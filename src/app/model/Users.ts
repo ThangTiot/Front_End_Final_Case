@@ -1,5 +1,7 @@
 export interface Users {
   id?: number;
+  userName?: string;
+  pass?: string;
   fullName?: string;
   gender?: string;
   phone?: string;

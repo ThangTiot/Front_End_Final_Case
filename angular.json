@@ -23,23 +23,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "src/templates/css/color.css",
-              "src/templates/css/main.min.css",
-              "src/templates/css/responsive.css",
-              "src/templates/css/strip.css",
-              "src/templates/css/style.css"
+              "src/styles.css"
             ],
             "scripts": [
-              "src/templates/js/backgroundVideo.js",
-              "src/templates/js/custom.js",
-              "src/templates/js/echarts.min.js",
-              "src/templates/js/main.min.js",
-              "src/templates/js/map-init.js",
-              "src/templates/js/script.js",
-              "src/templates/js/strip.pkgd.min.js",
-              "src/templates/js/userincr.js",
-              "src/templates/js/world.js"
             ]
           },
           "configurations": {

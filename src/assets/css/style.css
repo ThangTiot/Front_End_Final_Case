@@ -48,7 +48,7 @@ Last change:  4/september/18
 @import url('https://fonts.googleapis.com/css?family=Satisfy');
 @font-face {
     font-family: HoboStd;
-    src: url('../fonts/HoboStd.ttf'), url('../fonts/HoboStd.eot');
+    src: url('../fonts/HoboStd.eot');
 }
 
 
@@ -10045,5 +10045,9 @@ aside.sidebar.full-style {
     letter-spacing: 0.5px;
     text-transform: uppercase;
 }
-
+.error {
+  color: red;
+  font-size: 13px;
+  margin-top: -5px;
+}
 

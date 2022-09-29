@@ -1,8 +1,7 @@
-
 //google map
 if ($("#map-canvas").length) {
 jQuery(document).ready(function($) {
-
+	
 	"use strict";
 
 		var map;

@@ -1,1 +1,108 @@
-<p>users works!</p>
+
+<div class="theme-layout">
+  <div class="container-fluid pdng0">
+    <div class="row merged">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="land-featurearea">
+          <div class="land-meta">
+            <h1>Vinbook</h1>
+            <p>
+              Vinbook is free to use for as long as you want with two active projects.
+            </p>
+            <div class="friend-logo">
+              <span><img src="./././assets/images/logo-vinfast.png" alt="" style="height: 240px"></span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="login-reg-bg">
+          <div class="log-reg-area sign">
+            <h2 class="log-title">Login</h2>
+            <p>
+              Don’t use Vinbook Yet?<a href="#" title=""> Join now</a>
+            </p>
+            <form [formGroup]="formSignIn" (ngSubmit)="signIn()">
+              <div class="form-group">
+                <input type="text" id="userName" formControlName="userName" required="required"/>
+                <label class="control-label" for="userName">Username</label><i class="mtrl-select"></i>
+              </div>
+              <div class="form-group">
+                <input type="password" id="pass" formControlName="pass" required="required"/>
+                <label class="control-label" for="pass">Password</label><i class="mtrl-select"></i>
+              </div>
+              <div class="error" [hidden] = "signInError">
+                Username or password is incorrect!
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" checked="checked"/><i class="check-box"></i>Always Remember Me.
+                </label>
+              </div>
+              <a href="#" title="" class="forgot-pwd">Forgot Password?</a>
+              <div class="submit-btns">
+                <button class="mtr-btn signin"><span>Login</span></button>
+                <button class="mtr-btn signup"><span>Register</span></button>
+              </div>
+            </form>
+          </div>
+          <div class="log-reg-area reg">
+            <h2 class="log-title">Register</h2>
+            <p>
+              Don’t use Vinbook Yet? <a href="#" title="">Join now</a>
+            </p>
+            <form [formGroup]="formSignUp" (ngSubmit)="signUp()">
+              <div class="form-group">
+                <input type="text" id="fullName" formControlName="fullName" required="required"/>
+                <label class="control-label" for="fullName">First & Last Name</label><i class="mtrl-select"></i>
+              </div>
+              <div class="form-group">
+                <input type="text" id="userName1" formControlName="userName1" required="required"/>
+                <label class="control-label" for="userName1">User Name</label><i class="mtrl-select"></i>
+              </div>
+              <div class="error" [hidden] = "checkUsername">
+                Username is exist!
+              </div>
+              <div class="form-group">
+                <input type="password" id="pass1" formControlName="pass1" required="required"/>
+                <label class="control-label" for="pass1">Password</label><i class="mtrl-select"></i>
+              </div>
+              <div class="error" *ngIf="formSignUp.get('pass1')!.invalid && formSignUp.get('pass1')!.touched">
+                Password is incorrect!
+              </div>
+              <div class="form-group">
+                <input type="password" id="rePass" formControlName="rePass" required="required" (input)="checkRePass()"/>
+                <label class="control-label" for="rePass">RePassword</label><i class="mtrl-select"></i>
+              </div>
+              <div class="error" [hidden] = "checkRepass">
+                RePassword is incorrect!
+              </div>
+              <div class="form-radio">
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="gender" formControlName="gender" value="Male" checked="checked"/><i class="check-box"></i>Male
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="gender" formControlName="gender" value="Female"/><i class="check-box"></i>Female
+                  </label>
+                </div>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" checked="checked"/><i class="check-box"></i>Accept Terms & Conditions ?
+                </label>
+              </div>
+              <a href="#" title="" class="already-have">Already have an account</a>
+              <div class="submit-btns">
+                <button class="mtr-btn signin" type="submit" [disabled]="formSignUp.invalid || !checkRepass"><span>Register</span></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
