@@ -50,7 +50,7 @@ export class UsersComponent implements OnInit {
         let userPresentId = value.id;
         // @ts-ignore
         sessionStorage.setItem("userPresentId", userPresentId);
-        this.router.navigateByUrl('newsFeed');
+        this.router.navigateByUrl('newsFeed').then();
       } else {
         this.signInError = false;
       }

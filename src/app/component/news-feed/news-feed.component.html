@@ -438,9 +438,12 @@
                               </div>
                                 <div class="new-postbox">
                                   <div class="newpst-input">
-                                    <form method="post" style="width: 420px" [formGroup]="formCreatePost" (ngSubmit)="createPost()">
+                                    <form method="post" style="width: 420px" [formGroup]="formCreatePost">
                                       <textarea rows="2" placeholder="What's on your mind?"
                                                 style="border: none" formControlName="content"></textarea>
+                                      <div *ngIf=!loading>
+                                        <img [src]="imageSrc" alt="" width="200px" height="200px" style="margin-left: 120px; margin-top: -10px">
+                                      </div>
                                       <div class="attachments" style="border: none">
                                         <ul>
                                           <li>
@@ -458,14 +461,14 @@
                                           <li>
                                             <i class="fa fa-camera"></i>
                                             <label class="fileContainer">
-                                              <input type="file" formControlName="imageFile">
+                                              <input type="file" (change)="showPreview($event)">
                                             </label>
                                           </li>
                                         </ul>
                                       </div>
                                       <div class="modal-footer" style="border: none">
                                         <button type="submit" class="btn btn-danger" data-dismiss="modal"
-                                                style="width: 70px; margin-right: -15px">Post</button>
+                                                style="width: 70px; margin-right: -15px" (click)="createPost()" [disabled]=loading>Post</button>
                                       </div>
                                     </form>
                                   </div>

@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Users} from "../../model/Users";
 import {UsersService} from "../../service/users.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {PostsService} from "../../service/posts.service";
+import {AngularFireStorage} from "@angular/fire/compat/storage";
+import {finalize} from "rxjs";
 
 @Component({
   selector: 'app-news-feed',
@@ -11,9 +14,15 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class NewsFeedComponent implements OnInit {
   userPresent!: Users;
   formCreatePost!: FormGroup;
+  imageFile!: any;
+  imageSrc: string = "";
+  loading: boolean = true;
 
   constructor(private userService: UsersService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private postService: PostsService,
+              private storage: AngularFireStorage) {
+  }
 
   ngOnInit(): void {
     let id = sessionStorage.getItem("userPresentId");
@@ -21,32 +30,43 @@ export class NewsFeedComponent implements OnInit {
       this.userService.findById(parseInt(id)).subscribe(data => {
         this.userPresent = data;
       });
-    };
-    this.formCreatePost = this.formBuilder.group({
-      content: "",
-      imageFile: "",
-    })
+    }
+    // this.formCreatePost = this.formBuilder.group({
+    //   content: ["",Validators.],
+    // })
+  }
+
+  showPreview(event: any) {
+    this.imageFile = event.target.files[0]
+    this.submitImage();
+  }
+
+  submitImage() {
+    if (this.imageFile != null) {
+      const fileName = this.imageFile.name;
+      const fileRef = this.storage.ref(fileName);
+      this.storage.upload(fileName, this.imageFile).snapshotChanges().pipe(
+        finalize(() => (fileRef.getDownloadURL().subscribe(url => {
+          this.imageSrc = url;
+          this.loading = false;
+        })))
+      ).subscribe();
+    }
   }
 
   createPost() {
-    // const ref = firebase.storage().ref();
-    // const file = document.querySelector('#imagePost').files[0];
-    // const metadata = {
-    //   contentType: file.type
-    // }
-    // let image = file.name;
-    // const uploadIMG = ref.child(image).put(file, metadata);
-    // uploadIMG.then(snapshot => snapshot.ref.getDownloadURL())
-    //   .then(url => {
-    //     let URl = url;
-    //     let posts = {
-    //       content: content,
-    //       imageName: URl,
-    //       permissionPost: permission,
-    //       users: {
-    //         id: this.userPresent.id,
-    //       }
-    //     }
-    //   });
+    let post = {
+      content: this.formCreatePost.value.content,
+      imageName: this.imageSrc,
+      // @ts-ignore
+      permissionPost: document.getElementById("permissionPost").value,
+      users: this.userPresent,
+    }
+    this.postService.createPost(post).subscribe(() => {
+        this.loading = true;
+        this.imageSrc = "";
+        this.formCreatePost.reset();
+      }
+    );
   }
 }
