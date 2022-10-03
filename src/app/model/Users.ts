@@ -10,5 +10,5 @@ export interface Users {
   address?: string;
   avatar?: string;
   hobby?: string;
-  createDate?: Date;
+  blockAccount?: boolean;
 }

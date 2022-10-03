@@ -19,6 +19,12 @@ export class UsersService {
   }
 
   findById(id: number): Observable<Users> {
-    return this.httpClient.get("http://localhost:8080/user/findById/" + id)
+    return this.httpClient.get("http://localhost:8080/user/" + id)
+  }
+  findAllFriend(id: number): Observable<Users[]> {
+    return this.httpClient.get<Users[]>("http://localhost:8080/friend/findAllFriendOfUser/" + id)
+  }
+  findAllFriendConfirm(id: number): Observable<Users[]> {
+    return this.httpClient.get<Users[]>("http://localhost:8080/friend/findAllFriendOfUserConfirm/" + id)
   }
 }

@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PostsService} from "../../service/posts.service";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
 import {finalize} from "rxjs";
+import {Posts} from "../../model/Posts";
 
 @Component({
   selector: 'app-news-feed',
@@ -16,7 +17,13 @@ export class NewsFeedComponent implements OnInit {
   formCreatePost!: FormGroup;
   imageFile!: any;
   imageSrc: string = "";
-  loading: boolean = true;
+  loading: boolean = false;
+  disablePost: boolean = false;
+  allPost!: Posts[];
+  listPostOfNewFeed!: Posts[];
+  friendList!: Users[];
+  friendListConfirm!: Users[];
+  idUserPresent!: any;
 
   constructor(private userService: UsersService,
               private formBuilder: FormBuilder,
@@ -25,19 +32,53 @@ export class NewsFeedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let id = sessionStorage.getItem("userPresentId");
-    if (id) {
-      this.userService.findById(parseInt(id)).subscribe(data => {
+    this.listPostOfNewFeed = [];
+    this.idUserPresent = sessionStorage.getItem("userPresentId");
+    this.getUserPresent();
+    this.getAllPostAndFriend();
+  }
+
+  getUserPresent() {
+    if (this.idUserPresent) {
+      this.userService.findById(this.idUserPresent).subscribe(data => {
         this.userPresent = data;
       });
     }
-    // this.formCreatePost = this.formBuilder.group({
-    //   content: ["",Validators.],
-    // })
+    this.formCreatePost = this.formBuilder.group({
+      content: ["", Validators.required]
+    })
   }
+
+  getAllPostAndFriend() {
+    if (this.idUserPresent) {
+      this.userService.findAllFriend(this.idUserPresent).subscribe(listFriend => {
+        this.friendList = listFriend;
+        this.userService.findAllFriendConfirm(this.idUserPresent).subscribe(listFriendConfirm => {
+          this.friendListConfirm = listFriendConfirm;
+          this.postService.findAllPost().subscribe(data => {
+            this.allPost = data;
+            for (let i = 0; i < data.length; i++) {
+              if (data[i].users!.id == this.idUserPresent) {
+                this.listPostOfNewFeed.push(data[i]);
+              } else if (data[i].permissionPost == "public") {
+                this.listPostOfNewFeed.push(data[i]);
+              } else {
+                for (let j = 0; j < listFriend.length; j++) {
+                  if ((listFriend[j].id == data[i].users!.id) && (data[i].permissionPost == "friend")) {
+                    this.listPostOfNewFeed.push(data[i]);
+                  }
+                }
+              }
+            }
+          });
+        });
+      });
+    }
+  };
 
   showPreview(event: any) {
     this.imageFile = event.target.files[0]
+    this.disablePost = true;
     this.submitImage();
   }
 
@@ -48,7 +89,8 @@ export class NewsFeedComponent implements OnInit {
       this.storage.upload(fileName, this.imageFile).snapshotChanges().pipe(
         finalize(() => (fileRef.getDownloadURL().subscribe(url => {
           this.imageSrc = url;
-          this.loading = false;
+          this.loading = true;
+          this.disablePost = false;
         })))
       ).subscribe();
     }

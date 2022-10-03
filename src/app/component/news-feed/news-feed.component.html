@@ -441,8 +441,8 @@
                                     <form method="post" style="width: 420px" [formGroup]="formCreatePost">
                                       <textarea rows="2" placeholder="What's on your mind?"
                                                 style="border: none" formControlName="content"></textarea>
-                                      <div *ngIf=!loading>
-                                        <img [src]="imageSrc" alt="" width="200px" height="200px" style="margin-left: 120px; margin-top: -10px">
+                                      <div *ngIf=loading>
+                                        <img [src]="imageSrc" alt="" style="width: 400px; margin-top: -10px; margin-left: 20px">
                                       </div>
                                       <div class="attachments" style="border: none">
                                         <ul>
@@ -468,7 +468,7 @@
                                       </div>
                                       <div class="modal-footer" style="border: none">
                                         <button type="submit" class="btn btn-danger" data-dismiss="modal"
-                                                style="width: 70px; margin-right: -15px" (click)="createPost()" [disabled]=loading>Post</button>
+                                                style="width: 70px; margin-right: -15px" (click)="createPost()" [disabled]= "disablePost || formCreatePost.invalid">Post</button>
                                       </div>
                                     </form>
                                   </div>
