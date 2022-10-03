@@ -14,7 +14,7 @@ export class PostsService {
     return this.httpClient.post("http://localhost:8080/post/create",post)
   }
 
-  findAllPost(): Observable<Posts[]> {
-    return this.httpClient.get<Posts[]>("http://localhost:8080/post/findAll")
+  findPostOfNewFeed(id: any): Observable<Posts[]> {
+    return this.httpClient.get<Posts[]>("http://localhost:8080/post/listPostOfNewFeed/" + id)
   }
 }

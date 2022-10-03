@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UsersService} from "../../service/users.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import Swal from 'sweetalert2'
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-users',
@@ -32,7 +33,7 @@ export class UsersComponent implements OnInit {
     this.formSignUp = this.formBuilder.group(
       {
         userName1: ["",Validators.required],
-        pass1: ["", [Validators.pattern(/^(?=.*?[A-Z])[A-Za-z0-9]{6,32}$/)]],
+        pass1: ["", [Validators.pattern(/^(?=.*?[A-Z])[A-Za-z0-9]{6,32}$/),Validators.required]],
         rePass: ["",Validators.required],
         fullName: ["",Validators.required],
         gender: ""
@@ -66,7 +67,13 @@ export class UsersComponent implements OnInit {
     };
     this.userService.signUp(user).subscribe(value => {
       if (value == null) {
-        location.reload();
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Register Success!',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(r => location.reload())
       } else {
         this.checkUsername = false;
       }
@@ -77,7 +84,11 @@ export class UsersComponent implements OnInit {
     let pass = this.formSignUp.value.pass1;
     let repass = this.formSignUp.value.rePass;
     if (pass != repass) {
-      this.checkRepass = false;
+      if (repass == "") {
+        this.checkRepass = true;
+      } else {
+        this.checkRepass = false;
+      }
     } else {
       this.checkRepass = true;
     }

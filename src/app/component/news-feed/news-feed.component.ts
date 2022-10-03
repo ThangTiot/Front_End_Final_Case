@@ -35,7 +35,8 @@ export class NewsFeedComponent implements OnInit {
     this.listPostOfNewFeed = [];
     this.idUserPresent = sessionStorage.getItem("userPresentId");
     this.getUserPresent();
-    this.getAllPostAndFriend();
+    this.getAllFriend();
+    this.getAllPostOfNewFeed();
   }
 
   getUserPresent() {
@@ -49,32 +50,22 @@ export class NewsFeedComponent implements OnInit {
     })
   }
 
-  getAllPostAndFriend() {
+  getAllFriend() {
     if (this.idUserPresent) {
       this.userService.findAllFriend(this.idUserPresent).subscribe(listFriend => {
         this.friendList = listFriend;
-        this.userService.findAllFriendConfirm(this.idUserPresent).subscribe(listFriendConfirm => {
-          this.friendListConfirm = listFriendConfirm;
-          this.postService.findAllPost().subscribe(data => {
-            this.allPost = data;
-            for (let i = 0; i < data.length; i++) {
-              if (data[i].users!.id == this.idUserPresent) {
-                this.listPostOfNewFeed.push(data[i]);
-              } else if (data[i].permissionPost == "public") {
-                this.listPostOfNewFeed.push(data[i]);
-              } else {
-                for (let j = 0; j < listFriend.length; j++) {
-                  if ((listFriend[j].id == data[i].users!.id) && (data[i].permissionPost == "friend")) {
-                    this.listPostOfNewFeed.push(data[i]);
-                  }
-                }
-              }
-            }
-          });
-        });
+      });
+      this.userService.findAllFriendConfirm(this.idUserPresent).subscribe(listFriendConfirm => {
+        this.friendListConfirm = listFriendConfirm;
       });
     }
   };
+
+  getAllPostOfNewFeed() {
+    this.postService.findPostOfNewFeed(this.idUserPresent).subscribe(data => {
+      this.listPostOfNewFeed = data;
+    });
+  }
 
   showPreview(event: any) {
     this.imageFile = event.target.files[0]
