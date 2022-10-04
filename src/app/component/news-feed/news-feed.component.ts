@@ -1,11 +1,16 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Users} from "../../model/Users";
+import {User} from "../../model/User";
 import {UsersService} from "../../service/users.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PostsService} from "../../service/posts.service";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
 import {finalize} from "rxjs";
-import {Posts} from "../../model/Posts";
+import {Post} from "../../model/Post";
+import Swal from 'sweetalert2'
+import {Router} from "@angular/router";
+import {LikePost} from "../../model/LikePost";
+import {LikePostService} from "../../service/like-post.service";
+
 
 @Component({
   selector: 'app-news-feed',
@@ -13,23 +18,25 @@ import {Posts} from "../../model/Posts";
   styleUrls: ['./news-feed.component.css']
 })
 export class NewsFeedComponent implements OnInit {
-  userPresent!: Users;
+  userPresent!: User;
   formCreatePost!: FormGroup;
   imageFile!: any;
   imageSrc: string = "";
-  loading: boolean = false;
+  loadingImgPost: boolean = false;
   disablePost: boolean = false;
-  allPost!: Posts[];
-  listPostOfNewFeed!: Posts[];
-  friendList!: Users[];
-  friendListConfirm!: Users[];
+  listPostOfNewFeed!: Post[];
+  friendList!: User[];
+  friendListConfirm!: User[];
   idUserPresent!: any;
+  likePostList!: LikePost[];
 
-  constructor(private userService: UsersService,
-              private formBuilder: FormBuilder,
-              private postService: PostsService,
-              private storage: AngularFireStorage) {
-  }
+  constructor(
+    private formBuilder: FormBuilder,
+    private storage: AngularFireStorage,
+    private router: Router,
+    private postService: PostsService,
+    private userService: UsersService,
+    private likePostService: LikePostService) {}
 
   ngOnInit(): void {
     this.listPostOfNewFeed = [];
@@ -63,7 +70,14 @@ export class NewsFeedComponent implements OnInit {
 
   getAllPostOfNewFeed() {
     this.postService.findPostOfNewFeed(this.idUserPresent).subscribe(data => {
-      this.listPostOfNewFeed = data;
+      this.listPostOfNewFeed = data.reverse();
+      console.log(data);
+    });
+  }
+
+  getAllLikePost() {
+    this.likePostService.findAll().subscribe(data => {
+      this.likePostList = data;
     });
   }
 
@@ -77,13 +91,24 @@ export class NewsFeedComponent implements OnInit {
     if (this.imageFile != null) {
       const fileName = this.imageFile.name;
       const fileRef = this.storage.ref(fileName);
-      this.storage.upload(fileName, this.imageFile).snapshotChanges().pipe(
-        finalize(() => (fileRef.getDownloadURL().subscribe(url => {
-          this.imageSrc = url;
-          this.loading = true;
-          this.disablePost = false;
-        })))
-      ).subscribe();
+      // @ts-ignore
+      Swal.fire({
+        title: 'Loading...',
+        html: 'Please wait...',
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+          this.storage.upload(fileName, this.imageFile).snapshotChanges().pipe(
+            finalize(() => (fileRef.getDownloadURL().subscribe(url => {
+              this.imageSrc = url;
+              this.loadingImgPost = true;
+              this.disablePost = false;
+              Swal.close();
+            })))
+          ).subscribe();
+        }
+      }).then();
     }
   }
 
@@ -96,10 +121,27 @@ export class NewsFeedComponent implements OnInit {
       users: this.userPresent,
     }
     this.postService.createPost(post).subscribe(() => {
-        this.loading = true;
+        this.loadingImgPost = false;
         this.imageSrc = "";
         this.formCreatePost.reset();
+        this.ngOnInit();
       }
     );
+  }
+
+  logout() {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You will be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Logout!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigateByUrl('').then(() => location.reload());
+      }
+    })
   }
 }

@@ -28,11 +28,17 @@
                 <input type="text" id="userName" formControlName="userName" required="required"/>
                 <label class="control-label" for="userName">Username</label><i class="mtrl-select"></i>
               </div>
+              <div class="error" *ngIf="formSignIn.get('userName')!.touched && formSignIn.get('userName')!.invalid">
+                Username is required!
+              </div>
               <div class="form-group">
                 <input type="password" id="pass" formControlName="pass" required="required"/>
                 <label class="control-label" for="pass">Password</label><i class="mtrl-select"></i>
               </div>
-              <div class="error" *ngIf="signInError">
+              <div class="error" *ngIf="formSignIn.get('pass')!.touched && formSignIn.get('pass')!.invalid">
+                Password is required!
+              </div>
+              <div class="error" *ngIf="signInError && !formSignIn.get('pass')!.invalid && !formSignIn.get('userName')!.invalid">
                 Username or password is incorrect!
               </div>
               <div class="checkbox">

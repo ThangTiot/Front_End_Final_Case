@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Posts} from "../model/Posts";
+import {Post} from "../model/Post";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -10,11 +10,11 @@ export class PostsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  createPost(post: any): Observable<Posts> {
-    return this.httpClient.post("http://localhost:8080/post/create",post)
+  createPost(post: any): Observable<Post> {
+    return this.httpClient.post("http://localhost:8080/posts/create",post)
   }
 
-  findPostOfNewFeed(id: any): Observable<Posts[]> {
-    return this.httpClient.get<Posts[]>("http://localhost:8080/post/listPostOfNewFeed/" + id)
+  findPostOfNewFeed(id: any): Observable<Post[]> {
+    return this.httpClient.get<Post[]>("http://localhost:8080/posts/listPostOfNewFeed/" + id)
   }
 }

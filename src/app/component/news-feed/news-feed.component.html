@@ -14,7 +14,7 @@
     </div>
     <div class="mh-head second">
       <form class="mh-form">
-        <input placeholder="search" />
+        <input placeholder="search"/>
         <a href="#/" class="fa fa-search"></a>
       </form>
     </div>
@@ -80,32 +80,32 @@
           <form method="post">
             <div class="setting-row">
               <span>Sub users</span>
-              <input type="checkbox" id="switch6" />
+              <input type="checkbox" id="switch6"/>
               <label for="switch6" data-off-label="OFF"></label>
             </div>
             <div class="setting-row">
               <span>personal account</span>
-              <input type="checkbox" id="switch7" />
+              <input type="checkbox" id="switch7"/>
               <label for="switch7" data-off-label="OFF"></label>
             </div>
             <div class="setting-row">
               <span>Business account</span>
-              <input type="checkbox" id="switch8" />
+              <input type="checkbox" id="switch8"/>
               <label for="switch8" data-off-label="OFF"></label>
             </div>
             <div class="setting-row">
               <span>Show me online</span>
-              <input type="checkbox" id="switch9" />
+              <input type="checkbox" id="switch9"/>
               <label for="switch9" data-off-label="OFF"></label>
             </div>
             <div class="setting-row">
               <span>Delete history</span>
-              <input type="checkbox" id="switch10" />
+              <input type="checkbox" id="switch10"/>
               <label for="switch10" data-off-label="OFF"></label>
             </div>
             <div class="setting-row">
               <span>Expose author name</span>
-              <input type="checkbox" id="switch11" />
+              <input type="checkbox" id="switch11"/>
               <label for="switch11" data-off-label="OFF"></label>
             </div>
           </form>
@@ -116,7 +116,9 @@
 
   <div class="topbar stick">
     <div class="logo">
-      <a title="" routerLink="newsFeed"><img src="assets/images/logo-vinfast.png" alt="" style="width: 50px; height: 45px"><span style="font-weight: bold; font-size: 35px; position: absolute; margin-top: 2px; margin-left: -5px">inbook</span></a>
+      <a title="" routerLink="newsFeed"><img src="assets/images/logo-vinfast.png" alt=""
+                                             style="width: 50px; height: 45px"><span
+        style="font-weight: bold; font-size: 35px; position: absolute; margin-top: 2px; margin-left: -5px">inbook</span></a>
     </div>
 
     <div class="top-area">
@@ -134,7 +136,6 @@
           <ul>
             <li><a href="#" title="">timeline</a></li>
             <li><a href="#" title="">timeline friends</a></li>
-
 
 
           </ul>
@@ -309,7 +310,7 @@
         </li>
       </ul>
       <div class="user-img">
-        <img src="{{userPresent.avatar}}}" alt="" style="height: 60px; width: 60px">
+        <img [src]="userPresent.avatar" alt="" style="height: 60px; width: 60px">
         <span class="status f-online"></span>
         <div class="user-setting">
           <a href="#" title=""><span class="status f-online"></span>online</a>
@@ -354,7 +355,7 @@
 
                       <li>
                         <i class="ti-power-off"></i>
-                        <a routerLink="" title="">Logout</a>
+                        <a (click)="logout()" title="">Logout</a>
                       </li>
                     </ul>
                   </div><!-- Shortcuts -->
@@ -409,13 +410,14 @@
                     </figure>
                     <div class="newpst-input">
                       <form method="post">
-                        <input class="btn btn-primary" data-toggle="modal" data-target="#myModal" placeholder="What's on your mind?"
-                        style="background: #f3f0f0; border: none; border-radius: 20px; width: 500px; height: 60px; text-align: left">
+                        <input class="btn btn-primary" data-toggle="modal" data-target="#myModal"
+                               placeholder="What's on your mind?"
+                               style="background: #f3f0f0; border: none; border-radius: 20px; width: 500px; height: 60px; text-align: left">
                       </form>
                       <!-- The Modal -->
                       <div class="modal" id="myModal">
                         <div class="modal-dialog">
-                          <div class="modal-content"  style="border-radius: 20px">
+                          <div class="modal-content" style="border-radius: 20px">
                             <!-- Modal Header -->
                             <div class="modal-header">
                               <span style="margin-left: 170px"><h3>Create Post</h3></span>
@@ -425,54 +427,64 @@
                             <div class="modal-body">
                               <div style="display: flex">
                                 <figure>
-                                  <img src="{{userPresent.avatar}}" alt="" style="height: 60px; width: 60px; border-radius: 50%">
+                                  <img src="{{userPresent.avatar}}" alt=""
+                                       style="height: 60px; width: 60px; border-radius: 50%">
                                 </figure>
                                 <div class="friend-name">
                                   <ins><a href="#" title="">{{userPresent.fullName}}</a></ins>
                                   <select name="permissionPost" id="permissionPost">
-                                    <option value="public"><i class="fa fa-globe" aria-hidden="true" style="margin-right: 5px"></i>Public</option>
-                                    <option value="friend"><i class="fa fa-users" aria-hidden="true" style="margin-right: 5px"></i>Friend</option>
-                                    <option value="private"><i class="fa fa-lock" aria-hidden="true" style="margin-right: 5px"></i>Private</option>
+                                    <option value="public"><i class="fa fa-globe" aria-hidden="true"
+                                                              style="margin-right: 5px"></i>Public
+                                    </option>
+                                    <option value="friend"><i class="fa fa-users" aria-hidden="true"
+                                                              style="margin-right: 5px"></i>Friend
+                                    </option>
+                                    <option value="private"><i class="fa fa-lock" aria-hidden="true"
+                                                               style="margin-right: 5px"></i>Private
+                                    </option>
                                   </select>
                                 </div>
                               </div>
-                                <div class="new-postbox">
-                                  <div class="newpst-input">
-                                    <form method="post" style="width: 420px" [formGroup]="formCreatePost">
+                              <div class="new-postbox">
+                                <div class="newpst-input">
+                                  <form method="post" style="width: 420px" [formGroup]="formCreatePost">
                                       <textarea rows="2" placeholder="What's on your mind?"
                                                 style="border: none" formControlName="content"></textarea>
-                                      <div *ngIf=loading>
-                                        <img [src]="imageSrc" alt="" style="width: 400px; margin-top: -10px; margin-left: 20px">
-                                      </div>
-                                      <div class="attachments" style="border: none">
-                                        <ul>
-                                          <li>
-                                            <i class="fa fa-location-arrow" aria-hidden="true"></i>
-                                            <label class="fileContainer">
-                                              <input type="file">
-                                            </label>
-                                          </li>
-                                          <li>
-                                            <i class="fa fa-video-camera"></i>
-                                            <label class="fileContainer">
-                                              <input type="file">
-                                            </label>
-                                          </li>
-                                          <li>
-                                            <i class="fa fa-camera"></i>
-                                            <label class="fileContainer">
-                                              <input type="file" (change)="showPreview($event)">
-                                            </label>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                      <div class="modal-footer" style="border: none">
-                                        <button type="submit" class="btn btn-danger" data-dismiss="modal"
-                                                style="width: 70px; margin-right: -15px" (click)="createPost()" [disabled]= "disablePost || formCreatePost.invalid">Post</button>
-                                      </div>
-                                    </form>
-                                  </div>
-                                </div><!-- add post new box -->
+                                    <div *ngIf=loadingImgPost>
+                                      <img [src]="imageSrc" alt=""
+                                           style="width: 400px; margin-top: -10px; margin-left: 20px">
+                                    </div>
+                                    <div class="attachments" style="border: none">
+                                      <ul>
+                                        <li>
+                                          <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                                          <label class="fileContainer">
+                                            <input type="file">
+                                          </label>
+                                        </li>
+                                        <li>
+                                          <i class="fa fa-video-camera"></i>
+                                          <label class="fileContainer">
+                                            <input type="file">
+                                          </label>
+                                        </li>
+                                        <li>
+                                          <i class="fa fa-camera"></i>
+                                          <label class="fileContainer">
+                                            <input type="file" (change)="showPreview($event)">
+                                          </label>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <div class="modal-footer" style="border: none">
+                                      <button type="submit" class="btn btn-danger" data-dismiss="modal"
+                                              style="width: 70px; margin-right: -15px" (click)="createPost()"
+                                              [disabled]="disablePost || formCreatePost.invalid">Post
+                                      </button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div><!-- add post new box -->
                             </div>
                           </div>
                         </div>
@@ -481,41 +493,42 @@
                   </div>
                 </div><!-- add post new box -->
                 <div class="loadMore">
-<!--//////////////////////////////////////////////////////////////////-->
-                  <div class="central-meta item">
+                  <!--//////////////////////////////////////////////////////////////////-->
+                  <div class="central-meta item" *ngFor="let post of listPostOfNewFeed">
                     <div class="user-post">
                       <div class="friend-info">
                         <figure>
-                          <img src="assets/images/resources/friend-avatar10.jpg" alt="">
+                          <img [src]="post.users!.avatar" alt="">
                         </figure>
                         <div class="friend-name">
-                          <ins><a href="#" title="">Janice Griffith</a></ins>
-                          <span>published: june,2 2018 19:PM</span>
+                          <ins><a href="#" title="">{{post.users!.fullName}}</a></ins>
+                          <span>{{post.createDate | date:'dd/MM hh:mm'}}
+                          <span [ngSwitch]="post.permissionPost">
+                            <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'" style="margin-left: 3px"></i>
+                            <i class="fa fa-users" aria-hidden="true" *ngSwitchCase="'friend'" style="margin-left: 3px"></i>
+                            <i class="fa fa-lock" aria-hidden="true" *ngSwitchCase="'private'" style="margin-left: 3px"></i>
+                          </span></span>
                         </div>
                         <div class="post-meta">
-                          <img src="assets/images/resources/user-post.jpg" alt="">
+                          <div class="description">
+                            <p style="color:#000;">{{post.content}}</p>
+                          </div>
+                          <img src="{{post.imageName}}" alt="" *ngIf="post.imageName != ''">
                           <div class="we-video-info">
                             <ul>
-
                               <li>
 															<span class="comment" data-toggle="tooltip" title="Comments">
 																<i class="fa fa-comments-o"></i>
-																<ins>52</ins>
+																<ins>{{post.commentCount}}</ins>
 															</span>
                               </li>
                               <li>
 															<span class="like" data-toggle="tooltip" title="like">
 																<i class="ti-heart"></i>
-																<ins>2.2k</ins>
+																<ins>{{post.likeCount}}</ins>
 															</span>
                               </li>
                             </ul>
-                          </div>
-                          <div class="description">
-
-                            <p>
-                              World's most beautiful car in Curabitur <a href="#" title="">#test drive booking !</a> the most beatuiful car available in america and the saudia arabia, you can book your test drive by our official website
-                            </p>
                           </div>
                         </div>
                       </div>
@@ -532,7 +545,8 @@
                                 <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
                                 <a class="we-reply" href="#" title="Reply"><i class="ti-heart"></i></a>
                               </div>
-                              <p>we are working for the dance and sing songs. this car is very awesome for the youngster. please vote this car and like our post</p>
+                              <p>we are working for the dance and sing songs. this car is very awesome for the
+                                youngster. please vote this car and like our post</p>
                             </div>
                             <ul>
                               <li>
@@ -545,7 +559,8 @@
                                     <span>1 month ago</span>
                                     <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
                                   </div>
-                                  <p>yes, really very awesome car i see the features of this car in the official website of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>
+                                  <p>yes, really very awesome car i see the features of this car in the official website
+                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>
                                 </div>
                               </li>
                               <li>
@@ -558,7 +573,8 @@
                                     <span>16 days ago</span>
                                     <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
                                   </div>
-                                  <p>i like lexus cars, lexus cars are most beautiful with the awesome features, but this car is really outstanding than lexus</p>
+                                  <p>i like lexus cars, lexus cars are most beautiful with the awesome features, but
+                                    this car is really outstanding than lexus</p>
                                 </div>
                               </li>
                             </ul>
@@ -573,7 +589,8 @@
                                 <span>1 week ago</span>
                                 <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
                               </div>
-                              <p>we are working for the dance and sing songs. this video is very awesome for the youngster. please vote this video and like our channel
+                              <p>we are working for the dance and sing songs. this video is very awesome for the
+                                youngster. please vote this video and like our channel
                                 <i class="em em-smiley"></i>
                               </p>
                             </div>
@@ -596,7 +613,7 @@
                       </div>
                     </div>
                   </div>
- <!--//////////////////////////////////////////////////////////////////-->
+                  <!--//////////////////////////////////////////////////////////////////-->
                 </div>
               </div><!-- centerl meta -->
               <div class="col-lg-3">
@@ -612,7 +629,8 @@
                         </figure>
                         <div class="friendz-meta">
                           <a href="#">bucky barnes</a>
-                          <i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f2859b9c869780819d9e969780b2959f939b9edc919d9f">[email&#160;protected]</a></i>
+                          <i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__"
+                                data-cfemail="f2859b9c869780819d9e969780b2959f939b9edc919d9f">[email&#160;protected]</a></i>
                         </div>
                       </li>
                     </ul>
