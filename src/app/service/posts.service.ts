@@ -13,4 +13,8 @@ export class PostsService {
   createPost(post: any): Observable<Posts> {
     return this.httpClient.post("http://localhost:8080/post/create",post)
   }
+
+  deletePost(postId: any): Observable<void>{
+    return this.httpClient.delete<void>("http://localhost:8080/post/delete/" + postId)
+  }
 }

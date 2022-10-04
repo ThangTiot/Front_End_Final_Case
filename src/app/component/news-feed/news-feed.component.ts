@@ -31,9 +31,7 @@ export class NewsFeedComponent implements OnInit {
         this.userPresent = data;
       });
     }
-    // this.formCreatePost = this.formBuilder.group({
-    //   content: ["",Validators.],
-    // })
+
   }
 
   showPreview(event: any) {
@@ -68,5 +66,15 @@ export class NewsFeedComponent implements OnInit {
         this.formCreatePost.reset();
       }
     );
+  }
+
+  deletePost(id: number){
+    if (confirm("Do you want to remove this post")){
+      this.postService.deletePost(id).subscribe(() => {
+        alert("Delete success")
+      });
+    } else {
+      alert("Delete Fail")
+    }
   }
 }
