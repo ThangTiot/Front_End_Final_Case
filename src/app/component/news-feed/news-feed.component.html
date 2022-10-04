@@ -524,7 +524,8 @@
                               </li>
                               <li>
 															<span class="like" data-toggle="tooltip" title="like">
-																<i class="ti-heart"></i>
+																<i class="ti-heart"  *ngIf="!likeShow(post)" (click)="likePost(post.id)"></i>
+                                <i class="fa fa-heart" *ngIf="likeShow(post)" (click)="disLikePost(post.id)"></i>
 																<ins>{{post.likeCount}}</ins>
 															</span>
                               </li>

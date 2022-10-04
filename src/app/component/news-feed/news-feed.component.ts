@@ -36,7 +36,8 @@ export class NewsFeedComponent implements OnInit {
     private router: Router,
     private postService: PostsService,
     private userService: UsersService,
-    private likePostService: LikePostService) {}
+    private likePostService: LikePostService) {
+  }
 
   ngOnInit(): void {
     this.listPostOfNewFeed = [];
@@ -44,6 +45,7 @@ export class NewsFeedComponent implements OnInit {
     this.getUserPresent();
     this.getAllFriend();
     this.getAllPostOfNewFeed();
+    this.getAllLikePost();
   }
 
   getUserPresent() {
@@ -71,13 +73,13 @@ export class NewsFeedComponent implements OnInit {
   getAllPostOfNewFeed() {
     this.postService.findPostOfNewFeed(this.idUserPresent).subscribe(data => {
       this.listPostOfNewFeed = data.reverse();
-      console.log(data);
     });
   }
 
   getAllLikePost() {
-    this.likePostService.findAll().subscribe(data => {
+    this.likePostService.findAllByUser(this.idUserPresent).subscribe(data => {
       this.likePostList = data;
+      console.log(data)
     });
   }
 
@@ -144,4 +146,43 @@ export class NewsFeedComponent implements OnInit {
       }
     })
   }
+
+  likeShow(post: Post) {
+    for (let i = 0; i < this.likePostList.length; i++) {
+      if ((this.likePostList[i].post!.id == post.id) && (this.likePostList[i].users!.id == this.idUserPresent)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+  likePost(idPost: any) {
+    let likePost = {
+      users: {
+        id: this.idUserPresent,
+      },
+      post: {
+        id: idPost,
+      }
+    }
+    this.likePostService.likePost(likePost).subscribe(() => {
+        this.getAllLikePost();
+        this.getAllPostOfNewFeed()
+      }
+    );
+  }
+
+  disLikePost(idPost: any) {
+    for (let i = 0; i < this.likePostList.length; i++) {
+      if ((this.likePostList[i].post!.id == idPost) && (this.likePostList[i].users!.id == this.idUserPresent)) {
+        this.likePostService.disLikePost(this.likePostList[i].id).subscribe(() => {
+            this.getAllLikePost();
+            this.getAllPostOfNewFeed()
+          }
+        );
+      }
+    }
+  }
+
 }
