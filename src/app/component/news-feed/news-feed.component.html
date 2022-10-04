@@ -1,4 +1,4 @@
-<div class="theme-layout">
+  <div class="theme-layout">
 
   <div class="responsive-header">
     <div class="mh-head first Sticky">
@@ -37,8 +37,8 @@
         <li><span>Account Setting</span>
           <ul>
 
-            <li><a href="#" title="">edit-password</a></li>
-            <li><a href="#" title="">edit profile basics</a></li>
+            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>
+            <li><a [routerLink]="'/edit-profile/' + userPresent.id" title="">edit profile basics</a></li>
             <li><a href="#" title="">message box</a></li>
 
           </ul>
@@ -144,8 +144,8 @@
           <a href="#" title="">account settings</a>
           <ul>
 
-            <li><a href="#" title="">edit-password</a></li>
-            <li><a href="#" title="">edit profile basics</a></li>
+            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>
+            <li><a [routerLink]="'/edit-profile/' + userPresent.id" title="">edit profile basics</a></li>
             <li><a href="#" title="">message box</a></li>
 
           </ul>
@@ -300,13 +300,14 @@
             <a href="#" title="" class="more-mesg">view more</a>
           </div>
         </li>
-        <li><a href="#" title="Languages" data-ripple=""><i class="fa fa-globe"></i></a>
-          <div class="dropdowns languages">
-            <a href="#" title=""><i class="ti-check"></i>English</a>
-            <a href="#" title="">Arabic</a>
-            <a href="#" title="">Dutch</a>
-            <a href="#" title="">French</a>
-          </div>
+        <li>
+<!--          <a href="#" title="Languages" data-ripple=""><i class="fa fa-globe"></i></a>-->
+<!--          <div class="dropdowns languages">-->
+<!--            <a href="#" title=""><i class="ti-check"></i>English</a>-->
+<!--            <a href="#" title="">Arabic</a>-->
+<!--            <a href="#" title="">Dutch</a>-->
+<!--            <a href="#" title="">French</a>-->
+<!--          </div>-->
         </li>
       </ul>
       <div class="user-img">
@@ -317,7 +318,7 @@
           <a href="#" title=""><span class="status f-away"></span>away</a>
           <a href="#" title=""><span class="status f-off"></span>offline</a>
           <a href="#" title=""><i class="ti-user"></i> view profile</a>
-          <a href="#" title=""><i class="ti-pencil-alt"></i>edit profile</a>
+          <a [routerLink]="'/edit-profile/' + userPresent.id" title=""><i class="ti-pencil-alt"></i>edit profile</a>
           <a href="#" title=""><i class="ti-target"></i>activity log</a>
           <a href="#" title=""><i class="ti-settings"></i>account setting</a>
           <a href="#" title=""><i class="ti-power-off"></i>log out</a>
@@ -507,9 +508,10 @@
                             <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'" style="margin-left: 3px"></i>
                             <i class="fa fa-users" aria-hidden="true" *ngSwitchCase="'friend'" style="margin-left: 3px"></i>
                             <i class="fa fa-lock" aria-hidden="true" *ngSwitchCase="'private'" style="margin-left: 3px"></i>
-                          </span></span>
+                          </span>
+                          </span>
                         </div>
-                        <div class="post-meta">
+                                                <div class="post-meta">
                           <div class="description">
                             <p style="color:#000;">{{post.content}}</p>
                           </div>
@@ -644,3 +646,4 @@
     </div>
   </section>
 </div>
+
