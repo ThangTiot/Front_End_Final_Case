@@ -504,8 +504,8 @@
                         </figure>
                         <div class="friend-name">
                           <ins><a href="#" title="">{{post.users!.fullName}}</a></ins>
-                          <span>{{post.createDate | date:'dd/MM hh:mm'}}
-                            <span [ngSwitch]="post.permissionPost">
+                          <span>{{(post.createDate)| date:'hh:mm:ss'}}
+                            <span [ngSwitch]="post.permissionPost" style="font-size: larger">
                             <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'"
                                style="margin-left: 3px"></i>
                             <i class="fa fa-users" aria-hidden="true" *ngSwitchCase="'friend'"
