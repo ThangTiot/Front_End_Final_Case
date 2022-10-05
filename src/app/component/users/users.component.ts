@@ -13,7 +13,7 @@ export class UsersComponent implements OnInit {
   formSignIn!: FormGroup;
   formSignUp!: FormGroup;
   signInError: boolean = false;
-  checkUsername: boolean = true;
+  checkUsername: boolean = false;
   checkRepass: boolean = true;
 
   constructor(private formBuilder: FormBuilder,
@@ -75,7 +75,7 @@ export class UsersComponent implements OnInit {
           timer: 1500
         }).then(r => location.reload())
       } else {
-        this.checkUsername = false;
+        this.checkUsername = true;
       }
     });
   }
@@ -92,5 +92,9 @@ export class UsersComponent implements OnInit {
     } else {
       this.checkRepass = true;
     }
+  }
+
+  changeUserName() {
+    this.checkUsername = false;
   }
 }

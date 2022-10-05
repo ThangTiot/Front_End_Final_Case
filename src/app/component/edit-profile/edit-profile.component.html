@@ -6,7 +6,7 @@
 				<a class="" href="#menu"><i class="fa fa-align-justify"></i></a>
 			</span>
       <span class="mh-text">
-				<a href="newsfeed.html" title=""><img src="../images/logo2.png" alt=""></a>
+			<a routerLink="newsFeed" title=""><img src="../src/assets/images/logo-vinfast.png" alt=""></a>
 			</span>
       <span class="mh-btns-right">
 				<a class="fa fa-sliders" href="#shoppingbag"></a>
@@ -24,7 +24,7 @@
           <ul>
             <li><a href="landing.html" title="">Login page</a></li>
             <li><a href="logout.html" title="">Logout Page</a></li>
-            <li><a href="newsfeed.html" title="">news feed</a></li>
+            <li><a routerLink="newsFeed" title="">news feed</a></li>
           </ul>
         </li>
         <li><span>Time Line</span>
@@ -37,12 +37,12 @@
         <li><span>Account Setting</span>
           <ul>
 
-            <li><a href="../../resources/templates/edit-password.html" title="">edit-password</a></li>
-            <li><a href="edit-profile-basic.html" title="">edit profile basics</a></li>
+            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>
+            <li><a [routerLink]="'/edit-profile/' + userPresent.id"title="">edit profile </a></li>
 
           </ul>
         </li>
-        <li><a href="../../resources/templates/about.html" title="">about</a></li>
+        <li><a [routerLink]="'/user-about/' + userPresent.id" title="">about</a></li>
       </ul>
     </nav>
 
@@ -50,7 +50,9 @@
 
   <div class="topbar stick">
     <div class="logo">
-      <a title="" href="newsfeed.html"><img src="../images/logo.png" alt=""></a>
+      <a title="" routerLink="newsFeed"><img src="../src/assets/images/logo-vinfast.png" alt=""
+                                             style="width: 50px; height: 45px"><span
+        style="font-weight: bold; font-size: 35px; position: absolute; margin-top: 2px; margin-left: -5px">inbook</span></a>
     </div>
 
     <div class="top-area">
@@ -60,7 +62,7 @@
           <ul>
             <li><a href="landing.html" title="">Login page</a></li>
             <li><a href="logout.html" title="">Logout Page</a></li>
-            <li><a href="newsfeed.html" title="">news feed</a></li>
+            <li><a routerLink="newsFeed" title="">news feed</a></li>
           </ul>
         </li>
         <li>
@@ -77,8 +79,8 @@
           <a href="#" title="">account settings</a>
           <ul>
 
-            <li><a href="../../resources/templates/edit-password.html" title="">edit-password</a></li>
-            <li><a href="edit-profile-basic.html" title="">edit profile basics</a></li>
+            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>
+            <li><a [routerLink]="'/edit-profile/' + userPresent.id"title="">edit profile basics</a></li>
 
 
           </ul>
@@ -86,18 +88,18 @@
       </ul>
       <ul class="setting-area">
 
-        <li><a href="newsfeed.html" title="Home" data-ripple=""><i class="ti-home"></i></a></li>
+        <li><a routerLink="newsFeed" title="Home" data-ripple=""><i class="ti-home"></i></a></li>
 
 
 
 
       </ul>
       <div class="user-img">
-        <img src="../images/resources/admin.jpg" alt="">
+        <img [src]="userPresent.avatar" alt="" style="height: 60px; width: 60px">
         <span class="status f-online"></span>
         <div class="user-setting">
           <a href="#" title=""><i class="ti-user"></i> view profile</a>
-          <a href="#" title=""><i class="ti-pencil-alt"></i>edit profile</a>
+          <a [routerLink]="'/edit-profile/' + userPresent.id" title=""><i class="ti-pencil-alt"></i>edit profile</a>
           <a href="#" title=""><i class="ti-power-off"></i>log out</a>
         </div>
       </div>
@@ -107,7 +109,7 @@
 
   <section>
     <div class="feature-photo">
-      <figure><img src="../images/resources/timeline-1.jpg" alt=""></figure>
+      <figure><img src="../src/assets/images/resources/timeline-1.jpg" alt=""></figure>
       <div class="add-btn">
         <span>1205 followers</span>
         <a href="#" title="" data-ripple="">Add Friend</a>
@@ -124,7 +126,7 @@
           <div class="col-lg-2 col-sm-3">
             <div class="user-avatar">
               <figure>
-                <img src="../images/resources/user-avatar.jpg" alt="">
+                <img src="../src/assets/images/resources/user-avatar.jpg" alt="">
                 <form class="edit-phto">
                   <i class="fa fa-camera-retro"></i>
                   <label class="fileContainer">
@@ -145,7 +147,7 @@
                 <li>
                   <a class="" href="time-line.html" title="" data-ripple="">time line</a>
                   <a class="" href="timeline-friends.html" title="" data-ripple="">Friends</a>
-                  <a class="active" href="../../resources/templates/about.html" title="" data-ripple="">about</a>
+                  <a class="active" [routerLink]="'/user-about/' + userPresent.id" title="" data-ripple="">about</a>
 
                 </li>
               </ul>
@@ -170,11 +172,11 @@
                     <ul class="naves">
                       <li>
                         <i class="ti-info-alt"></i>
-                        <a href="edit-profile-basic.html" title="">Basic info</a>
+                      <a [routerLink]="'/edit-profile/' + userPresent.id"title="">edit profile</a>
                       </li>
                       <li>
                         <i class="ti-lock"></i>
-                        <a href="../../resources/templates/edit-password.html" title="">change password</a>
+                        <a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a>
                       </li>
                     </ul>
                   </div><!-- settings widget -->
@@ -183,7 +185,7 @@
               <div class="col-lg-6">
                 <div class="central-meta">
                   <div class="editing-info">
-                    <h5 class="f-title"><i class="ti-info-alt"></i> Edit Basic Information</h5>
+                    <h5 class="f-title"><i class="ti-info-alt"></i> Edit  Information</h5>
 
                     <form method="post">
                       <div class="form-group half">
@@ -541,7 +543,7 @@
                         <label class="control-label" for="textarea">About Me</label><i class="mtrl-select"></i>
                       </div>
                       <div class="submit-btns">
-                        <button type="button" class="mtr-btn"><span>Cancel</span></button>
+                        <button type="reset" class="mtr-btn"><span>Cancel</span></button>
                         <button type="button" class="mtr-btn"><span>Update</span></button>
                       </div>
                     </form>
@@ -556,6 +558,6 @@
   </section>
 </div>
 <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="../js/main.min.js"></script>
-<script src="../js/script.js"></script>
-<script src="../js/map-init.js"></script>
+<script src="../src/assets/js/script.js"></script>
+<script src="../src/assets/js/map-init.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8c55_YHLvDHGACkQscgbGLtLRdxBDCfI"></script>

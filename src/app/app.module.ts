@@ -15,6 +15,7 @@ import {environment} from "../environments/environment";
 
 import { EditPasswordComponent } from './component/edit-password/edit-password.component';
 import {EditProfileComponent} from "./component/edit-profile/edit-profile.component";
+import { UserAboutComponent } from './component/user-about/user-about.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {EditProfileComponent} from "./component/edit-profile/edit-profile.compon
     UsersComponent,
     NewsFeedComponent,
     EditProfileComponent,
-    EditPasswordComponent
+    EditPasswordComponent,
+    UserAboutComponent
   ],
   imports: [
     BrowserModule,
