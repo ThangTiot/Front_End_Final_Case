@@ -17,4 +17,16 @@ export class PostsService {
   findPostOfNewFeed(id: any): Observable<Post[]> {
     return this.httpClient.get<Post[]>("http://localhost:8080/posts/listPostOfNewFeed/" + id)
   }
+
+  findById(id: any): Observable<Post> {
+    return this.httpClient.get("http://localhost:8080/posts/findById/" + id);
+  }
+
+  deletePost(id: any): Observable<any> {
+    return this.httpClient.delete("http://localhost:8080/posts/delete/" + id)
+  }
+
+  updatePost(id: any, post: Post): Observable<Post> {
+    return this.httpClient.put<Post>("http://localhost:8080/posts/update/" + id, post)
+  }
 }
