@@ -28,11 +28,17 @@
                 <input type="text" id="userName" formControlName="userName" required="required"/>
                 <label class="control-label" for="userName">Username</label><i class="mtrl-select"></i>
               </div>
+              <div class="error" *ngIf="formSignIn.get('userName')!.touched && formSignIn.get('userName')!.invalid">
+                Username is required!
+              </div>
               <div class="form-group">
                 <input type="password" id="pass" formControlName="pass" required="required"/>
                 <label class="control-label" for="pass">Password</label><i class="mtrl-select"></i>
               </div>
-              <div class="error" [hidden] = "signInError">
+              <div class="error" *ngIf="formSignIn.get('pass')!.touched && formSignIn.get('pass')!.invalid">
+                Password is required!
+              </div>
+              <div class="error" *ngIf="signInError && !formSignIn.get('pass')!.invalid && !formSignIn.get('userName')!.invalid">
                 Username or password is incorrect!
               </div>
               <div class="checkbox">
@@ -42,8 +48,8 @@
               </div>
               <a href="#" title="" class="forgot-pwd">Forgot Password?</a>
               <div class="submit-btns">
-                <button class="mtr-btn signin"><span>Login</span></button>
-                <button class="mtr-btn signup"><span>Register</span></button>
+                <button type="submit" class="mtr-btn signin" [disabled]="formSignIn.invalid"><span>Login</span></button>
+                <button type="button" class="mtr-btn signup"><span>Register</span></button>
               </div>
             </form>
           </div>
@@ -57,12 +63,18 @@
                 <input type="text" id="fullName" formControlName="fullName" required="required"/>
                 <label class="control-label" for="fullName">First & Last Name</label><i class="mtrl-select"></i>
               </div>
+              <div class="error" *ngIf="formSignUp.get('fullName')!.touched && formSignUp.get('fullName')!.invalid">
+                FullName is required!
+              </div>
               <div class="form-group">
                 <input type="text" id="userName1" formControlName="userName1" required="required"/>
                 <label class="control-label" for="userName1">User Name</label><i class="mtrl-select"></i>
               </div>
               <div class="error" [hidden] = "checkUsername">
                 Username is exist!
+              </div>
+              <div class="error" *ngIf="formSignUp.get('userName1')!.invalid && formSignUp.get('userName1')!.touched">
+                Username is required!
               </div>
               <div class="form-group">
                 <input type="password" id="pass1" formControlName="pass1" required="required"/>
@@ -77,6 +89,9 @@
               </div>
               <div class="error" [hidden] = "checkRepass">
                 RePassword is incorrect!
+              </div>
+              <div class="error" *ngIf="formSignUp.get('rePass')!.invalid && formSignUp.get('rePass')!.touched">
+                RePassword is required!
               </div>
               <div class="form-radio">
                 <div class="radio">
@@ -97,7 +112,7 @@
               </div>
               <a href="#" title="" class="already-have">Already have an account</a>
               <div class="submit-btns">
-                <button class="mtr-btn signin" type="submit" [disabled]="formSignUp.invalid || !checkRepass"><span>Register</span></button>
+                <button class="mtr-btn signin" type="submit" [disabled]="formSignUp.invalid"><span>Register</span></button>
               </div>
             </form>
           </div>

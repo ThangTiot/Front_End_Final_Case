@@ -1,4 +1,4 @@
-export interface Users {
+export interface User {
   id?: number;
   userName?: string;
   pass?: string;
@@ -10,5 +10,5 @@ export interface Users {
   address?: string;
   avatar?: string;
   hobby?: string;
-  createDate?: Date;
+  blockAccount?: boolean;
 }

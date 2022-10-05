@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Users} from "../model/Users";
+import {User} from "../model/User";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -11,14 +11,20 @@ export class UsersService {
   constructor(private httpClient: HttpClient) {
   }
 
-  signIn(users: Users): Observable<Users> {
-    return this.httpClient.post<Users>("http://localhost:8080/logIn/logIn",users)
+  signIn(users: User): Observable<User> {
+    return this.httpClient.post<User>("http://localhost:8080/logIn/logIn",users)
   }
-  signUp(users: Users): Observable<Users> {
-    return this.httpClient.post<Users>("http://localhost:8080/logIn/signUp",users)
+  signUp(users: User): Observable<User> {
+    return this.httpClient.post<User>("http://localhost:8080/logIn/signUp",users)
   }
 
-  findById(id: number): Observable<Users> {
-    return this.httpClient.get("http://localhost:8080/user/findById/" + id)
+  findById(id: number): Observable<User> {
+    return this.httpClient.get("http://localhost:8080/users/" + id)
+  }
+  findAllFriend(id: number): Observable<User[]> {
+    return this.httpClient.get<User[]>("http://localhost:8080/friends/findAllFriendOfUser/" + id)
+  }
+  findAllFriendConfirm(id: number): Observable<User[]> {
+    return this.httpClient.get<User[]>("http://localhost:8080/friends/findAllFriendOfUserConfirm/" + id)
   }
 }
