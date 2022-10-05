@@ -1,4 +1,4 @@
-  <div class="theme-layout">
+<div class="theme-layout">
 
   <div class="responsive-header">
     <div class="mh-head first Sticky">
@@ -301,13 +301,13 @@
           </div>
         </li>
         <li>
-<!--          <a href="#" title="Languages" data-ripple=""><i class="fa fa-globe"></i></a>-->
-<!--          <div class="dropdowns languages">-->
-<!--            <a href="#" title=""><i class="ti-check"></i>English</a>-->
-<!--            <a href="#" title="">Arabic</a>-->
-<!--            <a href="#" title="">Dutch</a>-->
-<!--            <a href="#" title="">French</a>-->
-<!--          </div>-->
+          <!--          <a href="#" title="Languages" data-ripple=""><i class="fa fa-globe"></i></a>-->
+          <!--          <div class="dropdowns languages">-->
+          <!--            <a href="#" title=""><i class="ti-check"></i>English</a>-->
+          <!--            <a href="#" title="">Arabic</a>-->
+          <!--            <a href="#" title="">Dutch</a>-->
+          <!--            <a href="#" title="">French</a>-->
+          <!--          </div>-->
         </li>
       </ul>
       <div class="user-img">
@@ -503,15 +503,28 @@
                         </figure>
                         <div class="friend-name">
                           <ins><a href="#" title="">{{post.users!.fullName}}</a></ins>
+<!--                          <div class="post-btn">-->
+<!--                            <span class="like" data-toggle="tooltip" title="like">-->
+<!--												    <i class="fa fa-pencil-square-o" aria-hidden="true"-->
+<!--                           onclick="updatePostForm(${listPost[i].id})"></i>-->
+<!--											      </span>-->
+<!--                            <span class="like" data-toggle="tooltip" title="like">-->
+<!--											      <i class="fa fa-trash-o" aria-hidden="true" onclick="deletePost(${listPost[i].id})"></i>-->
+<!--											      </span>-->
+<!--                          </div>-->
                           <span>{{post.createDate | date:'dd/MM hh:mm'}}
-                          <span [ngSwitch]="post.permissionPost">
-                            <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'" style="margin-left: 3px"></i>
-                            <i class="fa fa-users" aria-hidden="true" *ngSwitchCase="'friend'" style="margin-left: 3px"></i>
-                            <i class="fa fa-lock" aria-hidden="true" *ngSwitchCase="'private'" style="margin-left: 3px"></i>
+                            <span [ngSwitch]="post.permissionPost">
+                            <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'"
+                               style="margin-left: 3px"></i>
+                            <i class="fa fa-users" aria-hidden="true" *ngSwitchCase="'friend'"
+                               style="margin-left: 3px"></i>
+                            <i class="fa fa-lock" aria-hidden="true" *ngSwitchCase="'private'"
+                               style="margin-left: 3px"></i>
                           </span>
                           </span>
                         </div>
-                                                <div class="post-meta">
+
+                        <div class="post-meta">
                           <div class="description">
                             <p style="color:#000;">{{post.content}}</p>
                           </div>
@@ -529,6 +542,17 @@
 																<i class="ti-heart"></i>
 																<ins>{{post.likeCount}}</ins>
 															</span>
+                              </li>
+                              <li>
+                                <span class="like" data-toggle="tooltip" title="like">
+												    <i class="fa fa-pencil-square-o" aria-hidden="true"
+                               onclick="updatePostForm(${listPost[i].id})"></i>
+											      </span>
+                              </li>
+                              <li>
+                                <span class="like" data-toggle="tooltip" title="like">
+											      <i class="fa fa-trash-o" aria-hidden="true" onclick="deletePost(${listPost[i].id})"></i>
+											      </span>
                               </li>
                             </ul>
                           </div>

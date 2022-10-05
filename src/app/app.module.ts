@@ -13,11 +13,16 @@ import {AngularFireAuth, AngularFireAuthModule} from "@angular/fire/compat/auth"
 import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../environments/environment";
 
+import { EditPasswordComponent } from './component/edit-password/edit-password.component';
+import {EditProfileComponent} from "./component/edit-profile/edit-profile.component";
+
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
-    NewsFeedComponent
+    NewsFeedComponent,
+    EditProfileComponent,
+    EditPasswordComponent
   ],
   imports: [
     BrowserModule,
