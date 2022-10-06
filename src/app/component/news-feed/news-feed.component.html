@@ -504,50 +504,50 @@
                         </figure>
                         <div class="friend-name">
                           <ins><a href="#" title="">{{post.users!.fullName}}</a></ins>
-                          <span>{{(post.createDate)| date:'hh:mm:ss'}}
-                            <span [ngSwitch]="post.permissionPost" style="font-size: larger">
-                            <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'"
-                               style="margin-left: 3px"></i>
-                            <i class="fa fa-users" aria-hidden="true" *ngSwitchCase="'friend'"
-                               style="margin-left: 3px"></i>
-                            <i class="fa fa-lock" aria-hidden="true" *ngSwitchCase="'private'"
-                               style="margin-left: 3px"></i>
-                          </span></span>
+                            <span>{{(post.createDate)| date:'hh:mm:ss'}}
+                              <span [ngSwitch]="post.permissionPost" style="font-size: larger">
+                              <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'"
+                                 style="margin-left: 3px"></i>
+                              <i class="fa fa-users" aria-hidden="true" *ngSwitchCase="'friend'"
+                                 style="margin-left: 3px"></i>
+                              <i class="fa fa-lock" aria-hidden="true" *ngSwitchCase="'private'"
+                                 style="margin-left: 3px"></i>
+                            </span></span>
                         </div>
-                        <div class="post-meta">
-                          <div class="description">
-                            <p style="color:#000;">{{post.content}}</p>
+                          <div class="post-meta">
+                            <div class="description">
+                              <p style="color:#000;">{{post.content}}</p>
+                            </div>
+                            <img src="{{post.imageName}}" alt="" *ngIf="post.imageName != ''">
+                            <div class="we-video-info">
+                              <ul>
+                                <li>
+                                <span class="comment" data-toggle="tooltip" title="Comments">
+                                  <i class="fa fa-comments-o"></i>
+                                  <ins>{{post.commentCount}}</ins>
+                                </span>
+                                </li>
+                                <li>
+                                <span class="like" data-toggle="tooltip" title="like">
+                                  <i class="ti-heart" *ngIf="!likeShow(post)" (click)="likePost(post.id)"></i>
+                                  <i class="fa fa-heart" *ngIf="likeShow(post)" (click)="disLikePost(post.id)"></i>
+                                  <ins>{{post.likeCount}}</ins>
+                                </span>
+                                </li>
+                                <li *ngIf="post.users!.id == idUserPresent">
+                                  <span class="like" data-toggle="tooltip" title="update">
+                                  <i class="fa fa-pencil-square-o" aria-hidden="true" (click)="updatePostForm(post.id)"
+                                     data-toggle="modal" data-target="#myModal"></i>
+                                  </span>
+                                </li>
+                                <li *ngIf="post.users!.id == idUserPresent">
+                                  <span class="like" data-toggle="tooltip" title="delete">
+                                  <i class="fa fa-trash-o" aria-hidden="true" (click)="deletePost(post.id)"></i>
+                                  </span>
+                                </li>
+                              </ul>
+                            </div>
                           </div>
-                          <img src="{{post.imageName}}" alt="" *ngIf="post.imageName != ''">
-                          <div class="we-video-info">
-                            <ul>
-                              <li>
-															<span class="comment" data-toggle="tooltip" title="Comments">
-																<i class="fa fa-comments-o"></i>
-																<ins>{{post.commentCount}}</ins>
-															</span>
-                              </li>
-                              <li>
-															<span class="like" data-toggle="tooltip" title="like">
-																<i class="ti-heart" *ngIf="!likeShow(post)" (click)="likePost(post.id)"></i>
-                                <i class="fa fa-heart" *ngIf="likeShow(post)" (click)="disLikePost(post.id)"></i>
-																<ins>{{post.likeCount}}</ins>
-															</span>
-                              </li>
-                              <li *ngIf="post.users!.id == idUserPresent">
-                                <span class="like" data-toggle="tooltip" title="update">
-												        <i class="fa fa-pencil-square-o" aria-hidden="true" (click)="updatePostForm(post.id)"
-                                   data-toggle="modal" data-target="#myModal"></i>
-											          </span>
-                              </li>
-                              <li *ngIf="post.users!.id == idUserPresent">
-                                <span class="like" data-toggle="tooltip" title="delete">
-											          <i class="fa fa-trash-o" aria-hidden="true" (click)="deletePost(post.id)"></i>
-											          </span>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
                       </div>
                       <div class="coment-area">
                         <ul class="we-comet">

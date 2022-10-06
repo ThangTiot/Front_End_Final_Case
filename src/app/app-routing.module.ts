@@ -9,10 +9,9 @@ const routes: Routes = [
   { path: 'newsFeed', component: NewsFeedComponent },
   { path: 'timeLine/:id', component: TimeLineComponent },
 ];
-
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {useHash: true} ),
   ],
   exports: [RouterModule]
 })
