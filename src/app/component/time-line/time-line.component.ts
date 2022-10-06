@@ -31,10 +31,6 @@ export class TimeLineComponent implements OnInit {
         this.posts = data1
         console.log(data1)
       })
-      // this.router.paramMap.subscribe(paramMap => {
-      //   this.id = paramMap.get('id');
-      //
-      //   })
     })
   }
 
