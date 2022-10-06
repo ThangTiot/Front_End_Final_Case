@@ -13,13 +13,15 @@ import {AngularFireAuth, AngularFireAuthModule} from "@angular/fire/compat/auth"
 import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../environments/environment";
 import { TimeLineComponent } from './component/time-line/time-line.component';
+import { AboutComponent } from './component/about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
     NewsFeedComponent,
-    TimeLineComponent
+    TimeLineComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
