@@ -30,4 +30,5 @@ export class UsersService {
   findAllUserNotFriend(id: number): Observable<User[]> {
     return this.httpClient.get<User[]>("http://localhost:8080/friends/findAllUserNotFriend/" + id)
   }
+
 }
