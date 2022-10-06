@@ -21,7 +21,7 @@ import { AboutComponent } from './component/about/about.component';
     UsersComponent,
     NewsFeedComponent,
     TimeLineComponent,
-    AboutComponent
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
