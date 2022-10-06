@@ -28,6 +28,7 @@ export class NewsFeedComponent implements OnInit {
   friendListConfirm!: User[];
   idUserPresent!: any;
   likePostList!: LikePost[];
+  allUserNotFriend!: User[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,6 +46,7 @@ export class NewsFeedComponent implements OnInit {
     this.getAllFriend();
     this.getAllPostOfNewFeed();
     this.getAllLikePost();
+    this.findAllUserNotFriend();
   }
 
   getUserPresent() {
@@ -237,5 +239,9 @@ export class NewsFeedComponent implements OnInit {
 
   deleteImage() {
     this.imageSrc = "";
+  }
+
+  findAllUserNotFriend(){
+    return this.userService.findAllUserNotFriend(this.idUserPresent).subscribe(data=>{this.allUserNotFriend = data})
   }
 }

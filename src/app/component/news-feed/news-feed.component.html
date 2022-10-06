@@ -358,39 +358,11 @@
                   </div><!-- Shortcuts -->
                   <div class="widget stick-widget">
                     <h4 class="widget-title">Who's following</h4>
-                    <ul class="followers">
+                    <ul class="followers" *ngFor="let a of allUserNotFriend">
                       <li>
-                        <figure><img src="assets/images/resources/friend-avatar2.jpg" alt=""></figure>
+                        <figure><img src="{{a.avatar}}" alt=""></figure>
                         <div class="friend-meta">
-                          <h4><a href="#" title="">Kelly Bill</a></h4>
-                          <a href="#" title="" class="underline">Add Friend</a>
-                        </div>
-                      </li>
-                      <li>
-                        <figure><img src="assets/images/resources/friend-avatar4.jpg" alt=""></figure>
-                        <div class="friend-meta">
-                          <h4><a href="#" title="">Issabel</a></h4>
-                          <a href="#" title="" class="underline">Add Friend</a>
-                        </div>
-                      </li>
-                      <li>
-                        <figure><img src="assets/images/resources/friend-avatar6.jpg" alt=""></figure>
-                        <div class="friend-meta">
-                          <h4><a href="#" title="">Andrew</a></h4>
-                          <a href="#" title="" class="underline">Add Friend</a>
-                        </div>
-                      </li>
-                      <li>
-                        <figure><img src="assets/images/resources/friend-avatar8.jpg" alt=""></figure>
-                        <div class="friend-meta">
-                          <h4><a href="#" title="">Sophia</a></h4>
-                          <a href="#" title="" class="underline">Add Friend</a>
-                        </div>
-                      </li>
-                      <li>
-                        <figure><img src="assets/images/resources/friend-avatar3.jpg" alt=""></figure>
-                        <div class="friend-meta">
-                          <h4><a href="#" title="">Allen</a></h4>
+                          <h4><a href="#" title="">{{a.fullName}}</a></h4>
                           <a href="#" title="" class="underline">Add Friend</a>
                         </div>
                       </li>
