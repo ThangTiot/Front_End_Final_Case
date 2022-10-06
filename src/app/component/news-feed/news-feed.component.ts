@@ -21,8 +21,7 @@ export class NewsFeedComponent implements OnInit {
   userPresent!: User;
   formCreatePost!: FormGroup;
   imageFile!: any;
-  imageSrc: string = "";
-  loadingImgPost: boolean = false;
+  imageSrc: any = "";
   disablePost: boolean = false;
   listPostOfNewFeed!: Post[];
   friendList!: User[];
@@ -36,7 +35,8 @@ export class NewsFeedComponent implements OnInit {
     private router: Router,
     private postService: PostsService,
     private userService: UsersService,
-    private likePostService: LikePostService) {}
+    private likePostService: LikePostService) {
+  }
 
   ngOnInit(): void {
     this.listPostOfNewFeed = [];
@@ -44,6 +44,7 @@ export class NewsFeedComponent implements OnInit {
     this.getUserPresent();
     this.getAllFriend();
     this.getAllPostOfNewFeed();
+    this.getAllLikePost();
   }
 
   getUserPresent() {
@@ -53,7 +54,9 @@ export class NewsFeedComponent implements OnInit {
       });
     }
     this.formCreatePost = this.formBuilder.group({
-      content: ["", Validators.required]
+      id: [""],
+      content: ["", Validators.required],
+      permissionPost: [""],
     })
   }
 
@@ -71,12 +74,11 @@ export class NewsFeedComponent implements OnInit {
   getAllPostOfNewFeed() {
     this.postService.findPostOfNewFeed(this.idUserPresent).subscribe(data => {
       this.listPostOfNewFeed = data.reverse();
-      console.log(data);
     });
   }
 
   getAllLikePost() {
-    this.likePostService.findAll().subscribe(data => {
+    this.likePostService.findAllByUser(this.idUserPresent).subscribe(data => {
       this.likePostList = data;
     });
   }
@@ -102,7 +104,6 @@ export class NewsFeedComponent implements OnInit {
           this.storage.upload(fileName, this.imageFile).snapshotChanges().pipe(
             finalize(() => (fileRef.getDownloadURL().subscribe(url => {
               this.imageSrc = url;
-              this.loadingImgPost = true;
               this.disablePost = false;
               Swal.close();
             })))
@@ -113,20 +114,31 @@ export class NewsFeedComponent implements OnInit {
   }
 
   createPost() {
+    let idPost = this.formCreatePost.value.id;
     let post = {
       content: this.formCreatePost.value.content,
-      imageName: this.imageSrc,
       // @ts-ignore
       permissionPost: document.getElementById("permissionPost").value,
-      users: this.userPresent,
+      imageName: this.imageSrc,
+      users: {
+        id: this.idUserPresent,
+      },
     }
-    this.postService.createPost(post).subscribe(() => {
-        this.loadingImgPost = false;
-        this.imageSrc = "";
+    if (idPost == "" || idPost == null) {
+      this.postService.createPost(post).subscribe(() => {
         this.formCreatePost.reset();
-        this.ngOnInit();
-      }
-    );
+        this.imageSrc = "";
+        this.getAllPostOfNewFeed();
+      });
+    } else {
+      this.postService.updatePost(idPost, post).subscribe(() => {
+        this.formCreatePost.reset();
+        this.imageSrc = "";
+        this.getAllPostOfNewFeed();
+        document.getElementById("postButton")!.innerText = "Post";
+        document.getElementById("postFormTitle")!.innerText = "Create Post";
+      });
+    }
   }
 
   logout() {
@@ -144,13 +156,86 @@ export class NewsFeedComponent implements OnInit {
       }
     })
   }
-  deletePost(id: number){
-    if (confirm("Do you want to remove this post")){
-      this.postService.deletePost(id).subscribe(() => {
-        alert("Delete success")
-      });
-    } else {
-      alert("Delete Fail")
+
+  likeShow(post: Post) {
+    for (let i = 0; i < this.likePostList.length; i++) {
+      if ((this.likePostList[i].post!.id == post.id) && (this.likePostList[i].users!.id == this.idUserPresent)) {
+        return true;
+      }
     }
+    return false;
+  }
+
+
+  likePost(idPost: any) {
+    let likePost = {
+      users: {
+        id: this.idUserPresent,
+      },
+      post: {
+        id: idPost,
+      }
+    }
+    this.likePostService.likePost(likePost).subscribe(() => {
+        this.getAllLikePost();
+        this.getAllPostOfNewFeed()
+      }
+    );
+  }
+
+  disLikePost(idPost: any) {
+    for (let i = 0; i < this.likePostList.length; i++) {
+      if ((this.likePostList[i].post!.id == idPost) && (this.likePostList[i].users!.id == this.idUserPresent)) {
+        this.likePostService.disLikePost(this.likePostList[i].id).subscribe(() => {
+            this.getAllLikePost();
+            this.getAllPostOfNewFeed()
+          }
+        );
+      }
+    }
+  }
+
+  updatePostForm(idPost: any) {
+    this.formCreatePost.reset();
+    this.imageSrc = "";
+    this.postService.findById(idPost).subscribe(data => {
+      this.formCreatePost.patchValue(data);
+      if (data.imageName != "") {
+        this.imageSrc = data.imageName;
+      }
+      document.getElementById("postButton")!.innerText = "Update";
+      document.getElementById("postFormTitle")!.innerText = "Update Post";
+      // @ts-ignore
+      document.getElementById("permissionPost").value = data.permissionPost;
+    });
+  }
+
+  deletePost(id: any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.postService.deletePost(id).subscribe(() =>
+          this.getAllPostOfNewFeed()
+        );
+      }
+    })
+  }
+
+  clearFormCreatePost() {
+    this.formCreatePost.reset();
+    this.imageSrc = "";
+    document.getElementById("postButton")!.innerText = "Post";
+    document.getElementById("postFormTitle")!.innerText = "Create Post";
+  }
+
+  deleteImage() {
+    this.imageSrc = "";
   }
 }

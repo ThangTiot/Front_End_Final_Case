@@ -29,7 +29,7 @@
         </li>
         <li><span>Time Line</span>
           <ul>
-            <li><a href="#" title="">timeline</a></li>
+            <li><a href="#" title="">time line</a></li>
             <li><a href="#" title="">timeline friends</a></li>
 
           </ul>
@@ -134,10 +134,8 @@
         <li>
           <a href="#" title="">timeline</a>
           <ul>
-            <li><a href="#" title="">timeline</a></li>
+            <li><a href="#" title="" routerLink="/timeLine/{{idUserPresent}}">Time Line</a></li>
             <li><a href="#" title="">timeline friends</a></li>
-
-
           </ul>
         </li>
         <li>
@@ -154,8 +152,7 @@
           <a href="#" title="">more pages</a>
           <ul>
             <li><a href="#" title="">404 error page</a></li>
-            <li><a href="#" title="">about</a></li>
-
+            <li><a title="" routerLink="/about/{{idUserPresent}}">About</a></li>
           </ul>
         </li>
       </ul>
@@ -420,41 +417,46 @@
                           <div class="modal-content" style="border-radius: 20px">
                             <!-- Modal Header -->
                             <div class="modal-header">
-                              <span style="margin-left: 170px"><h3>Create Post</h3></span>
-                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <span style="margin-left: 170px"><h3 id="postFormTitle">Create Post</h3></span>
+                              <button type="button" class="close" data-dismiss="modal" (click)="clearFormCreatePost()">
+                                &times;
+                              </button>
                             </div>
                             <!-- Modal body -->
                             <div class="modal-body">
-                              <div style="display: flex">
-                                <figure>
-                                  <img src="{{userPresent.avatar}}" alt=""
-                                       style="height: 60px; width: 60px; border-radius: 50%">
-                                </figure>
-                                <div class="friend-name">
-                                  <ins><a href="#" title="">{{userPresent.fullName}}</a></ins>
-                                  <select name="permissionPost" id="permissionPost">
-                                    <option value="public"><i class="fa fa-globe" aria-hidden="true"
-                                                              style="margin-right: 5px"></i>Public
-                                    </option>
-                                    <option value="friend"><i class="fa fa-users" aria-hidden="true"
-                                                              style="margin-right: 5px"></i>Friend
-                                    </option>
-                                    <option value="private"><i class="fa fa-lock" aria-hidden="true"
-                                                               style="margin-right: 5px"></i>Private
-                                    </option>
-                                  </select>
+                              <form method="post" [formGroup]="formCreatePost">
+                                <div style="display: flex">
+                                  <figure>
+                                    <img src="{{userPresent.avatar}}" alt=""
+                                         style="height: 60px; width: 60px; border-radius: 50%">
+                                  </figure>
+                                  <div class="friend-name" style="width: 390px">
+                                    <ins><a href="#" title="">{{userPresent.fullName}}</a></ins>
+                                    <select id="permissionPost" name="permissionPost">
+                                      <option value="public"><i class="fa fa-globe" aria-hidden="true"
+                                                                style="margin-right: 5px"></i>Public
+                                      </option>
+                                      <option value="friend"><i class="fa fa-users" aria-hidden="true"
+                                                                style="margin-right: 5px"></i>Friend
+                                      </option>
+                                      <option value="private"><i class="fa fa-lock" aria-hidden="true"
+                                                                 style="margin-right: 5px"></i>Private
+                                      </option>
+                                    </select>
+                                  </div>
                                 </div>
-                              </div>
-                              <div class="new-postbox">
-                                <div class="newpst-input">
-                                  <form method="post" style="width: 420px" [formGroup]="formCreatePost">
+                                <input type="text" hidden formControlName="id">
+                                <div class="new-postbox">
+                                  <div class="newpst-input">
                                       <textarea rows="2" placeholder="What's on your mind?"
                                                 style="border: none" formControlName="content"></textarea>
-                                    <div *ngIf=loadingImgPost>
+                                    <div *ngIf="imageSrc != ''">
+                                      <i class="fa fa-times" aria-hidden="true" style="float: left"
+                                         (click)="deleteImage()"></i>
                                       <img [src]="imageSrc" alt=""
                                            style="width: 400px; margin-top: -10px; margin-left: 20px">
                                     </div>
-                                    <div class="attachments" style="border: none">
+                                    <div class="attachments" style="border: none; width: 430px">
                                       <ul>
                                         <li>
                                           <i class="fa fa-location-arrow" aria-hidden="true"></i>
@@ -476,15 +478,15 @@
                                         </li>
                                       </ul>
                                     </div>
-                                    <div class="modal-footer" style="border: none">
-                                      <button type="submit" class="btn btn-danger" data-dismiss="modal"
-                                              style="width: 70px; margin-right: -15px" (click)="createPost()"
+                                    <div class="modal-footer" style="border: none; width: 420px">
+                                      <button type="submit" id="postButton" class="btn btn-danger" data-dismiss="modal"
+                                              style="margin-right: -15px" (click)="createPost()"
                                               [disabled]="disablePost || formCreatePost.invalid">Post
                                       </button>
                                     </div>
-                                  </form>
-                                </div>
-                              </div><!-- add post new box -->
+                                  </div>
+                                </div><!-- add post new box -->
+                              </form>
                             </div>
                           </div>
                         </div>
@@ -502,16 +504,19 @@
                         </figure>
                         <div class="friend-name">
                           <ins><a href="#" title="">{{post.users!.fullName}}</a></ins>
-                          <span>{{post.createDate | date:'dd/MM hh:mm'}}
-                          <span [ngSwitch]="post.permissionPost">
-                            <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'" style="margin-left: 3px"></i>
-                            <i class="fa fa-users" aria-hidden="true" *ngSwitchCase="'friend'" style="margin-left: 3px"></i>
-                            <i class="fa fa-lock" aria-hidden="true" *ngSwitchCase="'private'" style="margin-left: 3px"></i>
+                          <span>{{(post.createDate)| date:'hh:mm:ss'}}
+                            <span [ngSwitch]="post.permissionPost" style="font-size: larger">
+                            <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'"
+                               style="margin-left: 3px"></i>
+                            <i class="fa fa-users" aria-hidden="true" *ngSwitchCase="'friend'"
+                               style="margin-left: 3px"></i>
+                            <i class="fa fa-lock" aria-hidden="true" *ngSwitchCase="'private'"
+                               style="margin-left: 3px"></i>
                           </span></span>
                         </div>
                         <div class="post-meta">
                           <div class="description">
-                            <p style="color:#000;">{{post.content}}</p>
+                            <p style="color: gray; font-size: 16px">{{post.content}}</p>
                           </div>
                           <img src="{{post.imageName}}" alt="" *ngIf="post.imageName != ''">
                           <div class="we-video-info">
@@ -524,9 +529,21 @@
                               </li>
                               <li>
 															<span class="like" data-toggle="tooltip" title="like">
-																<i class="ti-heart"></i>
+																<i class="ti-heart" *ngIf="!likeShow(post)" (click)="likePost(post.id)"></i>
+                                <i class="fa fa-heart" *ngIf="likeShow(post)" (click)="disLikePost(post.id)"></i>
 																<ins>{{post.likeCount}}</ins>
 															</span>
+                              </li>
+                              <li *ngIf="post.users!.id == idUserPresent">
+                                <span class="like" data-toggle="tooltip" title="update">
+												        <i class="fa fa-pencil-square-o" aria-hidden="true"
+                                   data-toggle="modal" data-target="#myModal"></i>
+											          </span>
+                              </li>
+                              <li *ngIf="post.users!.id == idUserPresent">
+                                <span class="like" data-toggle="tooltip" title="delete">
+											          <i class="fa fa-trash-o" aria-hidden="true" (click)="deletePost(post.id)"></i>
+											          </span>
                               </li>
                             </ul>
                           </div>
@@ -534,78 +551,49 @@
                       </div>
                       <div class="coment-area">
                         <ul class="we-comet">
-                          <li>
-                            <div class="comet-avatar">
-                              <img src="assets/images/resources/comet-1.jpg" alt="">
-                            </div>
-                            <div class="we-comment">
-                              <div class="coment-head">
-                                <h5><a href="#" title="">Jason borne</a></h5>
-                                <span>1 year ago</span>
-                                <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
-                                <a class="we-reply" href="#" title="Reply"><i class="ti-heart"></i></a>
-                              </div>
-                              <p>we are working for the dance and sing songs. this car is very awesome for the
-                                youngster. please vote this car and like our post</p>
-                            </div>
-                            <ul>
-                              <li>
-                                <div class="comet-avatar">
-                                  <img src="assets/images/resources/comet-2.jpg" alt="">
-                                </div>
-                                <div class="we-comment">
-                                  <div class="coment-head">
-                                    <h5><a href="#" title="">alexendra dadrio</a></h5>
-                                    <span>1 month ago</span>
-                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
-                                  </div>
-                                  <p>yes, really very awesome car i see the features of this car in the official website
-                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>
-                                </div>
-                              </li>
-                              <li>
-                                <div class="comet-avatar">
-                                  <img src="assets/images/resources/comet-3.jpg" alt="">
-                                </div>
-                                <div class="we-comment">
-                                  <div class="coment-head">
-                                    <h5><a href="#" title="">Olivia</a></h5>
-                                    <span>16 days ago</span>
-                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
-                                  </div>
-                                  <p>i like lexus cars, lexus cars are most beautiful with the awesome features, but
-                                    this car is really outstanding than lexus</p>
-                                </div>
-                              </li>
-                            </ul>
-                          </li>
-                          <li>
-                            <div class="comet-avatar">
-                              <img src="assets/images/resources/comet-1.jpg" alt="">
-                            </div>
-                            <div class="we-comment">
-                              <div class="coment-head">
-                                <h5><a href="#" title="">Donald Trump</a></h5>
-                                <span>1 week ago</span>
-                                <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
-                              </div>
-                              <p>we are working for the dance and sing songs. this video is very awesome for the
-                                youngster. please vote this video and like our channel
-                                <i class="em em-smiley"></i>
-                              </p>
-                            </div>
-                          </li>
-                          <li>
-                            <a href="#" title="" class="showmore underline">more comments</a>
-                          </li>
+                          <!--                          <li>-->
+                          <!--                            <div class="comet-avatar">-->
+                          <!--                              <img src="assets/images/resources/comet-1.jpg" alt="">-->
+                          <!--                            </div>-->
+                          <!--                            <div class="we-comment">-->
+                          <!--                              <div class="coment-head">-->
+                          <!--                                <h5><a href="#" title="">Jason borne</a></h5>-->
+                          <!--                                <span>1 year ago</span>-->
+                          <!--                                <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>-->
+                          <!--                                <a class="we-reply" href="#" title="Reply"><i class="ti-heart"></i></a>-->
+                          <!--                              </div>-->
+                          <!--                              <p>we are working for the dance and sing songs. this car is very awesome for the-->
+                          <!--                                youngster. please vote this car and like our post</p>-->
+                          <!--                            </div>-->
+                          <!--                            <ul>-->
+                          <!--                              <li>-->
+                          <!--                                <div class="comet-avatar">-->
+                          <!--                                  <img src="assets/images/resources/comet-2.jpg" alt="">-->
+                          <!--                                </div>-->
+                          <!--                                <div class="we-comment">-->
+                          <!--                                  <div class="coment-head">-->
+                          <!--                                    <h5><a href="#" title="">alexendra dadrio</a></h5>-->
+                          <!--                                    <span>1 month ago</span>-->
+                          <!--                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>-->
+                          <!--                                  </div>-->
+                          <!--                                  <p>yes, really very awesome car i see the features of this car in the official website-->
+                          <!--                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>-->
+                          <!--                                </div>-->
+                          <!--                              </li>-->
+                          <!--                            </ul>-->
+                          <!--                          </li>-->
+
+                          <!--                          <li>-->
+                          <!--                            <a href="#" title="" class="showmore underline">more comments</a>-->
+                          <!--                          </li>-->
                           <li class="post-comment">
                             <div class="comet-avatar">
-                              <img src="assets/images/resources/comet-1.jpg" alt="">
+                              <img [src]="userPresent.avatar" alt="">
                             </div>
                             <div class="post-comt-box">
                               <form method="post">
                                 <textarea placeholder="Post your comment"></textarea>
-                                <button type="submit" style="background: #088dcd; position: relative">Post</button>
+                                <!--                                <button type="submit" style="background: #088dcd; position: relative">Post</button>-->
                               </form>
                             </div>
                           </li>
@@ -621,16 +609,14 @@
                   <div class="widget friend-list stick-widget">
                     <h4 class="widget-title">Friends</h4>
                     <div id="searchDir"></div>
-                    <ul id="people-list" class="friendz-list">
+                    <ul id="people-list" class="friendz-list" *ngFor="let f of friendList">
                       <li>
                         <figure>
-                          <img src="assets/images/resources/friend-avatar.jpg" alt="">
+                          <img src="{{f.avatar}}" alt="">
                           <span class="status f-online"></span>
                         </figure>
                         <div class="friendz-meta">
-                          <a href="#">bucky barnes</a>
-                          <i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__"
-                                data-cfemail="f2859b9c869780819d9e969780b2959f939b9edc919d9f">[email&#160;protected]</a></i>
+                          <a href="#">{{f.fullName}}</a>
                         </div>
                       </li>
                     </ul>
