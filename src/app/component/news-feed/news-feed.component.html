@@ -363,7 +363,7 @@
                         <figure><img src="{{a.avatar}}" alt=""></figure>
                         <div class="friend-meta">
                           <h4><a href="#" title="">{{a.fullName}}</a></h4>
-                          <a href="#" title="" class="underline">Add Friend</a>
+                          <a (click)="addFriend(a.id)" title="" class="underline">Add Friend</a>
                         </div>
                       </li>
                     </ul>
