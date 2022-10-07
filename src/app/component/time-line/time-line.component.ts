@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {UsersService} from "../../service/users.service";
+import {TimelineService} from "../../service/timeline.service";
+import {ActivatedRoute} from "@angular/router";
+import {User} from "../../model/User";
+import {Post} from "../../model/Post";
 
 @Component({
   selector: 'app-time-line',
@@ -8,14 +12,34 @@ import {UsersService} from "../../service/users.service";
 })
 export class TimeLineComponent implements OnInit {
 
+  id: any;
+  timeline: any;
+  user!: User;
+  posts! : Post[];
   idUserPresent!: any;
-  constructor(
-    private userService: UsersService) {
-
-  }
+  mutualFriend!: User[];
+  constructor(private timelineService: TimelineService,
+              private userService: UsersService,
+              private routerActive: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.idUserPresent = sessionStorage.getItem("userPresentId");
+    this.routerActive.paramMap.subscribe(paramMap => {
+      this.id = paramMap.get('id');
+      this.userService.findById(this.id).subscribe((data)=>{
+        this.user = data
+        console.log(data)
+        console.log(this.id)
+      })
+      this.timelineService.findAllById(this.id).subscribe((data1)=>{
+        this.posts = data1
+        console.log(data1)
+      })
+    })
+  }
+
+  findAllMutualFriend(){
+
   }
 
 }

@@ -476,19 +476,16 @@
                         </figure>
                         <div class="friend-name">
                           <ins><a href="#" title="">{{post.users!.fullName}}</a></ins>
-                          <span>{{(post.createDate)| date:'hh:mm:ss'}}
-                            <span [ngSwitch]="post.permissionPost" style="font-size: larger">
-                            <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'"
-                               style="margin-left: 3px"></i>
-                            <i class="fa fa-users" aria-hidden="true" *ngSwitchCase="'friend'"
-                               style="margin-left: 3px"></i>
-                            <i class="fa fa-lock" aria-hidden="true" *ngSwitchCase="'private'"
-                               style="margin-left: 3px"></i>
+                          <span style="font-size: 12px; margin-top: -3px">{{(post.createDate)| date:'hh:mm:ss'}}
+                            <span [ngSwitch]="post.permissionPost" style="font-size: medium; margin-left: 3px">
+                            <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'"></i>
+                            <i class="fa fa-users" aria-hidden="true" *ngSwitchCase="'friend'"></i>
+                            <i class="fa fa-lock" aria-hidden="true" *ngSwitchCase="'private'"></i>
                           </span></span>
                         </div>
                         <div class="post-meta">
                           <div class="description">
-                            <p style="color: gray; font-size: 16px">{{post.content}}</p>
+                            <p style="color: gray; font-size: 18px">{{post.content}}</p>
                           </div>
                           <img src="{{post.imageName}}" alt="" *ngIf="post.imageName != ''">
                           <div class="we-video-info">
@@ -581,14 +578,16 @@
                   <div class="widget friend-list stick-widget">
                     <h4 class="widget-title">Friends</h4>
                     <div id="searchDir"></div>
-                    <ul id="people-list" class="friendz-list" *ngFor="let f of friendList">
+                    <ul id="people-list" class="friendz-list">
                       <li>
                         <figure>
-                          <img src="{{f.avatar}}" alt="">
+                          <img src="assets/images/resources/friend-avatar.jpg" alt="">
                           <span class="status f-online"></span>
                         </figure>
                         <div class="friendz-meta">
-                          <a href="#">{{f.fullName}}</a>
+                          <a href="#">bucky barnes</a>
+                          <i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__"
+                                data-cfemail="f2859b9c869780819d9e969780b2959f939b9edc919d9f">[email&#160;protected]</a></i>
                         </div>
                       </li>
                     </ul>
