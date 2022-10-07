@@ -238,4 +238,8 @@ export class NewsFeedComponent implements OnInit {
   deleteImage() {
     this.imageSrc = "";
   }
+
+  addFriend(idUser: any) {
+
+  }
 }

@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {UsersService} from "../../service/users.service";
+import {TimelineService} from "../../service/timeline.service";
+import {ActivatedRoute} from "@angular/router";
+import {User} from "../../model/User";
+import {Post} from "../../model/Post";
 
 @Component({
   selector: 'app-time-line',
@@ -7,9 +12,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimeLineComponent implements OnInit {
 
-  constructor() { }
+  id: any;
+  timeline: any;
+  user!: User;
+  posts! : Post[];
+  constructor(private timelineService: TimelineService,
+              private userService: UsersService,
+              private routerActive: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.routerActive.paramMap.subscribe(paramMap => {
+      this.id = paramMap.get('id');
+      this.userService.findById(this.id).subscribe((data)=>{
+        this.user = data
+        console.log(data)
+        console.log(this.id)
+      })
+      this.timelineService.findAllById(this.id).subscribe((data1)=>{
+        this.posts = data1
+        console.log(data1)
+      })
+    })
   }
 
 }

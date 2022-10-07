@@ -14,7 +14,6 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../environments/environment";
 import { TimeLineComponent } from './component/time-line/time-line.component';
 import { AboutComponent } from './component/about/about.component';
-
 @NgModule({
   declarations: [
     AppComponent,
