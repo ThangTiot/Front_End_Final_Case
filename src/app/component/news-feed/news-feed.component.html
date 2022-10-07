@@ -390,9 +390,7 @@
                             <!-- Modal Header -->
                             <div class="modal-header">
                               <span style="margin-left: 170px"><h3 id="postFormTitle">Create Post</h3></span>
-                              <button type="button" class="close" data-dismiss="modal" (click)="clearFormCreatePost()">
-                                &times;
-                              </button>
+                              <button type="button" class="close" data-dismiss="modal" (click)="clearFormCreatePost()">&times;</button>
                             </div>
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -418,13 +416,12 @@
                                   </div>
                                 </div>
                                 <input type="text" hidden formControlName="id">
-                                <div class="new-postbox">
-                                  <div class="newpst-input">
+                              <div class="new-postbox">
+                                <div class="newpst-input">
                                       <textarea rows="2" placeholder="What's on your mind?"
                                                 style="border: none" formControlName="content"></textarea>
                                     <div *ngIf="imageSrc != ''">
-                                      <i class="fa fa-times" aria-hidden="true" style="float: left"
-                                         (click)="deleteImage()"></i>
+                                      <i class="fa fa-times" aria-hidden="true" style="float: left" (click)="deleteImage()"></i>
                                       <img [src]="imageSrc" alt=""
                                            style="width: 400px; margin-top: -10px; margin-left: 20px">
                                     </div>
@@ -505,7 +502,7 @@
                               </li>
                               <li *ngIf="post.users!.id == idUserPresent">
                                 <span class="like" data-toggle="tooltip" title="update">
-												        <i class="fa fa-pencil-square-o" aria-hidden="true"
+												        <i class="fa fa-pencil-square-o" aria-hidden="true" (click)="updatePostForm(post.id)"
                                    data-toggle="modal" data-target="#myModal"></i>
 											          </span>
                               </li>
@@ -562,7 +559,7 @@
                             <div class="post-comt-box">
                               <form method="post">
                                 <textarea placeholder="Post your comment"></textarea>
-                                <!--                                <button type="submit" style="background: #088dcd; position: relative">Post</button>-->
+<!--                                <button type="submit" style="background: #088dcd; position: relative">Post</button>-->
                               </form>
                             </div>
                           </li>
