@@ -244,4 +244,6 @@ export class NewsFeedComponent implements OnInit {
   findAllUserNotFriend(){
     return this.userService.findAllUserNotFriend(this.idUserPresent).subscribe(data=>{this.allUserNotFriend = data})
   }
+
+
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {UsersService} from "../../service/users.service";
 
 @Component({
   selector: 'app-time-line',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimeLineComponent implements OnInit {
 
-  constructor() { }
+  idUserPresent!: any;
+  constructor(
+    private userService: UsersService) {
+
+  }
 
   ngOnInit(): void {
+    this.idUserPresent = sessionStorage.getItem("userPresentId");
   }
 
 }
