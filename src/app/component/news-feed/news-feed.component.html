@@ -575,16 +575,14 @@
                   <div class="widget friend-list stick-widget">
                     <h4 class="widget-title">Friends</h4>
                     <div id="searchDir"></div>
-                    <ul id="people-list" class="friendz-list">
+                    <ul id="people-list" class="friendz-list" *ngFor="let f of friendList">
                       <li>
                         <figure>
-                          <img src="assets/images/resources/friend-avatar.jpg" alt="">
+                          <img src="{{f.avatar}}" alt="">
                           <span class="status f-online"></span>
                         </figure>
                         <div class="friendz-meta">
-                          <a href="#">bucky barnes</a>
-                          <i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__"
-                                data-cfemail="f2859b9c869780819d9e969780b2959f939b9edc919d9f">[email&#160;protected]</a></i>
+                          <a href="#">{{f.fullName}}</a>
                         </div>
                       </li>
                     </ul>
