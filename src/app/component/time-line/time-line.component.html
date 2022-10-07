@@ -7,7 +7,7 @@
 				<a class="" href="#menu"><i class="fa fa-align-justify"></i></a>
 			</span>
       <span class="mh-text">
-				<a routerLink="newsFeed" href="../../templates/templates/newsfeed.html" title=""><img src="../../../assets/images/logo2.png" alt=""></a>
+				<a href="../../templates/templates/newsfeed.html" title=""><img src="../../../assets/images/logo2.png" alt=""></a>
 			</span>
       <span class="mh-btns-right">
 				<a class="fa fa-sliders" href="#shoppingbag"></a>
@@ -452,7 +452,6 @@
               <ul>
                 <li class="admin-name">
                   <h5>{{user.fullName}}</h5>
-                  <span>Group Admin</span>
                 </li>
                 <li>
                   <a class="active" href="time-line.html" title="" data-ripple="">time line</a>
@@ -680,16 +679,28 @@
                           <div class="we-video-info">
                             <ul>
                               <li>
-																<span class="comment" data-toggle="tooltip" title="Comments">
-																	<i class="fa fa-comments-o"></i>
-																	<ins></ins>
-																</span>
+                                <span class="comment" data-toggle="tooltip" title="Comments">
+                                  <i class="fa fa-comments-o"></i>
+                                  <ins>{{p.commentCount}}</ins>
+                                </span>
                               </li>
                               <li>
-																<span class="like" data-toggle="tooltip" title="like">
-																	<i class="ti-heart"></i>
-																	<ins>2.2k</ins>
-																</span>
+                                <span class="like" data-toggle="tooltip" title="like">
+                                  <i class="ti-heart" *ngIf="!likeShow(p)" (click)="likePost(p.id)"></i>
+                                  <i class="fa fa-heart" *ngIf="likeShow(p)" (click)="disLikePost(p.id)"></i>
+                                  <ins>{{p.likeCount}}</ins>
+                                </span>
+                              </li>
+                              <li *ngIf="p.users!.id == idUserPresent">
+                                  <span class="like" data-toggle="tooltip" title="update">
+                                  <i class="fa fa-pencil-square-o" aria-hidden="true" (click)="updatePostForm(p.id)"
+                                     data-toggle="modal" data-target="#myModal"></i>
+                                  </span>
+                              </li>
+                              <li *ngIf="p.users!.id == idUserPresent">
+                                  <span class="like" data-toggle="tooltip" title="delete">
+                                  <i class="fa fa-trash-o" aria-hidden="true" (click)="deletePost(p.id)"></i>
+                                  </span>
                               </li>
                             </ul>
                           </div>

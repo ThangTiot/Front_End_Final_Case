@@ -395,26 +395,26 @@
                             <!-- Modal body -->
                             <div class="modal-body">
                               <form method="post" [formGroup]="formCreatePost">
-                                <div style="display: flex">
-                                  <figure>
-                                    <img src="{{userPresent.avatar}}" alt=""
-                                         style="height: 60px; width: 60px; border-radius: 50%">
-                                  </figure>
-                                  <div class="friend-name" style="width: 390px">
-                                    <ins><a href="#" title="">{{userPresent.fullName}}</a></ins>
-                                    <select id="permissionPost" name="permissionPost">
-                                      <option value="public"><i class="fa fa-globe" aria-hidden="true"
-                                                                style="margin-right: 5px"></i>Public
-                                      </option>
-                                      <option value="friend"><i class="fa fa-users" aria-hidden="true"
-                                                                style="margin-right: 5px"></i>Friend
-                                      </option>
-                                      <option value="private"><i class="fa fa-lock" aria-hidden="true"
-                                                                 style="margin-right: 5px"></i>Private
-                                      </option>
-                                    </select>
-                                  </div>
+                              <div style="display: flex">
+                                <figure>
+                                  <img src="{{userPresent.avatar}}" alt=""
+                                       style="height: 60px; width: 60px; border-radius: 50%">
+                                </figure>
+                                <div class="friend-name" style="width: 390px">
+                                  <ins><a href="#" title="">{{userPresent.fullName}}</a></ins>
+                                  <select id="permissionPost" name="permissionPost">
+                                    <option value="public"><i class="fa fa-globe" aria-hidden="true"
+                                                              style="margin-right: 5px"></i>Public
+                                    </option>
+                                    <option value="friend"><i class="fa fa-users" aria-hidden="true"
+                                                              style="margin-right: 5px"></i>Friend
+                                    </option>
+                                    <option value="private"><i class="fa fa-lock" aria-hidden="true"
+                                                               style="margin-right: 5px"></i>Private
+                                    </option>
+                                  </select>
                                 </div>
+                              </div>
                                 <input type="text" hidden formControlName="id">
                               <div class="new-postbox">
                                 <div class="newpst-input">
@@ -453,8 +453,8 @@
                                               [disabled]="disablePost || formCreatePost.invalid">Post
                                       </button>
                                     </div>
-                                  </div>
-                                </div><!-- add post new box -->
+                                </div>
+                              </div><!-- add post new box -->
                               </form>
                             </div>
                           </div>
@@ -482,7 +482,7 @@
                         </div>
                         <div class="post-meta">
                           <div class="description">
-                            <p style="color: gray; font-size: 18px">{{post.content}}</p>
+                            <p style="color:#000;">{{post.content}}</p>
                           </div>
                           <img src="{{post.imageName}}" alt="" *ngIf="post.imageName != ''">
                           <div class="we-video-info">
@@ -517,41 +517,41 @@
                       </div>
                       <div class="coment-area">
                         <ul class="we-comet">
-                          <!--                          <li>-->
-                          <!--                            <div class="comet-avatar">-->
-                          <!--                              <img src="assets/images/resources/comet-1.jpg" alt="">-->
-                          <!--                            </div>-->
-                          <!--                            <div class="we-comment">-->
-                          <!--                              <div class="coment-head">-->
-                          <!--                                <h5><a href="#" title="">Jason borne</a></h5>-->
-                          <!--                                <span>1 year ago</span>-->
-                          <!--                                <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>-->
-                          <!--                                <a class="we-reply" href="#" title="Reply"><i class="ti-heart"></i></a>-->
-                          <!--                              </div>-->
-                          <!--                              <p>we are working for the dance and sing songs. this car is very awesome for the-->
-                          <!--                                youngster. please vote this car and like our post</p>-->
-                          <!--                            </div>-->
-                          <!--                            <ul>-->
-                          <!--                              <li>-->
-                          <!--                                <div class="comet-avatar">-->
-                          <!--                                  <img src="assets/images/resources/comet-2.jpg" alt="">-->
-                          <!--                                </div>-->
-                          <!--                                <div class="we-comment">-->
-                          <!--                                  <div class="coment-head">-->
-                          <!--                                    <h5><a href="#" title="">alexendra dadrio</a></h5>-->
-                          <!--                                    <span>1 month ago</span>-->
-                          <!--                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>-->
-                          <!--                                  </div>-->
-                          <!--                                  <p>yes, really very awesome car i see the features of this car in the official website-->
-                          <!--                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>-->
-                          <!--                                </div>-->
-                          <!--                              </li>-->
-                          <!--                            </ul>-->
-                          <!--                          </li>-->
+<!--                          <li>-->
+<!--                            <div class="comet-avatar">-->
+<!--                              <img src="assets/images/resources/comet-1.jpg" alt="">-->
+<!--                            </div>-->
+<!--                            <div class="we-comment">-->
+<!--                              <div class="coment-head">-->
+<!--                                <h5><a href="#" title="">Jason borne</a></h5>-->
+<!--                                <span>1 year ago</span>-->
+<!--                                <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>-->
+<!--                                <a class="we-reply" href="#" title="Reply"><i class="ti-heart"></i></a>-->
+<!--                              </div>-->
+<!--                              <p>we are working for the dance and sing songs. this car is very awesome for the-->
+<!--                                youngster. please vote this car and like our post</p>-->
+<!--                            </div>-->
+<!--                            <ul>-->
+<!--                              <li>-->
+<!--                                <div class="comet-avatar">-->
+<!--                                  <img src="assets/images/resources/comet-2.jpg" alt="">-->
+<!--                                </div>-->
+<!--                                <div class="we-comment">-->
+<!--                                  <div class="coment-head">-->
+<!--                                    <h5><a href="#" title="">alexendra dadrio</a></h5>-->
+<!--                                    <span>1 month ago</span>-->
+<!--                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>-->
+<!--                                  </div>-->
+<!--                                  <p>yes, really very awesome car i see the features of this car in the official website-->
+<!--                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>-->
+<!--                                </div>-->
+<!--                              </li>-->
+<!--                            </ul>-->
+<!--                          </li>-->
 
-                          <!--                          <li>-->
-                          <!--                            <a href="#" title="" class="showmore underline">more comments</a>-->
-                          <!--                          </li>-->
+<!--                          <li>-->
+<!--                            <a href="#" title="" class="showmore underline">more comments</a>-->
+<!--                          </li>-->
                           <li class="post-comment">
                             <div class="comet-avatar">
                               <img [src]="userPresent.avatar" alt="">
