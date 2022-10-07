@@ -11,7 +11,6 @@ const routes: Routes = [
   { path: 'timeLine/:id', component: TimeLineComponent },
   { path: 'about/:id', component: AboutComponent },
 ];
-
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {useHash: true} ),
