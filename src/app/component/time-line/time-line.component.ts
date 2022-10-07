@@ -16,11 +16,14 @@ export class TimeLineComponent implements OnInit {
   timeline: any;
   user!: User;
   posts! : Post[];
+  idUserPresent!: any;
+  mutualFriend!: User[];
   constructor(private timelineService: TimelineService,
               private userService: UsersService,
               private routerActive: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.idUserPresent = sessionStorage.getItem("userPresentId");
     this.routerActive.paramMap.subscribe(paramMap => {
       this.id = paramMap.get('id');
       this.userService.findById(this.id).subscribe((data)=>{
@@ -33,6 +36,10 @@ export class TimeLineComponent implements OnInit {
         console.log(data1)
       })
     })
+  }
+
+  findAllMutualFriend(){
+
   }
 
 }

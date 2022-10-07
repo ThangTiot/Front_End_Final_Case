@@ -358,39 +358,11 @@
                   </div><!-- Shortcuts -->
                   <div class="widget stick-widget">
                     <h4 class="widget-title">Who's following</h4>
-                    <ul class="followers">
+                    <ul class="followers" *ngFor="let a of allUserNotFriend">
                       <li>
-                        <figure><img src="assets/images/resources/friend-avatar2.jpg" alt=""></figure>
+                        <figure><img src="{{a.avatar}}" alt=""></figure>
                         <div class="friend-meta">
-                          <h4><a href="#" title="">Kelly Bill</a></h4>
-                          <a href="#" title="" class="underline">Add Friend</a>
-                        </div>
-                      </li>
-                      <li>
-                        <figure><img src="assets/images/resources/friend-avatar4.jpg" alt=""></figure>
-                        <div class="friend-meta">
-                          <h4><a href="#" title="">Issabel</a></h4>
-                          <a href="#" title="" class="underline">Add Friend</a>
-                        </div>
-                      </li>
-                      <li>
-                        <figure><img src="assets/images/resources/friend-avatar6.jpg" alt=""></figure>
-                        <div class="friend-meta">
-                          <h4><a href="#" title="">Andrew</a></h4>
-                          <a href="#" title="" class="underline">Add Friend</a>
-                        </div>
-                      </li>
-                      <li>
-                        <figure><img src="assets/images/resources/friend-avatar8.jpg" alt=""></figure>
-                        <div class="friend-meta">
-                          <h4><a href="#" title="">Sophia</a></h4>
-                          <a href="#" title="" class="underline">Add Friend</a>
-                        </div>
-                      </li>
-                      <li>
-                        <figure><img src="assets/images/resources/friend-avatar3.jpg" alt=""></figure>
-                        <div class="friend-meta">
-                          <h4><a href="#" title="">Allen</a></h4>
+                          <h4><a href="#" title="">{{a.fullName}}</a></h4>
                           <a href="#" title="" class="underline">Add Friend</a>
                         </div>
                       </li>
@@ -418,9 +390,7 @@
                             <!-- Modal Header -->
                             <div class="modal-header">
                               <span style="margin-left: 170px"><h3 id="postFormTitle">Create Post</h3></span>
-                              <button type="button" class="close" data-dismiss="modal" (click)="clearFormCreatePost()">
-                                &times;
-                              </button>
+                              <button type="button" class="close" data-dismiss="modal" (click)="clearFormCreatePost()">&times;</button>
                             </div>
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -446,13 +416,12 @@
                                   </div>
                                 </div>
                                 <input type="text" hidden formControlName="id">
-                                <div class="new-postbox">
-                                  <div class="newpst-input">
+                              <div class="new-postbox">
+                                <div class="newpst-input">
                                       <textarea rows="2" placeholder="What's on your mind?"
                                                 style="border: none" formControlName="content"></textarea>
                                     <div *ngIf="imageSrc != ''">
-                                      <i class="fa fa-times" aria-hidden="true" style="float: left"
-                                         (click)="deleteImage()"></i>
+                                      <i class="fa fa-times" aria-hidden="true" style="float: left" (click)="deleteImage()"></i>
                                       <img [src]="imageSrc" alt=""
                                            style="width: 400px; margin-top: -10px; margin-left: 20px">
                                     </div>
@@ -533,7 +502,7 @@
                               </li>
                               <li *ngIf="post.users!.id == idUserPresent">
                                 <span class="like" data-toggle="tooltip" title="update">
-												        <i class="fa fa-pencil-square-o" aria-hidden="true"
+												        <i class="fa fa-pencil-square-o" aria-hidden="true" (click)="updatePostForm(post.id)"
                                    data-toggle="modal" data-target="#myModal"></i>
 											          </span>
                               </li>
@@ -590,7 +559,7 @@
                             <div class="post-comt-box">
                               <form method="post">
                                 <textarea placeholder="Post your comment"></textarea>
-                                <!--                                <button type="submit" style="background: #088dcd; position: relative">Post</button>-->
+<!--                                <button type="submit" style="background: #088dcd; position: relative">Post</button>-->
                               </form>
                             </div>
                           </li>
@@ -606,16 +575,14 @@
                   <div class="widget friend-list stick-widget">
                     <h4 class="widget-title">Friends</h4>
                     <div id="searchDir"></div>
-                    <ul id="people-list" class="friendz-list">
+                    <ul id="people-list" class="friendz-list" *ngFor="let f of friendList">
                       <li>
                         <figure>
-                          <img src="assets/images/resources/friend-avatar.jpg" alt="">
+                          <img src="{{f.avatar}}" alt="">
                           <span class="status f-online"></span>
                         </figure>
                         <div class="friendz-meta">
-                          <a href="#">bucky barnes</a>
-                          <i><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__"
-                                data-cfemail="f2859b9c869780819d9e969780b2959f939b9edc919d9f">[email&#160;protected]</a></i>
+                          <a href="#">{{f.fullName}}</a>
                         </div>
                       </li>
                     </ul>
