@@ -10,6 +10,7 @@ import Swal from 'sweetalert2'
 import {Router} from "@angular/router";
 import {LikePost} from "../../model/LikePost";
 import {LikePostService} from "../../service/like-post.service";
+import {RelationshipService} from "../../service/relationship.service";
 
 
 @Component({
@@ -35,7 +36,9 @@ export class NewsFeedComponent implements OnInit {
     private router: Router,
     private postService: PostsService,
     private userService: UsersService,
-    private likePostService: LikePostService) {
+    private likePostService: LikePostService,
+    private relationshipService: RelationshipService
+  ) {
   }
 
   ngOnInit(): void {
@@ -240,6 +243,17 @@ export class NewsFeedComponent implements OnInit {
   }
 
   addFriend(idUser: any) {
-
+    let relationship = {
+      usersTo: {
+        id: this.idUserPresent,
+      },
+      usersFrom: {
+        id: idUser,
+      }
+    }
+    this.relationshipService.addFriend(relationship).subscribe(() => {
+      this.getAllPostOfNewFeed();
+      this.getAllFriend();
+    });
   }
 }
