@@ -191,7 +191,9 @@
 
   <div class="topbar stick">
     <div class="logo">
-      <a title="" href="../../templates/templates/newsfeed.html"><img src="../../../assets/images/logo.png" alt=""></a>
+      <a title="" routerLink="/newsFeed"><img src="assets/images/logo-vinfast.png" alt=""
+                                              style="width: 50px; height: 45px"><span
+        style="font-weight: bold; font-size: 35px; position: absolute; margin-top: 2px; margin-left: -5px">inbook</span></a>
     </div>
 
     <div class="top-area">
@@ -420,9 +422,17 @@
   <section>
     <div class="feature-photo">
       <figure><img src="../../../assets/images/resources/timeline-1.jpg" alt=""></figure>
-      <div class="add-btn">
-        <span>1205 followers</span>
-        <a href="#" title="" data-ripple="">Add Friend</a>
+      <div class="add-btn" [ngSwitch]="checkFriend()" *ngIf="id != idUserPresent" style="color: white">
+        <a *ngSwitchCase="'friend'" title="" data-ripple="" (click)="unfriend(id)" style="padding: 6px 10px">
+          <i class="fa fa-user-times" aria-hidden="true" style="margin-right: 5px;font-size: 20px"></i>Unfriend</a>
+        <a *ngSwitchCase="'confirm'" title="" data-ripple="" (click)="confirm(id)" style="margin-right: 15px; padding: 6px 10px">
+          <i class="fa fa-check" aria-hidden="true" style="margin-right: 5px;font-size: 18px"></i>Confirm</a>
+          <a *ngSwitchCase="'confirm'" title="" data-ripple="" (click)="deleteRequest()" style="padding: 6px 10px">
+            <i class="fa fa-times" aria-hidden="true" style="margin-right: 5px;font-size: 18px"></i>Delete</a>
+        <a *ngSwitchCase="'cancel request'" title="" data-ripple="" (click)="deleteRequest()" style="padding: 6px 10px">
+          <i class="fa fa-user-times" aria-hidden="true" style="margin-right: 5px;font-size: 20px"></i>Cancel Request</a>
+        <a *ngSwitchCase="'strange'" title="" data-ripple="" (click)="addFriend(id)" style="padding: 6px 10px">
+          <i class="fa fa-user-plus" aria-hidden="true" style="margin-right: 5px;font-size: 20px"></i>Add Friend</a>
       </div>
       <form class="edit-phto">
         <i class="fa fa-camera-retro"></i>
@@ -436,7 +446,7 @@
           <div class="col-lg-2 col-sm-3">
             <div class="user-avatar">
               <figure>
-                <img src="../../../assets/images/resources/user-avatar.jpg" alt="">
+                <img [src]="user.avatar" alt="">
                 <form class="edit-phto">
                   <i class="fa fa-camera-retro"></i>
                   <label class="fileContainer">

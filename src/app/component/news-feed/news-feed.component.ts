@@ -26,7 +26,8 @@ export class NewsFeedComponent implements OnInit {
   disablePost: boolean = false;
   listPostOfNewFeed!: Post[];
   friendList!: User[];
-  friendListConfirm!: User[];
+  friendListConfirmTo!: User[];
+  friendListConfirmFrom!: User[];
   idUserPresent!: any;
   likePostList!: LikePost[];
   allUserNotFriend!: User[];
@@ -70,8 +71,11 @@ export class NewsFeedComponent implements OnInit {
       this.userService.findAllFriend(this.idUserPresent).subscribe(listFriend => {
         this.friendList = listFriend;
       });
-      this.userService.findAllFriendConfirm(this.idUserPresent).subscribe(listFriendConfirm => {
-        this.friendListConfirm = listFriendConfirm;
+      this.userService.findAllFriendConfirmTo(this.idUserPresent).subscribe(listFriendConfirmTo => {
+        this.friendListConfirmTo = listFriendConfirmTo;
+      });
+      this.userService.findAllFriendConfirmFrom(this.idUserPresent).subscribe(listFriendConfirmFrom => {
+        this.friendListConfirmFrom = listFriendConfirmFrom;
       });
     }
   };
@@ -251,16 +255,21 @@ export class NewsFeedComponent implements OnInit {
 
   addFriend(idUser: any) {
     let relationship = {
-      usersTo: {
+      usersFrom: {
         id: this.idUserPresent,
       },
-      usersFrom: {
+      usersTo: {
         id: idUser,
       }
     }
     this.relationshipService.addFriend(relationship).subscribe(() => {
-      this.getAllPostOfNewFeed();
       this.getAllFriend();
+      this.findAllUserNotFriend()
     });
+  }
+
+  paste() {
+    // @ts-ignore
+    document.getElementById("link").value = "abcde";
   }
 }

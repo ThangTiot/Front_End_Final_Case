@@ -11,6 +11,7 @@ import {LikePostService} from "../../service/like-post.service";
 import Swal from "sweetalert2";
 import {finalize} from "rxjs";
 import {Post} from "../../model/Post";
+import {RelationshipService} from "../../service/relationship.service";
 
 @Component({
   selector: 'app-time-line',
@@ -29,7 +30,8 @@ export class TimeLineComponent implements OnInit {
   disablePost: boolean = false;
   listPostOfNewFeed!: Post[];
   friendList!: User[];
-  friendListConfirm!: User[];
+  friendListConfirmTo!: User[];
+  friendListConfirmFrom!: User[];
   idUserPresent!: any;
   likePostList!: LikePost[];
   constructor(private timelineService: TimelineService,
@@ -39,7 +41,9 @@ export class TimeLineComponent implements OnInit {
               private router: Router,
               private postService: PostsService,
               private userService: UsersService,
-              private likePostService: LikePostService) { }
+              private likePostService: LikePostService,
+              private relationshipService: RelationshipService
+  ) { }
 
   ngOnInit(): void {
     this.routerActive.paramMap.subscribe(paramMap => {
@@ -49,11 +53,9 @@ export class TimeLineComponent implements OnInit {
       })
       this.getAllPostOfUser()
     })
-    this.listPostOfNewFeed = [];
     this.idUserPresent = sessionStorage.getItem("userPresentId");
     this.getUserPresent();
     this.getAllFriend();
-    this.getAllPostOfNewFeed();
     this.getAllLikePost();
   }
   getAllPostOfUser(){
@@ -78,8 +80,11 @@ export class TimeLineComponent implements OnInit {
       this.userService.findAllFriend(this.idUserPresent).subscribe(listFriend => {
         this.friendList = listFriend;
       });
-      this.userService.findAllFriendConfirm(this.idUserPresent).subscribe(listFriendConfirm => {
-        this.friendListConfirm = listFriendConfirm;
+      this.userService.findAllFriendConfirmTo(this.idUserPresent).subscribe(listFriendConfirmTo => {
+        this.friendListConfirmTo = listFriendConfirmTo;
+      });
+      this.userService.findAllFriendConfirmFrom(this.idUserPresent).subscribe(listFriendConfirmFrom => {
+        this.friendListConfirmFrom = listFriendConfirmFrom;
       });
     }
   };
@@ -240,4 +245,73 @@ export class TimeLineComponent implements OnInit {
     this.imageSrc = "";
   }
 
+  checkFriend(): string {
+    for (let i = 0; i < this.friendList.length; i++) {
+      if (this.friendList[i].id == this.user.id) {
+        return "friend";
+      }
+    }
+    for (let i = 0; i < this.friendListConfirmTo.length; i++) {
+      if (this.friendListConfirmTo[i].id == this.user.id) {
+        return "cancel request";
+      }
+    }
+    for (let i = 0; i < this.friendListConfirmFrom.length; i++) {
+      if (this.friendListConfirmFrom[i].id == this.user.id) {
+        return "confirm";
+      }
+    }
+    return "strange";
+  }
+
+  addFriend(idUser: any) {
+    let relationship = {
+      usersFrom: {
+        id: this.idUserPresent,
+      },
+      usersTo: {
+        id: idUser,
+      }
+    }
+    this.relationshipService.addFriend(relationship).subscribe(() => {
+      this.checkFriend();
+      this.getAllPostOfUser();
+      this.getAllFriend();
+    });
+  }
+
+  unfriend(idUser: any) {
+    Swal.fire({
+      title: 'Unfriend ' + this.user.fullName,
+      text: "Are you sure you want to unfriend " + this.user.fullName + "?",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirm'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.relationshipService.unfriend(this.idUserPresent, idUser).subscribe(() => {
+          this.checkFriend();
+          this.getAllPostOfUser();
+          this.getAllFriend();
+        });
+      }
+    })
+  }
+
+  deleteRequest() {
+    this.relationshipService.unfriend(this.idUserPresent, this.id).subscribe(() => {
+      this.checkFriend();
+      this.getAllPostOfUser();
+      this.getAllFriend();
+    });
+  }
+
+  confirm(idUser: any) {
+    this.relationshipService.confirm(this.idUserPresent, idUser).subscribe(() => {
+      this.checkFriend();
+      this.getAllPostOfUser();
+      this.getAllFriend();
+    });
+  }
 }

@@ -116,7 +116,7 @@
 
   <div class="topbar stick">
     <div class="logo">
-      <a title="" routerLink="newsFeed"><img src="assets/images/logo-vinfast.png" alt=""
+      <a title="" routerLink="/newsFeed"><img src="assets/images/logo-vinfast.png" alt=""
                                              style="width: 50px; height: 45px"><span
         style="font-weight: bold; font-size: 35px; position: absolute; margin-top: 2px; margin-left: -5px">inbook</span></a>
     </div>
@@ -357,12 +357,12 @@
                     </ul>
                   </div><!-- Shortcuts -->
                   <div class="widget stick-widget">
-                    <h4 class="widget-title">Who's following</h4>
+                    <h4 class="widget-title">People You May Know</h4>
                     <ul class="followers" *ngFor="let a of allUserNotFriend">
                       <li>
                         <figure><img src="{{a.avatar}}" alt=""></figure>
                         <div class="friend-meta">
-                          <h4><a href="#" title="">{{a.fullName}}</a></h4>
+                          <h4 style="width: 150px"><a routerLink="/timeLine/{{a.id}}" title="">{{a.fullName}}</a></h4>
                           <a (click)="addFriend(a.id)" title="" class="underline">Add Friend</a>
                         </div>
                       </li>
@@ -472,7 +472,7 @@
                           <img [src]="post.users!.avatar" alt="">
                         </figure>
                         <div class="friend-name">
-                          <ins><a href="#" title="">{{post.users!.fullName}}</a></ins>
+                          <ins><a routerLink="/timeLine/{{post.users!.id}}" title="">{{post.users!.fullName}}</a></ins>
                           <span style="font-size: 12px; margin-top: -3px">{{(post.createDate)| date:'hh:mm:ss'}}
                             <span [ngSwitch]="post.permissionPost" style="font-size: medium; margin-left: 3px">
                             <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'"></i>
@@ -482,7 +482,7 @@
                         </div>
                         <div class="post-meta">
                           <div class="description">
-                            <p style="color:#000;">{{post.content}}</p>
+                            <p style="color:#7a7a7a;font-size: large">{{post.content}}</p>
                           </div>
                           <img src="{{post.imageName}}" alt="" *ngIf="post.imageName != ''">
                           <div class="we-video-info">
@@ -573,16 +573,16 @@
               <div class="col-lg-3">
                 <aside class="sidebar static">
                   <div class="widget friend-list stick-widget">
-                    <h4 class="widget-title">Friends</h4>
+                    <h4 class="widget-title" style="margin-bottom: 30px">Friends</h4>
                     <div id="searchDir"></div>
-                    <ul id="people-list" class="friendz-list" *ngFor="let f of friendList">
-                      <li>
+                    <ul id="people-list" class="friendz-list">
+                      <li  *ngFor="let f of friendList">
                         <figure>
                           <img src="{{f.avatar}}" alt="">
                           <span class="status f-online"></span>
                         </figure>
-                        <div class="friendz-meta">
-                          <a href="#">{{f.fullName}}</a>
+                        <div class="friend-meta">
+                          <h4 style="width: 150px"><a routerLink="/timeLine/{{f.id}}">{{f.fullName}}</a></h4>
                         </div>
                       </li>
                     </ul>

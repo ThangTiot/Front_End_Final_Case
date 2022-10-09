@@ -24,8 +24,11 @@ export class UsersService {
   findAllFriend(id: number): Observable<User[]> {
     return this.httpClient.get<User[]>("http://localhost:8080/friends/findAllFriendOfUser/" + id)
   }
-  findAllFriendConfirm(id: number): Observable<User[]> {
-    return this.httpClient.get<User[]>("http://localhost:8080/friends/findAllFriendOfUserConfirm/" + id)
+  findAllFriendConfirmTo(id: number): Observable<User[]> {
+    return this.httpClient.get<User[]>("http://localhost:8080/friends/findAllFriendOfUserConfirmTo/" + id)
+  }
+  findAllFriendConfirmFrom(id: number): Observable<User[]> {
+    return this.httpClient.get<User[]>("http://localhost:8080/friends/findAllFriendOfUserConfirmFrom/" + id)
   }
   findAllUserNotFriend(id: number): Observable<User[]> {
     return this.httpClient.get<User[]>("http://localhost:8080/friends/findAllUserNotFriend/" + id)
