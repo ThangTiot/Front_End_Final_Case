@@ -436,7 +436,7 @@
           <div class="col-lg-2 col-sm-3">
             <div class="user-avatar">
               <figure>
-                <img src="../../../assets/images/resources/user-avatar.jpg" alt="">
+                <img src="{{user.avatar}}" alt="">
                 <form class="edit-phto">
                   <i class="fa fa-camera-retro"></i>
                   <label class="fileContainer">
@@ -497,7 +497,7 @@
                     <ul class="naves">
                       <li>
                         <i class="ti-clipboard"></i>
-                        <a href="../../templates/templates/newsfeed.html" title="">News feed</a>
+                        <a routerLink="/newsFeed" title="">News feed</a>
                       </li>
                       <li>
                         <i class="ti-mouse-alt"></i>
@@ -1146,7 +1146,7 @@
           <div class="widget">
             <div class="foot-logo">
               <div class="logo">
-                <a href="index-2.html" title=""><img src="../../../assets/images/logo.png" alt=""></a>
+                <a routerLink="newsFeed"><img src="../../../assets/images/logo.png" alt=""></a>
               </div>
               <p>
                 The trio took this simple idea and built it into the world’s leading carpooling platform.
