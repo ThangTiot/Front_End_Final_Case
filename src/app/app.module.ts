@@ -14,6 +14,8 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../environments/environment";
 import { TimeLineComponent } from './component/time-line/time-line.component';
 import { AboutComponent } from './component/about/about.component';
+import {FriendsComponent} from "./component/friends/friends.component";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +23,7 @@ import { AboutComponent } from './component/about/about.component';
     NewsFeedComponent,
     TimeLineComponent,
     AboutComponent,
+    FriendsComponent
   ],
   imports: [
     BrowserModule,

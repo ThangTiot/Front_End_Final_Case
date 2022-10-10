@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Relationship} from "../model/Relationship";
+import {User} from "../model/User";
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,8 @@ export class RelationshipService {
   }
   confirm(idUserFrom: any,idUserTo: any): Observable<any> {
     return this.httpclient.put(`http://localhost:8080/friends/confirm/${idUserFrom}/${idUserTo}`,null);
+  }
+  findMutualFriends(idPresent: number, id: number): Observable<User[]> {
+    return this.httpclient.get<User[]>("http://localhost:8080/friends/" + idPresent +"/"+ id)
   }
 }
