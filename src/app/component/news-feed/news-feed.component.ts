@@ -178,9 +178,8 @@ export class NewsFeedComponent implements OnInit {
 
   logout() {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You will be able to revert this!",
-      icon: 'warning',
+      title: 'Log Out',
+      text: "Are you sure?",
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -312,5 +311,27 @@ export class NewsFeedComponent implements OnInit {
         this.formComment.reset();
       });
     }
+  }
+
+  updateComment(id: any) {
+
+  }
+
+  deleteComment(idCmt: any) {
+    Swal.fire({
+      title: 'Delete Comment ',
+      text: "Are you sure want to delete comment?",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirm'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.commentService.delete(idCmt).subscribe(() => {
+          this.getAllComment();
+          this.getAllPostOfNewFeed();
+          });
+      }
+    })
   }
 }

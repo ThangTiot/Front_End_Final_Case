@@ -519,14 +519,18 @@
                         <ul class="we-comet">
                           <li *ngFor="let cmt of getCommentByPost(post.id)">
                             <div class="comet-avatar">
-                              <img [src]="cmt.users!.avatar" alt="">
+                              <img [src]="cmt.users!.avatar" alt="" style="width: 45px">
                             </div>
                             <div class="we-comment">
                               <div class="coment-head">
                                 <h5><a routerLink="/timeLine/{{cmt.users!.id}}" title="">{{cmt.users!.fullName}}</a></h5>
                                 <span>{{cmt.dateCreate | date:'hh:mm:ss'}}</span>
-                                <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
-                                <a class="we-reply" href="#" title="Reply"><i class="ti-heart"></i></a>
+                                <a class="we-reply" title="Reply"><i class="fa fa-reply"></i></a>
+                                <a class="we-reply" title="Heart"><i class="ti-heart"></i></a>
+                                <a class="we-reply" title="Update" *ngIf="cmt.users!.id == idUserPresent">
+                                  <i class="fa fa-pencil-square-o" aria-hidden="true" (click)="updateComment(cmt.id)"></i></a>
+                                <a class="we-reply" title="Delete" *ngIf="cmt.users!.id == idUserPresent">
+                                  <i class="fa fa-trash-o" aria-hidden="true" (click)="deleteComment(cmt.id)"></i></a>
                               </div>
                               <p>{{cmt.content}}</p>
                             </div>

@@ -283,7 +283,7 @@ export class TimeLineComponent implements OnInit {
   unfriend(idUser: any) {
     Swal.fire({
       title: 'Unfriend ' + this.user.fullName,
-      text: "Are you sure you want to unfriend " + this.user.fullName + "?",
+      text: "Are you sure want to unfriend " + this.user.fullName + "?",
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',

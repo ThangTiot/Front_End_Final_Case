@@ -1880,7 +1880,7 @@ for some reason nth-child(1) is always busy and elements starting from 2 */
 
 .coment-head > span {
     color: #999;
-    font-size: 12px;
+    font-size: 11px;
     padding-left: 10px;
     display: inline-block;
 }

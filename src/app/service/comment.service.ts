@@ -17,8 +17,7 @@ export class CommentService {
   public create(comment: any): Observable<Comments> {
     return this.httpClient.post<Comments>("http://localhost:8080/comments/create", comment);
   }
-
-  public findAllByPost(idPost: any): Observable<Comments[]> {
-    return this.httpClient.get<Comments[]>("http://localhost:8080/comments/findAllByPost/" + idPost);
+  public delete(idCmt: any): Observable<any> {
+    return this.httpClient.delete("http://localhost:8080/comments/delete/" + idCmt);
   }
 }
