@@ -402,7 +402,7 @@
         </li>
       </ul>
       <div class="user-img">
-        <img style="height:50px; width:50px" src="{{user.avatar}}" alt="">
+        <img style="height:50px; width:50px" src="{{userPresent.avatar}}" alt="">
         <span class="status f-online"></span>
         <div class="user-setting">
           <a href="#" title=""><span class="status f-online"></span>online</a>
@@ -719,19 +719,16 @@
                         </figure>
                         <div class="friend-name">
                           <ins><a href="time-line.html" title=""></a>{{user.fullName}}</ins>
-                          <span>{{(p.createDate)| date:'hh:mm:ss'}}
-                            <span [ngSwitch]="p.permissionPost" style="font-size: larger">
-                            <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'"
-                               style="margin-left: 3px"></i>
-                            <i class="fa fa-users" aria-hidden="true" *ngSwitchCase="'friend'"
-                               style="margin-left: 3px"></i>
-                            <i class="fa fa-lock" aria-hidden="true" *ngSwitchCase="'private'"
-                               style="margin-left: 3px"></i>
+                          <span style="font-size: 12px; margin-top: -3px">{{(p.createDate)| date:'hh:mm:ss'}}
+                            <span [ngSwitch]="p.permissionPost" style="font-size: medium; margin-left: 3px">
+                            <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'"></i>
+                            <i class="fa fa-users" aria-hidden="true" *ngSwitchCase="'friend'"></i>
+                            <i class="fa fa-lock" aria-hidden="true" *ngSwitchCase="'private'"></i>
                           </span></span>
                         </div>
                         <div class="post-meta">
                           <div class="description">
-                            <p style="color:#000;">{{p.content}}</p>
+                            <p style="color:#7a7a7a;font-size: large">{{p.content}}</p>
                           </div>
                           <p><img src="{{p.imageName}}" alt="" *ngIf="p.imageName != ''"></p>
                           <div class="we-video-info">

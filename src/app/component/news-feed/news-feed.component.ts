@@ -308,6 +308,7 @@ export class NewsFeedComponent implements OnInit {
       };
       this.commentService.create(comment).subscribe(() => {
         this.getAllComment();
+        this.getAllPostOfNewFeed();
         this.formComment.reset();
       });
     }

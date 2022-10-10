@@ -24,7 +24,7 @@
           <ul>
             <!--            <li><a href="login.html" title="">Login page</a></li>-->
             <li><a routerLink="" title="">Logout Page</a></li>
-            <li><a routerLink="newsFeed" title="">News feed</a></li>
+            <li><a routerLink="/newsFeed" title="">News feed</a></li>
           </ul>
         </li>
         <li><span>Time Line</span>
@@ -533,7 +533,7 @@
                                 <a class="we-reply" title="Delete" *ngIf="cmt.users!.id == idUserPresent">
                                   <i class="fa fa-trash-o" aria-hidden="true" (click)="deleteComment(cmt.id)"></i></a>
                               </div>
-                              <p>{{cmt.content}}</p>
+                              <p style="font-size: inherit">{{cmt.content}}</p>
                             </div>
 <!--                            <ul>-->
 <!--                              <li>-->

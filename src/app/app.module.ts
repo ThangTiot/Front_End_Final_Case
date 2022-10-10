@@ -27,7 +27,7 @@ import { UserAboutComponent } from './component/user-about/user-about.component'
     NewsFeedComponent,
     TimeLineComponent,
     AboutComponent,
-    FriendsComponent
+    FriendsComponent,
     NewsFeedComponent,
     EditProfileComponent,
     EditPasswordComponent,

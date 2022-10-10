@@ -46,6 +46,7 @@ export class TimeLineComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.idUserPresent = sessionStorage.getItem("userPresentId");
     this.routerActive.paramMap.subscribe(paramMap => {
       this.id = paramMap.get('id');
       this.userService.findById(this.id).subscribe((data)=>{
@@ -53,15 +54,20 @@ export class TimeLineComponent implements OnInit {
       })
       this.getAllPostOfUser()
     })
-    this.idUserPresent = sessionStorage.getItem("userPresentId");
     this.getUserPresent();
     this.getAllFriend();
     this.getAllLikePost();
   }
   getAllPostOfUser(){
-    this.timelineService.findAllById(this.id).subscribe((data1)=>{
-      this.posts = data1.reverse()
-    })
+    if (this.idUserPresent == this.id) {
+      this.timelineService.findAllById(this.id).subscribe((data1) => {
+        this.posts = data1.reverse()
+      });
+    } else {
+      this.timelineService.findPostOfTimeLine(this.id, this.idUserPresent).subscribe(data => {
+        this.posts = data.reverse();
+      });
+    }
   }
   getUserPresent() {
     if (this.idUserPresent) {
@@ -149,7 +155,7 @@ export class TimeLineComponent implements OnInit {
       this.postService.updatePost(idPost, post).subscribe(() => {
         this.formCreatePost.reset();
         this.imageSrc = "";
-        this.getAllPostOfNewFeed();
+        this.getAllPostOfUser();
         document.getElementById("postButton")!.innerText = "Post";
         document.getElementById("postFormTitle")!.innerText = "Create Post";
       });
