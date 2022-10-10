@@ -140,7 +140,20 @@ export class NewsFeedComponent implements OnInit {
       });
     }
   }
-
+  updatePostForm(idPost: any) {
+    this.formCreatePost.reset();
+    this.imageSrc = "";
+    this.postService.findById(idPost).subscribe(data => {
+      this.formCreatePost.patchValue(data);
+      if (data.imageName != "") {
+        this.imageSrc = data.imageName;
+      }
+      document.getElementById("postButton")!.innerText = "Update";
+      document.getElementById("postFormTitle")!.innerText = "Update Post";
+      // @ts-ignore
+      document.getElementById("permissionPost").value = data.permissionPost;
+    });
+  }
   logout() {
     Swal.fire({
       title: 'Are you sure?',
@@ -195,20 +208,7 @@ export class NewsFeedComponent implements OnInit {
     }
   }
 
-  updatePostForm(idPost: any) {
-    this.formCreatePost.reset();
-    this.imageSrc = "";
-    this.postService.findById(idPost).subscribe(data => {
-      this.formCreatePost.patchValue(data);
-      if (data.imageName != "") {
-        this.imageSrc = data.imageName;
-      }
-      document.getElementById("postButton")!.innerText = "Update";
-      document.getElementById("postFormTitle")!.innerText = "Update Post";
-      // @ts-ignore
-      document.getElementById("permissionPost").value = data.permissionPost;
-    });
-  }
+
 
   deletePost(id: any) {
     Swal.fire({

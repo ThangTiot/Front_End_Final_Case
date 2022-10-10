@@ -37,7 +37,7 @@
         <li><span>Account Setting</span>
           <ul>
 
-            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>
+<!--            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>-->
             <li><a [routerLink]="'/edit-profile/' + userPresent.id" title="">edit profile basics</a></li>
 
 
@@ -144,7 +144,7 @@
           <a href="#" title="">account settings</a>
           <ul>
 
-            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>
+<!--            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>-->
             <li><a [routerLink]="'/edit-profile/' + userPresent.id" title="">edit profile basics</a></li>
             <li><a href="#" title="">message box</a></li>
 
@@ -449,7 +449,6 @@
                               </div>
                               <div class="new-postbox">
                                 <div class="newpst-input">
-                                  <form method="post" style="width: 420px" [formGroup]="formCreatePost">
                                       <textarea rows="2" placeholder="What's on your mind?"
                                                 style="border: none" formControlName="content"></textarea>
                                     <div *ngIf="imageSrc != ''">
@@ -485,7 +484,6 @@
                                               [disabled]="disablePost || formCreatePost.invalid">Post
                                       </button>
                                     </div>
-                                  </form>
                                 </div>
                               </div><!-- add post new box -->
                               </form>
