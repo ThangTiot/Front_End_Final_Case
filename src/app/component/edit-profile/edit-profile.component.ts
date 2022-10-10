@@ -37,8 +37,14 @@ export class EditProfileComponent implements OnInit {
   ngOnInit(): void {
     this.idUserPresent = sessionStorage.getItem("userPresentId");
     this.getUserPresent();
+    const script=document.createElement("script")
+    script.innerHTML='document.getElementById("userDate").value='+'"'+'2002-04-09'+'"'
+    document.body.append(script);
   }
-
+  dateSelected : any
+  fetchDateSelected (){
+    console.log("date selected is : "+ this.dateSelected);
+  }
   getUserPresent() {
     this.formUserInfo = this.formBuilder.group({
         fullName: ["",[Validators.pattern(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/),Validators.required]],
@@ -47,19 +53,16 @@ export class EditProfileComponent implements OnInit {
         email: ["",[Validators.email]],
         address: [""],
         hobby: [""],
-
+        birthday : [""]
       //   day: [""],
       // month : [""],
       // year : [""]
       }
     )
-
-
     this.formUserPass = this.formBuilder.group({
       pass1: [""],
       rePass: [""],
       currentPass: [""]
-
     })
     if (this.idUserPresent) {
       this.userService.findById(this.idUserPresent).subscribe(data => {
@@ -67,14 +70,8 @@ export class EditProfileComponent implements OnInit {
         this.formUserInfo.patchValue(data)
       });
     }
-
   }
-
-
   updateUserInfo() {
-    this.dateOfBirth = this.formUserInfo.value.day;
-    this.dateOfBirth= this.formUserInfo.value.month;
-    this.dateOfBirth= this.formUserInfo.value.year;
     let user = {
       fullName: this.formUserInfo.value.fullName,
       phone: this.formUserInfo.value.phone,
@@ -82,7 +79,7 @@ export class EditProfileComponent implements OnInit {
       email: this.formUserInfo.value.email,
       address: this.formUserInfo.value.address,
       hobby: this.formUserInfo.value.hobby,
-      day: this.dateOfBirth
+      day: this.formUserInfo.value.birthday
     }
     Swal.fire({
       title: 'Are you sure?',
