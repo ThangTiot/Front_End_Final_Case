@@ -402,7 +402,7 @@
         </li>
       </ul>
       <div class="user-img">
-        <img src="../../../assets/images/resources/admin.jpg" alt="">
+        <img style="height:50px; width:50px" src="{{user.avatar}}" alt="">
         <span class="status f-online"></span>
         <div class="user-setting">
           <a href="#" title=""><span class="status f-online"></span>online</a>
@@ -446,7 +446,7 @@
           <div class="col-lg-2 col-sm-3">
             <div class="user-avatar">
               <figure>
-                <img [src]="user.avatar" alt="">
+                <img src="{{user.avatar}}" alt="">
                 <form class="edit-phto">
                   <i class="fa fa-camera-retro"></i>
                   <label class="fileContainer">
@@ -649,7 +649,7 @@
                                            style="height: 60px; width: 60px; border-radius: 50%">
                                     </figure>
                                     <div class="friend-name" style="width: 390px">
-                                      <ins><a href="#" title="">{{userPresent.fullName}}</a></ins>
+                                      <ins><a>{{userPresent.fullName}}</a></ins>
                                       <select id="permissionPost" name="permissionPost">
                                         <option value="public"><i class="fa fa-globe" aria-hidden="true"
                                                                   style="margin-right: 5px"></i>Public
