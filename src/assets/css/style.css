@@ -3793,7 +3793,7 @@ form .form-group.half {
 form .form-group.half {
     float: left;
     margin-right: 10px;
-    width: 48.2%;
+    width: 100%;
 }
 
 form .form-group.half:nth-child(2) {

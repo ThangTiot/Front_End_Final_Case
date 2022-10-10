@@ -7,6 +7,7 @@ import {EditPasswordComponent} from "./component/edit-password/edit-password.com
 import {UserAboutComponent} from "./component/user-about/user-about.component";
 
 const routes: Routes = [
+
   { path: '', component: UsersComponent },
   { path: 'newsFeed', component: NewsFeedComponent },
   { path: 'edit-profile/:id', component: EditProfileComponent },
@@ -16,8 +17,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes)
-      // {useHash: true} ),
+    RouterModule.forRoot(routes,
+      {useHash: true} ),
   ],
   exports: [RouterModule]
 })

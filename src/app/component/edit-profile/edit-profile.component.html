@@ -192,41 +192,32 @@
                         <input type="text" id="fullName" formControlName="fullName"required="required"/>
                         <label class="control-label" for="fullName">Full Name</label><i class="mtrl-select"></i>
                       </div>
+                      <div class="error" *ngIf="formUserInfo.get('fullName')!.invalid">
+                        Full Name is incorrect!
+                      </div>
                       <div class="form-group">
-                        <input type="text" id="phone" formControlName="phone" required="required"/>
+                        <input (keypress)="numberOnly($event)" type="text" id="phone" pattern="[1-9]{1}[0-9]{9}"  formControlName="phone" required="required">
+
                         <label class="control-label" for="phone">Phone No.</label><i class="mtrl-select"></i>
                       </div>
-                      <div class="error" *ngIf="formUserInfo.get('phone')!.invalid && formUserInfo.get('phone')!.touched">
-                        Password is incorrect!
+                      <div class="error" *ngIf="formUserInfo.get('phone')!.invalid">
+                        Phone number is incorrect!
                       </div>
 
                       <div class="dob">
                         <div class="form-group">
-                          <select  formControlName="day"  >
-                            <option
-                             >Day</option>
-                            <option
-                              *ngFor="let day of dayOfForm"
-                              value="{{day}}">{{day}}</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <select formControlName="month"  >
-                            <option
-                            >Month</option>
-                            <option *ngFor="let month of monthOfForm"
-                                    value="{{month}}">{{month}}</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <select  formControlName="year">
-                            <option
-                            >Year</option>
-                            <option
-                              *ngFor="let year of yearOfForm"
-                              value="{{year}}">{{year}}</option>
-
-                          </select>
+<!--                          <select  formControlName="day"  >-->
+<!--                            <option-->
+<!--                             >Day</option>-->
+<!--                            <option-->
+<!--                              *ngFor="let days of dayOfForm"-->
+<!--                              value="{{days}}">{{days}}</option>-->
+<!--                          </select>-->
+                          <input
+                            id="userDate"
+                            type="date"
+                            class="form-control"
+                            formControlName="userDate" />
                         </div>
                       </div>
                       <div class="form-radio">
@@ -245,17 +236,20 @@
                         <input type="text" id="email" formControlName="email"required="required"/>
                         <label class="control-label" for="email">Email</label><i class="mtrl-select"></i>
                       </div>
+                      <div class="error" *ngIf="formUserInfo.get('email')!.invalid && formUserInfo.get('email')!.touched">
+                        Email is incorrect!
+                      </div>
                       <div class="form-group">
                         <input type="text" id="address" formControlName="address" required="required"/>
                         <label class="control-label" for="address">Address</label><i class="mtrl-select"></i>
                       </div>
                       <div class="form-group">
-                        <textarea rows="4" id="hobby" formControlName="hobby" required="required"></textarea>
+                        <textarea rows="1" id="hobby" formControlName="hobby" required="required"></textarea>
                         <label class="control-label" for="hobby">About Me</label><i class="mtrl-select"></i>
                       </div>
                       <div class="submit-btns">
                         <button type="reset" class="mtr-btn"><span>Cancel</span></button>
-                        <button type="submit"  class="mtr-btn"><span>Update</span></button>
+                        <button type="submit"  class="mtr-btn" [disabled]="formUserInfo.invalid"><span>Update</span></button>
                       </div>
                     </form>
                   </div>
@@ -268,21 +262,31 @@
 
                     <form method="post" id="pass-form"  [formGroup]="formUserPass" (ngSubmit)="updateUserPass()">
                       <div class="form-group">
-                        <input type="password" id="pass" formControlName="pass" required="required"/>
+                        <input type="password" id="pass" formControlName="pass1" required="required"/>
                         <label class="control-label" for="pass">New password</label><i class="mtrl-select"></i>
                       </div>
                       <div class="form-group">
-                        <input type="password" id="repass" formControlName="rePass" required="required"/>
+                        <input type="password" id="repass" formControlName="rePass" required="required" (input)="checkRePass()"/>
                         <label class="control-label" for="repass">Confirm password</label><i class="mtrl-select"></i>
+                      </div>
+                      <div class="error" [hidden] = "checkRepass">
+                        RePassword is incorrect!
+                      </div>
+                      <div class="error" *ngIf="formUserPass.get('rePass')!.invalid && formUserPass.get('rePass')!.touched">
+                        RePassword is required!
                       </div>
                       <div class="form-group">
                         <input type="password" id="currPass" formControlName="currentPass" required="required"/>
                         <label class="control-label" for="currPass">Current password</label><i class="mtrl-select"></i>
+
+                      </div>
+                      <div class="error" *ngIf="!formUserPass.get('currentPass')!.invalid && checkCurrPass">
+                        Password does not match! Please retype again!
                       </div>
 
                       <div class="submit-btns">
                         <button type="reset" class="mtr-btn"><span>Cancel</span></button>
-                        <button type="submit" class="mtr-btn"><span>Update</span></button>
+                        <button type="submit" class="mtr-btn"[disabled]="formUserPass.invalid"><span>Update</span></button>
                       </div>
                     </form>
                   </div>
@@ -295,5 +299,5 @@
     </div>
   </section>
 </div>
-<script src="/assets/js/main.min.js"></script>
-<script src="/src/assets/js/script.js"></script>
+
+

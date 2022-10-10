@@ -68,7 +68,7 @@ export class UsersComponent implements OnInit {
     this.userService.signUp(user).subscribe(value => {
       if (value == null) {
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: 'Register Success!',
           showConfirmButton: false,
