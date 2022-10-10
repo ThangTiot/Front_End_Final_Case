@@ -138,7 +138,7 @@ export class TimeLineComponent implements OnInit {
       this.postService.createPost(post).subscribe(() => {
         this.formCreatePost.reset();
         this.imageSrc = "";
-        this.getAllPostOfNewFeed();
+        this.getAllPostOfUser();
       });
     } else {
       this.postService.updatePost(idPost, post).subscribe(() => {
