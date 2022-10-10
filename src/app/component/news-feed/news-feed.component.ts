@@ -267,9 +267,4 @@ export class NewsFeedComponent implements OnInit {
       this.findAllUserNotFriend()
     });
   }
-
-  paste() {
-    // @ts-ignore
-    document.getElementById("link").value = "abcde";
-  }
 }
