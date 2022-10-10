@@ -1,13 +1,12 @@
 import {Post} from "./Post";
-import firebase from "firebase/compat";
-import User = firebase.User;
+import {User} from "./User";
 
-export interface Comment {
+export interface Comments {
   id?: number;
   content?: string;
   likeCount?: number;
   dateCreate?: Date;
   posts?: Post;
   users?: User;
-  parentComment?: Comment;
+  parentComment?: Comments;
 }

@@ -11,6 +11,8 @@ import {Router} from "@angular/router";
 import {LikePost} from "../../model/LikePost";
 import {LikePostService} from "../../service/like-post.service";
 import {RelationshipService} from "../../service/relationship.service";
+import {CommentService} from "../../service/comment.service";
+import {Comments} from "../../model/Comments";
 
 
 @Component({
@@ -21,6 +23,7 @@ import {RelationshipService} from "../../service/relationship.service";
 export class NewsFeedComponent implements OnInit {
   userPresent!: User;
   formCreatePost!: FormGroup;
+  formComment!: FormGroup;
   imageFile!: any;
   imageSrc: any = "";
   disablePost: boolean = false;
@@ -31,6 +34,7 @@ export class NewsFeedComponent implements OnInit {
   idUserPresent!: any;
   likePostList!: LikePost[];
   allUserNotFriend!: User[];
+  allComment!: Comments[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,11 +43,21 @@ export class NewsFeedComponent implements OnInit {
     private postService: PostsService,
     private userService: UsersService,
     private likePostService: LikePostService,
-    private relationshipService: RelationshipService
+    private relationshipService: RelationshipService,
+    private commentService: CommentService
   ) {
   }
 
   ngOnInit(): void {
+    this.formCreatePost = this.formBuilder.group({
+      id: [""],
+      content: ["", Validators.required],
+      permissionPost: [""],
+    });
+    this.formComment = this.formBuilder.group({
+      id: [""],
+      comment: [""],
+    })
     this.listPostOfNewFeed = [];
     this.idUserPresent = sessionStorage.getItem("userPresentId");
     this.getUserPresent();
@@ -51,6 +65,7 @@ export class NewsFeedComponent implements OnInit {
     this.getAllPostOfNewFeed();
     this.getAllLikePost();
     this.findAllUserNotFriend();
+    this.getAllComment();
   }
 
   getUserPresent() {
@@ -59,11 +74,6 @@ export class NewsFeedComponent implements OnInit {
         this.userPresent = data;
       });
     }
-    this.formCreatePost = this.formBuilder.group({
-      id: [""],
-      content: ["", Validators.required],
-      permissionPost: [""],
-    })
   }
 
   getAllFriend() {
@@ -90,6 +100,22 @@ export class NewsFeedComponent implements OnInit {
     this.likePostService.findAllByUser(this.idUserPresent).subscribe(data => {
       this.likePostList = data;
     });
+  }
+
+  getAllComment() {
+    this.commentService.findAll().subscribe(data => {
+      this.allComment = data;
+    });
+  }
+
+  getCommentByPost(idPost: any){
+    let commentOfPost: Comments[] = [];
+    for (let i = 0; i < this.allComment.length; i++) {
+      if (this.allComment[i].posts!.id == idPost) {
+        commentOfPost.push(this.allComment[i]);
+      }
+    }
+    return commentOfPost;
   }
 
   showPreview(event: any) {
@@ -266,5 +292,25 @@ export class NewsFeedComponent implements OnInit {
       this.getAllFriend();
       this.findAllUserNotFriend()
     });
+  }
+
+  createComment(idPost: any) {
+    let commentId = this.formComment.value.id;
+    let commentValue = this.formComment.value.comment;
+    if (commentValue != null) {
+      let comment = {
+        content: commentValue,
+        posts: {
+          id: idPost,
+        },
+        users: {
+          id: this.idUserPresent,
+        }
+      };
+      this.commentService.create(comment).subscribe(() => {
+        this.getAllComment();
+        this.formComment.reset();
+      });
+    }
   }
 }

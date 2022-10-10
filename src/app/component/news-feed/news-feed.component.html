@@ -517,48 +517,49 @@
                       </div>
                       <div class="coment-area">
                         <ul class="we-comet">
-                          <li>
+                          <li *ngFor="let cmt of getCommentByPost(post.id)">
                             <div class="comet-avatar">
-                              <img src="assets/images/resources/comet-1.jpg" alt="">
+                              <img [src]="cmt.users!.avatar" alt="">
                             </div>
                             <div class="we-comment">
                               <div class="coment-head">
-                                <h5><a href="#" title="">Jason borne</a></h5>
-                                <span>1 year ago</span>
+                                <h5><a routerLink="/timeLine/{{cmt.users!.id}}" title="">{{cmt.users!.fullName}}</a></h5>
+                                <span>{{cmt.dateCreate | date:'hh:mm:ss'}}</span>
                                 <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
                                 <a class="we-reply" href="#" title="Reply"><i class="ti-heart"></i></a>
                               </div>
-                              <p>we are working for the dance and sing songs. this car is very awesome for the
-                                youngster. please vote this car and like our post</p>
+                              <p>{{cmt.content}}</p>
                             </div>
-                            <ul>
-                              <li>
-                                <div class="comet-avatar">
-                                  <img src="assets/images/resources/comet-2.jpg" alt="">
-                                </div>
-                                <div class="we-comment">
-                                  <div class="coment-head">
-                                    <h5><a href="#" title="">alexendra dadrio</a></h5>
-                                    <span>1 month ago</span>
-                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
-                                  </div>
-                                  <p>yes, really very awesome car i see the features of this car in the official website
-                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>
-                                </div>
-                              </li>
-                            </ul>
+<!--                            <ul>-->
+<!--                              <li>-->
+<!--                                <div class="comet-avatar">-->
+<!--                                  <img src="assets/images/resources/comet-2.jpg" alt="">-->
+<!--                                </div>-->
+<!--                                <div class="we-comment">-->
+<!--                                  <div class="coment-head">-->
+<!--                                    <h5><a href="#" title="">alexendra dadrio</a></h5>-->
+<!--                                    <span>1 month ago</span>-->
+<!--                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>-->
+<!--                                  </div>-->
+<!--                                  <p>yes, really very awesome car i see the features of this car in the official website-->
+<!--                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>-->
+<!--                                </div>-->
+<!--                              </li>-->
+<!--                            </ul>-->
                           </li>
 
 <!--                          <li>-->
 <!--                            <a href="#" title="" class="showmore underline">more comments</a>-->
 <!--                          </li>-->
+
                           <li class="post-comment">
                             <div class="comet-avatar">
                               <img [src]="userPresent.avatar" alt="">
                             </div>
                             <div class="post-comt-box">
-                              <form method="post">
-                                <textarea placeholder="Post your comment"></textarea>
+                              <form method="post" [formGroup]="formComment">
+                                <input type="text" formControlName="id" hidden>
+                                <textarea id="comment" placeholder="Post your comment" formControlName="comment" (keydown.enter)="createComment(post.id)"></textarea>
 <!--                                <button type="submit" style="background: #088dcd; position: relative">Post</button>-->
                               </form>
                             </div>
