@@ -402,7 +402,7 @@
         </li>
       </ul>
       <div class="user-img">
-        <img src="../../../assets/images/resources/admin.jpg" alt="">
+        <img style="height:50px; width:50px" src="{{user.avatar}}" alt="">
         <span class="status f-online"></span>
         <div class="user-setting">
           <a href="#" title=""><span class="status f-online"></span>online</a>
@@ -446,7 +446,7 @@
           <div class="col-lg-2 col-sm-3">
             <div class="user-avatar">
               <figure>
-                <img [src]="user.avatar" alt="">
+                <img src="{{user.avatar}}" alt="">
                 <form class="edit-phto">
                   <i class="fa fa-camera-retro"></i>
                   <label class="fileContainer">
@@ -469,7 +469,7 @@
                   <a class="" href="timeline-videos.html" title="" data-ripple="">Videos</a>
                   <a class="" href="timeline-friends.html" title="" data-ripple="">Friends</a>
                   <a class="" href="timeline-groups.html" title="" data-ripple="">Groups</a>
-                  <a class="" href="../../templates/templates/about.html" title="" data-ripple="">about</a>
+                  <a class="" [routerLink]="'/about/'+ user.id " title="" data-ripple="">about</a>
                   <a class="" href="#" title="" data-ripple="">more</a>
                 </li>
               </ul>
@@ -488,26 +488,26 @@
             <div class="row" id="page-contents">
               <div class="col-lg-3">
                 <aside class="sidebar static">
-                  <div class="widget">
-                    <h4 class="widget-title">Socials</h4>
-                    <ul class="socials">
-                      <li class="facebook">
-                        <a title="" href="#"><i class="fa fa-facebook"></i> <span>facebook</span> <ins>45 likes</ins></a>
-                      </li>
-                      <li class="twitter">
-                        <a title="" href="#"><i class="fa fa-twitter"></i> <span>twitter</span><ins>25 likes</ins></a>
-                      </li>
-                      <li class="google">
-                        <a title="" href="#"><i class="fa fa-google"></i> <span>google</span><ins>35 likes</ins></a>
-                      </li>
-                    </ul>
-                  </div>
+<!--                  <div class="widget">-->
+<!--                    <h4 class="widget-title">Socials</h4>-->
+<!--                    <ul class="socials">-->
+<!--                      <li class="facebook">-->
+<!--                        <a title="" href="#"><i class="fa fa-facebook"></i> <span>facebook</span> <ins>45 likes</ins></a>-->
+<!--                      </li>-->
+<!--                      <li class="twitter">-->
+<!--                        <a title="" href="#"><i class="fa fa-twitter"></i> <span>twitter</span><ins>25 likes</ins></a>-->
+<!--                      </li>-->
+<!--                      <li class="google">-->
+<!--                        <a title="" href="#"><i class="fa fa-google"></i> <span>google</span><ins>35 likes</ins></a>-->
+<!--                      </li>-->
+<!--                    </ul>-->
+<!--                  </div>-->
                   <div class="widget">
                     <h4 class="widget-title">Shortcuts</h4>
                     <ul class="naves">
                       <li>
                         <i class="ti-clipboard"></i>
-                        <a href="../../templates/templates/newsfeed.html" title="">News feed</a>
+                        <a routerLink="/newsFeed" title="">News feed</a>
                       </li>
                       <li>
                         <i class="ti-mouse-alt"></i>
@@ -551,115 +551,163 @@
                       </li>
                     </ul>
                   </div><!-- Shortcuts -->
-                  <div class="widget">
-                    <h4 class="widget-title">Recent Activity</h4>
-                    <ul class="activitiez">
-                      <li>
-                        <div class="activity-meta">
-                          <i>10 hours Ago</i>
-                          <span><a href="#" title="">Commented on Video posted </a></span>
-                          <h6>by <a href="../../templates/templates/newsfeed.html">black demon.</a></h6>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="activity-meta">
-                          <i>30 Days Ago</i>
-                          <span><a href="../../templates/templates/newsfeed.html" title="">Posted your status. “Hello guys, how are you?”</a></span>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="activity-meta">
-                          <i>2 Years Ago</i>
-                          <span><a href="#" title="">Share a video on her timeline.</a></span>
-                          <h6>"<a href="../../templates/templates/newsfeed.html">you are so funny mr.been.</a>"</h6>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><!-- recent activites -->
-                  <div class="widget stick-widget">
-                    <h4 class="widget-title">Who's follownig</h4>
-                    <ul class="followers">
-                      <li>
-                        <figure><img src="../../../assets/images/resources/friend-avatar2.jpg" alt=""></figure>
-                        <div class="friend-meta">
-                          <h4><a href="time-line.html" title="">Kelly Bill</a></h4>
-                          <a href="#" title="" class="underline">Add Friend</a>
-                        </div>
-                      </li>
-                      <li>
-                        <figure><img src="../../../assets/images/resources/friend-avatar4.jpg" alt=""></figure>
-                        <div class="friend-meta">
-                          <h4><a href="time-line.html" title="">Issabel</a></h4>
-                          <a href="#" title="" class="underline">Add Friend</a>
-                        </div>
-                      </li>
-                      <li>
-                        <figure><img src="../../../assets/images/resources/friend-avatar6.jpg" alt=""></figure>
-                        <div class="friend-meta">
-                          <h4><a href="time-line.html" title="">Andrew</a></h4>
-                          <a href="#" title="" class="underline">Add Friend</a>
-                        </div>
-                      </li>
-                      <li>
-                        <figure><img src="../../../assets/images/resources/friend-avatar8.jpg" alt=""></figure>
-                        <div class="friend-meta">
-                          <h4><a href="time-line.html" title="">Sophia</a></h4>
-                          <a href="#" title="" class="underline">Add Friend</a>
-                        </div>
-                      </li>
-                      <li>
-                        <figure><img src="../../../assets/images/resources/friend-avatar3.jpg" alt=""></figure>
-                        <div class="friend-meta">
-                          <h4><a href="time-line.html" title="">Allen</a></h4>
-                          <a href="#" title="" class="underline">Add Friend</a>
-                        </div>
-                      </li>
-                    </ul>
-                  </div><!-- who's following -->
+<!--                  <div class="widget">-->
+<!--                    <h4 class="widget-title">Recent Activity</h4>-->
+<!--                    <ul class="activitiez">-->
+<!--                      <li>-->
+<!--                        <div class="activity-meta">-->
+<!--                          <i>10 hours Ago</i>-->
+<!--                          <span><a href="#" title="">Commented on Video posted </a></span>-->
+<!--                          <h6>by <a href="../../templates/templates/newsfeed.html">black demon.</a></h6>-->
+<!--                        </div>-->
+<!--                      </li>-->
+<!--                      <li>-->
+<!--                        <div class="activity-meta">-->
+<!--                          <i>30 Days Ago</i>-->
+<!--                          <span><a href="../../templates/templates/newsfeed.html" title="">Posted your status. “Hello guys, how are you?”</a></span>-->
+<!--                        </div>-->
+<!--                      </li>-->
+<!--                      <li>-->
+<!--                        <div class="activity-meta">-->
+<!--                          <i>2 Years Ago</i>-->
+<!--                          <span><a href="#" title="">Share a video on her timeline.</a></span>-->
+<!--                          <h6>"<a href="../../templates/templates/newsfeed.html">you are so funny mr.been.</a>"</h6>-->
+<!--                        </div>-->
+<!--                      </li>-->
+<!--                    </ul>-->
+<!--                  </div>&lt;!&ndash; recent activites &ndash;&gt;-->
+<!--                  <div class="widget stick-widget">-->
+<!--                    <h4 class="widget-title">Who's follownig</h4>-->
+<!--                    <ul class="followers">-->
+<!--                      <li>-->
+<!--                        <figure><img src="../../../assets/images/resources/friend-avatar2.jpg" alt=""></figure>-->
+<!--                        <div class="friend-meta">-->
+<!--                          <h4><a href="time-line.html" title="">Kelly Bill</a></h4>-->
+<!--                          <a href="#" title="" class="underline">Add Friend</a>-->
+<!--                        </div>-->
+<!--                      </li>-->
+<!--                      <li>-->
+<!--                        <figure><img src="../../../assets/images/resources/friend-avatar4.jpg" alt=""></figure>-->
+<!--                        <div class="friend-meta">-->
+<!--                          <h4><a href="time-line.html" title="">Issabel</a></h4>-->
+<!--                          <a href="#" title="" class="underline">Add Friend</a>-->
+<!--                        </div>-->
+<!--                      </li>-->
+<!--                      <li>-->
+<!--                        <figure><img src="../../../assets/images/resources/friend-avatar6.jpg" alt=""></figure>-->
+<!--                        <div class="friend-meta">-->
+<!--                          <h4><a href="time-line.html" title="">Andrew</a></h4>-->
+<!--                          <a href="#" title="" class="underline">Add Friend</a>-->
+<!--                        </div>-->
+<!--                      </li>-->
+<!--                      <li>-->
+<!--                        <figure><img src="../../../assets/images/resources/friend-avatar8.jpg" alt=""></figure>-->
+<!--                        <div class="friend-meta">-->
+<!--                          <h4><a href="time-line.html" title="">Sophia</a></h4>-->
+<!--                          <a href="#" title="" class="underline">Add Friend</a>-->
+<!--                        </div>-->
+<!--                      </li>-->
+<!--                      <li>-->
+<!--                        <figure><img src="../../../assets/images/resources/friend-avatar3.jpg" alt=""></figure>-->
+<!--                        <div class="friend-meta">-->
+<!--                          <h4><a href="time-line.html" title="">Allen</a></h4>-->
+<!--                          <a href="#" title="" class="underline">Add Friend</a>-->
+<!--                        </div>-->
+<!--                      </li>-->
+<!--                    </ul>-->
+<!--                  </div>&lt;!&ndash; who's following &ndash;&gt;-->
                 </aside>
               </div><!-- sidebar -->
               <div class="col-lg-6">
                 <div class="loadMore">
-                  <div class="central-meta item">
+                  <div class="central-meta" *ngIf="idUserPresent == id">
                     <div class="new-postbox">
                       <figure>
-                        <img src="../../../assets/images/resources/admin2.jpg" alt="">
+                        <img src="{{userPresent.avatar}}" alt="" style="height: 60px; width: 60px">
                       </figure>
                       <div class="newpst-input">
                         <form method="post">
-                          <textarea rows="2" placeholder="write something"></textarea>
-                          <div class="attachments">
-                            <ul>
-                              <li>
-                                <i class="fa fa-music"></i>
-                                <label class="fileContainer">
-                                  <input type="file">
-                                </label>
-                              </li>
-                              <li>
-                                <i class="fa fa-image"></i>
-                                <label class="fileContainer">
-                                  <input type="file">
-                                </label>
-                              </li>
-                              <li>
-                                <i class="fa fa-video-camera"></i>
-                                <label class="fileContainer">
-                                  <input type="file">
-                                </label>
-                              </li>
-                              <li>
-                                <i class="fa fa-camera"></i>
-                                <label class="fileContainer">
-                                  <input type="file">
-                                </label>
-                              </li>
-                              <li>
-                                <button type="submit">Publish</button>
-                              </li>
-                            </ul>
-                          </div>
+                          <input class="btn btn-primary" data-toggle="modal" data-target="#myModal"
+                                 placeholder="What's on your mind?"
+                                 style="background: #f3f0f0; border: none; border-radius: 20px; width: 500px; height: 60px; text-align: left">
                         </form>
+                        <!-- The Modal -->
+                        <div class="modal" id="myModal">
+                          <div class="modal-dialog">
+                            <div class="modal-content" style="border-radius: 20px">
+                              <!-- Modal Header -->
+                              <div class="modal-header">
+                                <span style="margin-left: 170px"><h3 id="postFormTitle">Create Post</h3></span>
+                                <button type="button" class="close" data-dismiss="modal" (click)="clearFormCreatePost()">&times;</button>
+                              </div>
+                              <!-- Modal body -->
+                              <div class="modal-body">
+                                <form method="post" [formGroup]="formCreatePost">
+                                  <div style="display: flex">
+                                    <figure>
+                                      <img src="{{userPresent.avatar}}" alt=""
+                                           style="height: 60px; width: 60px; border-radius: 50%">
+                                    </figure>
+                                    <div class="friend-name" style="width: 390px">
+                                      <ins><a>{{userPresent.fullName}}</a></ins>
+                                      <select id="permissionPost" name="permissionPost">
+                                        <option value="public"><i class="fa fa-globe" aria-hidden="true"
+                                                                  style="margin-right: 5px"></i>Public
+                                        </option>
+                                        <option value="friend"><i class="fa fa-users" aria-hidden="true"
+                                                                  style="margin-right: 5px"></i>Friend
+                                        </option>
+                                        <option value="private"><i class="fa fa-lock" aria-hidden="true"
+                                                                   style="margin-right: 5px"></i>Private
+                                        </option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <input type="text" hidden formControlName="id">
+                                  <div class="new-postbox">
+                                    <div class="newpst-input">
+                                      <textarea rows="2" placeholder="What's on your mind?"
+                                                style="border: none" formControlName="content"></textarea>
+                                      <div *ngIf="imageSrc != ''">
+                                        <i class="fa fa-times" aria-hidden="true" style="float: left" (click)="deleteImage()"></i>
+                                        <img [src]="imageSrc" alt=""
+                                             style="width: 400px; margin-top: -10px; margin-left: 20px">
+                                      </div>
+                                      <div class="attachments" style="border: none; width: 430px">
+                                        <ul>
+                                          <li>
+                                            <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                                            <label class="fileContainer">
+                                              <input type="file">
+                                            </label>
+                                          </li>
+                                          <li>
+                                            <i class="fa fa-video-camera"></i>
+                                            <label class="fileContainer">
+                                              <input type="file">
+                                            </label>
+                                          </li>
+                                          <li>
+                                            <i class="fa fa-camera"></i>
+                                            <label class="fileContainer">
+                                              <input type="file" (change)="showPreview($event)">
+                                            </label>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                      <div class="modal-footer" style="border: none; width: 420px">
+                                        <button type="submit" id="postButton" class="btn btn-danger" data-dismiss="modal"
+                                                style="margin-right: -15px" (click)="createPost()"
+                                                [disabled]="disablePost || formCreatePost.invalid">Post
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div><!-- add post new box -->
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div><!-- add post new box -->
@@ -667,7 +715,7 @@
                     <div class="user-post">
                       <div class="friend-info">
                         <figure>
-                          <img src="../../../assets/images/resources/friend-avatar10.jpg" alt="">
+                          <img src="{{user.avatar}}" alt="">
                         </figure>
                         <div class="friend-name">
                           <ins><a href="time-line.html" title=""></a>{{user.fullName}}</ins>
@@ -962,20 +1010,20 @@
               <div class="col-lg-3">
                 <aside class="sidebar static">
 <!--                  <div class="widget">-->
-<!--                    <div class="banner medium-opacity bluesh">-->
-<!--                      <div style="background-image: url(../../../assets/images/resources/baner-widgetbg.jpg)" class="bg-image"></div>-->
-<!--                      <div class="baner-top">-->
-<!--                        <span><img src="../../../assets/images/book-icon.png" alt=""></span>-->
-<!--                        <i class="fa fa-ellipsis-h"></i>-->
-<!--                      </div>-->
-<!--                      <div class="banermeta">-->
-<!--                        <p>-->
-<!--                          create your own favourit page.-->
-<!--                        </p>-->
-<!--                        <span>like them all</span>-->
-<!--                        <a href="#" title="" data-ripple="">start now!</a>-->
-<!--                      </div>-->
-<!--                    </div>-->
+<!--&lt;!&ndash;                    <div class="banner medium-opacity bluesh">&ndash;&gt;-->
+<!--&lt;!&ndash;                      <div style="background-image: url(../../../assets/images/resources/baner-widgetbg.jpg)" class="bg-image"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <div class="baner-top">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <span><img src="../../../assets/images/book-icon.png" alt=""></span>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <i class="fa fa-ellipsis-h"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <div class="banermeta">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <p>&ndash;&gt;-->
+<!--&lt;!&ndash;                          create your own favourit page.&ndash;&gt;-->
+<!--&lt;!&ndash;                        </p>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <span>like them all</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a href="#" title="" data-ripple="">start now!</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
 <!--                  </div>-->
                   <div class="widget friend-list stick-widget">
                     <h4 class="widget-title">Friends</h4>
@@ -1156,7 +1204,7 @@
           <div class="widget">
             <div class="foot-logo">
               <div class="logo">
-                <a href="index-2.html" title=""><img src="../../../assets/images/logo.png" alt=""></a>
+                <a routerLink="newsFeed"><img src="../../../assets/images/logo.png" alt=""></a>
               </div>
               <p>
                 The trio took this simple idea and built it into the world’s leading carpooling platform.

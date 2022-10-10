@@ -6,7 +6,7 @@
 				<a class="" href="#menu"><i class="fa fa-align-justify"></i></a>
 			</span>
       <span class="mh-text">
-				<a routerLink="newsFeed" title=""><img src="assets/images/logo-vinfast.png" alt=""></a>
+				<a routerLink="newsFeed" title=""><img src="../src/assets/images/logo-vinfast.png" alt=""></a>
 			</span>
       <span class="mh-btns-right">
 				<a class="fa fa-sliders" href="#shoppingbag"></a>
@@ -29,7 +29,7 @@
         </li>
         <li><span>Time Line</span>
           <ul>
-            <li><a href="#" title="">time line</a></li>
+            <li><a href="#" title="">timeline</a></li>
             <li><a href="#" title="">timeline friends</a></li>
 
           </ul>
@@ -37,13 +37,13 @@
         <li><span>Account Setting</span>
           <ul>
 
-            <li><a href="#" title="">edit-password</a></li>
-            <li><a href="#" title="">edit profile basics</a></li>
-            <li><a href="#" title="">message box</a></li>
+<!--            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>-->
+            <li><a [routerLink]="'/edit-profile/' + userPresent.id" title="">edit profile basics</a></li>
+
 
           </ul>
         </li>
-        <li><a href="#" title="">about</a></li>
+        <li><a [routerLink]="'/user-about/' + userPresent.id" title="">about</a></li>
       </ul>
     </nav>
     <nav id="shoppingbag">
@@ -134,7 +134,7 @@
         <li>
           <a href="#" title="">timeline</a>
           <ul>
-            <li><a href="#" title="" routerLink="/timeLine/{{idUserPresent}}">Time Line</a></li>
+            <li><a href="#" title="" routerLink="/timeLine/{{idUserPresent}}">TimeLine</a></li>
             <li><a href="#" title="">timeline friends</a></li>
           </ul>
         </li>
@@ -142,8 +142,8 @@
           <a href="#" title="">account settings</a>
           <ul>
 
-            <li><a href="#" title="">edit-password</a></li>
-            <li><a href="#" title="">edit profile basics</a></li>
+<!--            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>-->
+            <li><a [routerLink]="'/edit-profile/' + userPresent.id" title="">edit profile basics</a></li>
             <li><a href="#" title="">message box</a></li>
 
           </ul>
@@ -297,13 +297,14 @@
             <a href="#" title="" class="more-mesg">view more</a>
           </div>
         </li>
-        <li><a href="#" title="Languages" data-ripple=""><i class="fa fa-globe"></i></a>
-          <div class="dropdowns languages">
-            <a href="#" title=""><i class="ti-check"></i>English</a>
-            <a href="#" title="">Arabic</a>
-            <a href="#" title="">Dutch</a>
-            <a href="#" title="">French</a>
-          </div>
+        <li>
+          <!--          <a href="#" title="Languages" data-ripple=""><i class="fa fa-globe"></i></a>-->
+          <!--          <div class="dropdowns languages">-->
+          <!--            <a href="#" title=""><i class="ti-check"></i>English</a>-->
+          <!--            <a href="#" title="">Arabic</a>-->
+          <!--            <a href="#" title="">Dutch</a>-->
+          <!--            <a href="#" title="">French</a>-->
+          <!--          </div>-->
         </li>
       </ul>
       <div class="user-img">
@@ -314,7 +315,7 @@
           <a href="#" title=""><span class="status f-away"></span>away</a>
           <a href="#" title=""><span class="status f-off"></span>offline</a>
           <a href="#" title=""><i class="ti-user"></i> view profile</a>
-          <a href="#" title=""><i class="ti-pencil-alt"></i>edit profile</a>
+          <a [routerLink]="'/edit-profile/' + userPresent.id" title=""><i class="ti-pencil-alt"></i>edit profile</a>
           <a href="#" title=""><i class="ti-target"></i>activity log</a>
           <a href="#" title=""><i class="ti-settings"></i>account setting</a>
           <a href="#" title=""><i class="ti-power-off"></i>log out</a>
@@ -401,7 +402,7 @@
                                        style="height: 60px; width: 60px; border-radius: 50%">
                                 </figure>
                                 <div class="friend-name" style="width: 390px">
-                                  <ins><a href="#" title="">{{userPresent.fullName}}</a></ins>
+                                  <ins><a>{{userPresent.fullName}}</a></ins>
                                   <select id="permissionPost" name="permissionPost">
                                     <option value="public"><i class="fa fa-globe" aria-hidden="true"
                                                               style="margin-right: 5px"></i>Public
