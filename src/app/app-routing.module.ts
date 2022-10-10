@@ -4,12 +4,14 @@ import {UsersComponent} from "./component/users/users.component";
 import {NewsFeedComponent} from "./component/news-feed/news-feed.component";
 import {TimeLineComponent} from "./component/time-line/time-line.component";
 import {AboutComponent} from "./component/about/about.component";
+import {FriendsComponent} from "./component/friends/friends.component";
 
 const routes: Routes = [
   { path: '', component: UsersComponent },
   { path: 'newsFeed', component: NewsFeedComponent },
   { path: 'timeLine/:id', component: TimeLineComponent },
   { path: 'about/:id', component: AboutComponent },
+  { path: 'friends/:id', component: FriendsComponent },
 ];
 @NgModule({
   imports: [

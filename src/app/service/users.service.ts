@@ -17,7 +17,6 @@ export class UsersService {
   signUp(users: User): Observable<User> {
     return this.httpClient.post<User>("http://localhost:8080/logIn/signUp",users)
   }
-
   findById(id: number): Observable<User> {
     return this.httpClient.get("http://localhost:8080/users/" + id)
   }
@@ -30,5 +29,4 @@ export class UsersService {
   findAllUserNotFriend(id: number): Observable<User[]> {
     return this.httpClient.get<User[]>("http://localhost:8080/friends/findAllUserNotFriend/" + id)
   }
-
 }
