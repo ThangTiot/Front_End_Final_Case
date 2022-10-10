@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {User} from "../model/User";
 import {Observable} from "rxjs";
+import * as http from "http";
+import {Post} from "../model/Post";
 
 @Injectable({
   providedIn: 'root'
@@ -32,4 +34,8 @@ export class UsersService {
   findAllUserNotFriend(id: number): Observable<User[]> {
     return this.httpClient.get<User[]>("http://localhost:8080/friends/findAllUserNotFriend/" + id)
   }
+  updateUser(id: any, user: User): Observable<User> {
+    return this.httpClient.put<User>("http://localhost:8080/users/" + id, user)
+  }
+
 }

@@ -16,6 +16,10 @@ import { TimeLineComponent } from './component/time-line/time-line.component';
 import { AboutComponent } from './component/about/about.component';
 import {FriendsComponent} from "./component/friends/friends.component";
 
+import { EditPasswordComponent } from './component/edit-password/edit-password.component';
+import {EditProfileComponent} from "./component/edit-profile/edit-profile.component";
+import { UserAboutComponent } from './component/user-about/user-about.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +28,10 @@ import {FriendsComponent} from "./component/friends/friends.component";
     TimeLineComponent,
     AboutComponent,
     FriendsComponent
+    NewsFeedComponent,
+    EditProfileComponent,
+    EditPasswordComponent,
+    UserAboutComponent
   ],
   imports: [
     BrowserModule,
