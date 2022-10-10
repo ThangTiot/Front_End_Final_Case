@@ -11,6 +11,7 @@ import {LikePostService} from "../../service/like-post.service";
 import Swal from "sweetalert2";
 import {finalize} from "rxjs";
 import {Post} from "../../model/Post";
+import {RelationshipService} from "../../service/relationship.service";
 
 @Component({
   selector: 'app-time-line',
@@ -39,7 +40,8 @@ export class TimeLineComponent implements OnInit {
               private router: Router,
               private postService: PostsService,
               private userService: UsersService,
-              private likePostService: LikePostService) { }
+              private likePostService: LikePostService,
+              private relationshipService: RelationshipService) { }
 
   ngOnInit(): void {
     this.routerActive.paramMap.subscribe(paramMap => {
@@ -83,6 +85,8 @@ export class TimeLineComponent implements OnInit {
       });
     }
   };
+
+
   getAllPostOfNewFeed() {
     this.postService.findPostOfNewFeed(this.idUserPresent).subscribe(data => {
       this.listPostOfNewFeed = data.reverse();
@@ -239,5 +243,4 @@ export class TimeLineComponent implements OnInit {
   deleteImage() {
     this.imageSrc = "";
   }
-
 }
