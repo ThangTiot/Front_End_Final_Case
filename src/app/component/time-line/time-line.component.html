@@ -392,14 +392,6 @@
             <a href="../../templates/templates/messages.html" title="" class="more-mesg">view more</a>
           </div>
         </li>
-        <li><a href="#" title="Languages" data-ripple=""><i class="fa fa-globe"></i></a>
-          <div class="dropdowns languages">
-            <a href="#" title=""><i class="ti-check"></i>English</a>
-            <a href="#" title="">Arabic</a>
-            <a href="#" title="">Dutch</a>
-            <a href="#" title="">French</a>
-          </div>
-        </li>
       </ul>
       <div class="user-img">
         <img style="height:50px; width:50px" src="{{userPresent.avatar}}" alt="">
@@ -469,7 +461,7 @@
                   <a class="" href="timeline-videos.html" title="" data-ripple="">Videos</a>
                   <a class="" href="timeline-friends.html" title="" data-ripple="">Friends</a>
                   <a class="" href="timeline-groups.html" title="" data-ripple="">Groups</a>
-                  <a class="" [routerLink]="'/about/'+ user.id " title="" data-ripple="">about</a>
+                  <a class="" [routerLink]="'/edit-profile/'+ user.id " title="" data-ripple="">about</a>
                   <a class="" href="#" title="" data-ripple="">more</a>
                 </li>
               </ul>
@@ -547,7 +539,7 @@
                       </li>
                       <li>
                         <i class="ti-power-off"></i>
-                        <a href="../../templates/templates/landing.html" title="">Logout</a>
+                        <a (click)="logout()" title="">Logout</a>
                       </li>
                     </ul>
                   </div><!-- Shortcuts -->

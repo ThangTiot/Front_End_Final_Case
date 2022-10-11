@@ -43,7 +43,7 @@
 
           </ul>
         </li>
-        <li><a [routerLink]="'/about/' + userPresent.id" title="">about</a></li>
+        <li><a [routerLink]="'/edit-profile/' + userPresent.id" title="">about</a></li>
       </ul>
     </nav>
     <nav id="shoppingbag">
@@ -152,7 +152,7 @@
           <a href="#" title="">more pages</a>
           <ul>
             <li><a href="#" title="">404 error page</a></li>
-            <li><a title="" routerLink="/about/{{idUserPresent}}">About</a></li>
+            <li><a title="" routerLink="/edit-profile/{{idUserPresent}}">About</a></li>
           </ul>
         </li>
       </ul>
@@ -297,15 +297,6 @@
             <a href="#" title="" class="more-mesg">view more</a>
           </div>
         </li>
-        <li>
-          <!--          <a href="#" title="Languages" data-ripple=""><i class="fa fa-globe"></i></a>-->
-          <!--          <div class="dropdowns languages">-->
-          <!--            <a href="#" title=""><i class="ti-check"></i>English</a>-->
-          <!--            <a href="#" title="">Arabic</a>-->
-          <!--            <a href="#" title="">Dutch</a>-->
-          <!--            <a href="#" title="">French</a>-->
-          <!--          </div>-->
-        </li>
       </ul>
       <div class="user-img">
         <img [src]="userPresent.avatar" alt="" style="height: 60px; width: 60px">
@@ -333,7 +324,12 @@
               <div class="col-lg-3">
                 <aside class="sidebar static">
                   <div class="widget">
-                    <h4 class="widget-title">Shortcuts</h4>
+                    <h4 class="widget-title" style="display: flex; align-items: baseline">
+                      <figure>
+                        <img src="{{userPresent.avatar}}" alt="" style="height: 35px; width: 35px; border-radius: 50%">
+                      </figure>
+                      <span style="font-size: small; padding-left: 10px">{{userPresent.fullName}}</span>
+                    </h4>
                     <ul class="naves">
                       <li>
                         <i class="ti-clipboard"></i>

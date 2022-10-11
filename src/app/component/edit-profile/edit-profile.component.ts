@@ -6,9 +6,10 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
 import {UsersService} from "../../service/users.service";
 import Swal from "sweetalert2";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {user} from "@angular/fire/auth";
 import {get} from "@angular/fire/database";
+import {RelationshipService} from "../../service/relationship.service";
 
 
 @Component({
@@ -25,27 +26,24 @@ export class EditProfileComponent implements OnInit {
   dateOfBirth!: Date;
   checkRepass: boolean = true;
   checkCurrPass : boolean = false;
-
+  user!: User;
+  id!: any;
+  friendList!: User[];
+  friendListConfirmTo!: User[];
+  friendListConfirmFrom!: User[];
 
   constructor(private formBuilder: FormBuilder,
               private storage: AngularFireStorage,
               private userService: UsersService,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute,
+              private relationshipService: RelationshipService,
+  ) {
 
   }
 
   ngOnInit(): void {
     this.idUserPresent = sessionStorage.getItem("userPresentId");
-    this.getUserPresent();
-    const script=document.createElement("script")
-    script.innerHTML='document.getElementById("userDate").value='+'"'+'2002-04-09'+'"'
-    document.body.append(script);
-  }
-  dateSelected : any
-  fetchDateSelected (){
-    console.log("date selected is : "+ this.dateSelected);
-  }
-  getUserPresent() {
     this.formUserInfo = this.formBuilder.group({
         fullName: ["",[Validators.pattern(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/),Validators.required]],
         phone: [""],
@@ -54,23 +52,46 @@ export class EditProfileComponent implements OnInit {
         address: [""],
         hobby: [""],
         birthday : [""]
-      //   day: [""],
-      // month : [""],
-      // year : [""]
+        //   day: [""],
+        // month : [""],
+        // year : [""]
       }
-    )
+    );
     this.formUserPass = this.formBuilder.group({
       pass1: ["", [Validators.pattern(/^(?=.*?[A-Z])[A-Za-z0-9]{6,32}$/),Validators.required]],
       rePass: [""],
       currentPass: [""]
-    })
+    });
+    this.route.paramMap.subscribe(paramMap => {
+      this.id = paramMap.get('id');
+      this.userService.findById(this.id).subscribe((data)=>{
+        this.user = data
+      })
+    });
+    this.getUserPresent();
+    this.getAllFriend();
+  }
+  getUserPresent() {
     if (this.idUserPresent) {
       this.userService.findById(this.idUserPresent).subscribe(data => {
         this.userPresent = data;
         this.formUserInfo.patchValue(data)
       });
     }
-  }
+  };
+  getAllFriend() {
+    if (this.idUserPresent) {
+      this.userService.findAllFriend(this.idUserPresent).subscribe(listFriend => {
+        this.friendList = listFriend;
+      });
+      this.userService.findAllFriendConfirmTo(this.idUserPresent).subscribe(listFriendConfirmTo => {
+        this.friendListConfirmTo = listFriendConfirmTo;
+      });
+      this.userService.findAllFriendConfirmFrom(this.idUserPresent).subscribe(listFriendConfirmFrom => {
+        this.friendListConfirmFrom = listFriendConfirmFrom;
+      });
+    }
+  };
   updateUserInfo() {
     let user = {
       fullName: this.formUserInfo.value.fullName,
@@ -132,23 +153,97 @@ export class EditProfileComponent implements OnInit {
   }
 
   showUserForm() {
-
-
+    // @ts-ignore
+    document.getElementById("user-about").style.display = "none"
     // @ts-ignore
     document.getElementById("user-info").style.display = "block"
     // @ts-ignore
     document.getElementById("user-pass").style.display = "none"
     // @ts-ignore
-
   }
 
   showPassForm() {
-
+    // @ts-ignore
+    document.getElementById("user-about").style.display = "none"
 // @ts-ignore
     document.getElementById("user-info").style.display = "none"
     // @ts-ignore
     document.getElementById("user-pass").style.display = "block"
+  }
 
+  showUserAbout() {
+// @ts-ignore
+    document.getElementById("user-about").style.display = "block"
+    // @ts-ignore
+    document.getElementById("user-info").style.display = "none"
+    // @ts-ignore
+    document.getElementById("user-pass").style.display = "none"
+  }
+
+  checkFriend(): string {
+    for (let i = 0; i < this.friendList.length; i++) {
+      if (this.friendList[i].id == this.user.id) {
+        return "friend";
+      }
+    }
+    for (let i = 0; i < this.friendListConfirmTo.length; i++) {
+      if (this.friendListConfirmTo[i].id == this.user.id) {
+        return "cancel request";
+      }
+    }
+    for (let i = 0; i < this.friendListConfirmFrom.length; i++) {
+      if (this.friendListConfirmFrom[i].id == this.user.id) {
+        return "confirm";
+      }
+    }
+    return "strange";
+  }
+
+  addFriend(idUser: any) {
+    let relationship = {
+      usersFrom: {
+        id: this.idUserPresent,
+      },
+      usersTo: {
+        id: idUser,
+      }
+    }
+    this.relationshipService.addFriend(relationship).subscribe(() => {
+      this.checkFriend();
+      this.getAllFriend();
+    });
+  }
+
+  unfriend(idUser: any) {
+    Swal.fire({
+      title: 'Unfriend ' + this.user.fullName,
+      text: "Are you sure want to unfriend " + this.user.fullName + "?",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirm'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.relationshipService.unfriend(this.idUserPresent, idUser).subscribe(() => {
+          this.checkFriend();
+          this.getAllFriend();
+        });
+      }
+    })
+  }
+
+  deleteRequest() {
+    this.relationshipService.unfriend(this.idUserPresent, this.id).subscribe(() => {
+      this.checkFriend();
+      this.getAllFriend();
+    });
+  }
+
+  confirm(idUser: any) {
+    this.relationshipService.confirm(this.idUserPresent, idUser).subscribe(() => {
+      this.checkFriend();
+      this.getAllFriend();
+    });
   }
 
   logout() {
@@ -172,7 +267,6 @@ export class EditProfileComponent implements OnInit {
       return false;
     }
     return true;
-
   }
 
 

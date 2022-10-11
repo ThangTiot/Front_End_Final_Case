@@ -12,7 +12,6 @@ import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../environments/environment";
 import { TimeLineComponent } from './component/time-line/time-line.component';
-import { AboutComponent } from './component/about/about.component';
 import {FriendsComponent} from "./component/friends/friends.component";
 
 import {EditProfileComponent} from "./component/edit-profile/edit-profile.component";
@@ -23,7 +22,6 @@ import {EditProfileComponent} from "./component/edit-profile/edit-profile.compon
     UsersComponent,
     NewsFeedComponent,
     TimeLineComponent,
-    AboutComponent,
     FriendsComponent,
     NewsFeedComponent,
     EditProfileComponent,
