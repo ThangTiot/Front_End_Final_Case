@@ -246,7 +246,7 @@
         </li>
       </ul>
       <div class="user-img">
-        <img src="../images/resources/admin.jpg" alt="">
+        <img [src]="userPresent.avatar" alt="" style="height: 60px; width: 60px">
         <span class="status f-online"></span>
         <div class="user-setting">
           <a href="#" title=""><span class="status f-online"></span>online</a>
@@ -327,11 +327,11 @@
                     <ul class="naves">
                       <li>
                         <i class="ti-info-alt"></i>
-                        <a title="" href="edit-profile-basic.html">Basic info</a>
+                        <a title="" routerLink="/about/{{idUserPresent}}">Basic info</a>
                       </li>
                       <li>
                         <i class="ti-lock"></i>
-                        <a title="" href="edit-password.html">change password</a>
+                        <a title="" routerLink="/edit-profile/{{idUserPresent}}">Edit profile</a>
                       </li>
                     </ul>
                   </div>
@@ -361,9 +361,9 @@
                         <li class="nav-item">
                           <a href="#interest" class="nav-link" data-toggle="tab">interests</a>
                         </li>
-                        <li class="nav-item">
-                          <a href="#lang" class="nav-link" data-toggle="tab">Other info</a>
-                        </li>
+<!--                        <li class="nav-item">-->
+<!--                          <a href="#lang" class="nav-link" data-toggle="tab">Other info</a>-->
+<!--                        </li>-->
                       </ul>
                       <div class="tab-content">
                         <div class="tab-pane fade show active" id="basic" >
@@ -372,6 +372,7 @@
                             <li><i class="ti-map-alt"></i>{{user.address}}</li>
                             <li><i class="ti-mobile"></i>{{user.phone}}</li>
                             <li><i class="ti-email"></i>{{user.email}}</li>
+                            <li><i class="fa fa-venus-mars"></i>{{user.gender}}</li>
                             <!--                            <li><i class="ti-world"></i>www.yoursite.com</li>-->
                           </ul>
                         </div>
@@ -398,12 +399,12 @@
                             <!--                            <li>photography</li>-->
                           </ul>
                         </div>
-                        <div class="tab-pane fade" id="lang" role="tabpanel">
-                          <ul class="basics">
-                            <li>Gender: {{user.gender}}</li>
-                            <li>Date Of Birth: {{user.dateOfBirth}}</li>
-                          </ul>
-                        </div>
+<!--                        <div class="tab-pane fade" id="lang" role="tabpanel">-->
+<!--                          <ul class="basics">-->
+<!--                            <li>Gender: {{user.gender}}</li>-->
+<!--                            <li>Date Of Birth: {{user.dateOfBirth}}</li>-->
+<!--                          </ul>-->
+<!--                        </div>-->
                       </div>
                     </div>
                   </div>

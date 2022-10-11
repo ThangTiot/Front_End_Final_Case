@@ -14,6 +14,8 @@ export class AboutComponent implements OnInit {
   id: any;
   idUserPresent!: any;
   allUserNotFriend!: User[];
+  userPresent!: User;
+
   constructor(private userService: UsersService,
               private route: ActivatedRoute,
               private relationshipService: RelationshipService) {
@@ -27,11 +29,19 @@ export class AboutComponent implements OnInit {
       this.userService.findById(this.id).subscribe((data)=>{
         this.user = data
       })
-    })
+    });
+    this.getUserPresent();
     this.findAllUserNotFriend();
   }
   findAllUserNotFriend(){
     return this.userService.findAllUserNotFriend(this.idUserPresent).subscribe(data=>{this.allUserNotFriend = data})
+  }
+  getUserPresent() {
+    if (this.idUserPresent) {
+      this.userService.findById(this.idUserPresent).subscribe(data => {
+        this.userPresent = data;
+      });
+    }
   }
 
 

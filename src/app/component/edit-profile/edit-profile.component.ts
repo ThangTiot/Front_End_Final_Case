@@ -60,7 +60,7 @@ export class EditProfileComponent implements OnInit {
       }
     )
     this.formUserPass = this.formBuilder.group({
-      pass1: [""],
+      pass1: ["", [Validators.pattern(/^(?=.*?[A-Z])[A-Za-z0-9]{6,32}$/),Validators.required]],
       rePass: [""],
       currentPass: [""]
     })
@@ -91,7 +91,9 @@ export class EditProfileComponent implements OnInit {
       confirmButtonText: 'Yes, Update!'
     }).then((result) => {
       if (result.isConfirmed) {
-       this.userService.updateUser(this.idUserPresent,user).subscribe(() => {})
+       this.userService.updateUser(this.idUserPresent,user).subscribe(() => {
+         location.reload();
+       })
       }
     })
   }

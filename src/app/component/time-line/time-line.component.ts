@@ -12,6 +12,8 @@ import Swal from "sweetalert2";
 import {finalize} from "rxjs";
 import {Post} from "../../model/Post";
 import {RelationshipService} from "../../service/relationship.service";
+import {Comments} from "../../model/Comments";
+import {CommentService} from "../../service/comment.service";
 
 @Component({
   selector: 'app-time-line',
@@ -25,15 +27,17 @@ export class TimeLineComponent implements OnInit {
   posts! : Post[];
   userPresent!: User;
   formCreatePost!: FormGroup;
+  formComment!: FormGroup;
   imageFile!: any;
   imageSrc: any = "";
   disablePost: boolean = false;
-  listPostOfNewFeed!: Post[];
   friendList!: User[];
   friendListConfirmTo!: User[];
   friendListConfirmFrom!: User[];
   idUserPresent!: any;
   likePostList!: LikePost[];
+  allComment!: Comments[];
+
   constructor(private timelineService: TimelineService,
               private routerActive: ActivatedRoute,
               private formBuilder: FormBuilder,
@@ -42,21 +46,24 @@ export class TimeLineComponent implements OnInit {
               private postService: PostsService,
               private userService: UsersService,
               private likePostService: LikePostService,
-              private relationshipService: RelationshipService
+              private relationshipService: RelationshipService,
+              private commentService: CommentService
   ) { }
 
   ngOnInit(): void {
-    this.idUserPresent = sessionStorage.getItem("userPresentId");
-    this.routerActive.paramMap.subscribe(paramMap => {
-      this.id = paramMap.get('id');
-      this.userService.findById(this.id).subscribe((data)=>{
-        this.user = data
-      })
-      this.getAllPostOfUser()
-    })
+    this.formCreatePost = this.formBuilder.group({
+      id: [""],
+      content: ["", Validators.required],
+      permissionPost: [""],
+    });
+    this.formComment = this.formBuilder.group({
+      id: [""],
+      comment: [""],
+    });
     this.getUserPresent();
     this.getAllFriend();
     this.getAllLikePost();
+    this.getAllComment();
   }
   getAllPostOfUser(){
     if (this.idUserPresent == this.id) {
@@ -70,16 +77,20 @@ export class TimeLineComponent implements OnInit {
     }
   }
   getUserPresent() {
+    this.idUserPresent = sessionStorage.getItem("userPresentId");
+    this.routerActive.paramMap.subscribe(paramMap => {
+      this.id = paramMap.get('id');
+      this.userService.findById(this.id).subscribe((data)=>{
+        this.user = data
+      })
+      this.getAllPostOfUser()
+    });
     if (this.idUserPresent) {
       this.userService.findById(this.idUserPresent).subscribe(data => {
         this.userPresent = data;
       });
     }
-    this.formCreatePost = this.formBuilder.group({
-      id: [""],
-      content: ["", Validators.required],
-      permissionPost: [""],
-    })
+
   }
   getAllFriend() {
     if (this.idUserPresent) {
@@ -94,16 +105,26 @@ export class TimeLineComponent implements OnInit {
       });
     }
   };
-  getAllPostOfNewFeed() {
-    this.postService.findPostOfNewFeed(this.idUserPresent).subscribe(data => {
-      this.listPostOfNewFeed = data.reverse();
-    });
-  }
 
   getAllLikePost() {
     this.likePostService.findAllByUser(this.idUserPresent).subscribe(data => {
       this.likePostList = data;
     });
+  }
+  getAllComment() {
+    this.commentService.findAll().subscribe(data => {
+      this.allComment = data;
+    });
+  }
+
+  getCommentByPost(idPost: any){
+    let commentOfPost: Comments[] = [];
+    for (let i = 0; i < this.allComment.length; i++) {
+      if (this.allComment[i].posts!.id == idPost) {
+        commentOfPost.push(this.allComment[i]);
+      }
+    }
+    return commentOfPost;
   }
   showPreview(event: any) {
     this.imageFile = event.target.files[0]
@@ -319,5 +340,47 @@ export class TimeLineComponent implements OnInit {
       this.getAllPostOfUser();
       this.getAllFriend();
     });
+  }
+  createComment(idPost: any) {
+    let commentId = this.formComment.value.id;
+    let commentValue = this.formComment.value.comment;
+    if (commentValue != null) {
+      let comment = {
+        content: commentValue,
+        posts: {
+          id: idPost,
+        },
+        users: {
+          id: this.idUserPresent,
+        }
+      };
+      this.commentService.create(comment).subscribe(() => {
+        this.getAllComment();
+        this.getAllPostOfUser();
+        this.formComment.reset();
+      });
+    }
+  }
+
+  updateComment(id: any) {
+
+  }
+
+  deleteComment(idCmt: any) {
+    Swal.fire({
+      title: 'Delete Comment ',
+      text: "Are you sure want to delete comment?",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirm'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.commentService.delete(idCmt).subscribe(() => {
+          this.getAllComment();
+          this.getAllPostOfUser();
+        });
+      }
+    })
   }
 }
