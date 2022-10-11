@@ -557,7 +557,7 @@
 <!--                            <a href="#" title="" class="showmore underline">more comments</a>-->
 <!--                          </li>-->
 
-                          <li class="post-comment">
+                          <li class="post-comment" *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)">
                             <div class="comet-avatar">
                               <img [src]="userPresent.avatar" alt="">
                             </div>

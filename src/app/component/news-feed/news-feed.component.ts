@@ -272,6 +272,14 @@ export class NewsFeedComponent implements OnInit {
   deleteImage() {
     this.imageSrc = "";
   }
+  checkFriend(idUserPost: any) {
+    for (let i = 0; i < this.friendList.length; i++) {
+      if (this.friendList[i].id == idUserPost) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   findAllUserNotFriend(){
     return this.userService.findAllUserNotFriend(this.idUserPresent).subscribe(data=>{this.allUserNotFriend = data})
