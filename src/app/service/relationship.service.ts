@@ -23,6 +23,6 @@ export class RelationshipService {
     return this.httpclient.put(`http://localhost:8080/friends/confirm/${idUserFrom}/${idUserTo}`,null);
   }
   findMutualFriends(idPresent: number, id: number): Observable<User[]> {
-    return this.httpclient.get<User[]>("http://localhost:8080/friends/" + idPresent +"/"+ id)
+    return this.httpclient.get<User[]>(`http://localhost:8080/friends/find-all-mutual-friend/${idPresent}/${id}`)
   }
 }

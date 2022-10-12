@@ -90,7 +90,7 @@
           <a href="#" title="">more pages</a>
           <ul>
             <li><a href="../../CASE_STUDY_MD4/src/main/resources/templates/404.html" title="">404 error page</a></li>
-            <li><a href="about.html" title="">about</a></li>
+            <li><a routerLink="/about/{{idUserPresent}}"  title="">about</a></li>
 
           </ul>
         </li>
@@ -301,7 +301,7 @@
                 </li>
                 <li>
                   <a class="" [routerLink]="'/timeLine/'+user.id" title="" data-ripple="">time line</a>
-                  <a class="" href="timeline-friends.html" title="" data-ripple="">Friends</a>
+                  <a class="" [routerLink]="'/friends/'+user.id" title="" data-ripple="">Friends</a>
                   <a class="active" href="about.html" title="" data-ripple="">about</a>
 
                 </li>

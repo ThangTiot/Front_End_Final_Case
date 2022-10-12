@@ -28,25 +28,5 @@ export class AboutComponent implements OnInit {
         this.user = data
       })
     })
-    this.findAllUserNotFriend();
   }
-  findAllUserNotFriend(){
-    return this.userService.findAllUserNotFriend(this.idUserPresent).subscribe(data=>{this.allUserNotFriend = data})
-  }
-
-
-  // addFriend(idUser: any) {
-  //   let relationship = {
-  //     usersTo: {
-  //       id: this.idUserPresent,
-  //     },
-  //     usersFrom: {
-  //       id: idUser,
-  //     }
-  //   }
-  //   this.relationshipService.addFriend(relationship).subscribe(() => {
-  //     this.getAllPostOfNewFeed();
-  //     this.getAllFriend();
-  //   });
-  // }
 }
