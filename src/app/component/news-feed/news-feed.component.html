@@ -324,7 +324,7 @@
               <div class="col-lg-3">
                 <aside class="sidebar static">
                   <div class="widget">
-                    <h4 class="widget-title" style="display: flex; align-items: baseline">
+                    <h4 class="widget-title" style="display: flex; align-items: baseline; padding-bottom: 0">
                       <figure>
                         <img src="{{userPresent.avatar}}" alt="" style="height: 35px; width: 35px; border-radius: 50%">
                       </figure>
@@ -417,6 +417,8 @@
                                 <div class="newpst-input">
                                       <textarea rows="2" placeholder="What's on your mind?"
                                                 style="border: none" formControlName="content"></textarea>
+<!--                                  <div contenteditable="true" id="postContent" formControlName="content" (paste)="getLink($event)">-->
+<!--                                  </div>-->
                                     <div *ngIf="imageSrc != ''">
                                       <i class="fa fa-times" aria-hidden="true" style="float: left" (click)="deleteImage()"></i>
                                       <img [src]="imageSrc" alt=""
@@ -574,6 +576,20 @@
               </div><!-- centerl meta -->
               <div class="col-lg-3">
                 <aside class="sidebar static">
+                  <div class="widget">
+                    <h4 class="widget-title" style="margin-bottom: 30px">Friend Requests</h4>
+                    <div></div>
+                    <ul class="followers">
+                      <li  *ngFor="let f of friendList">
+                        <figure>
+                          <img src="{{f.avatar}}" alt="">
+                        </figure>
+                        <div class="friend-meta">
+                          <h4 style="width: 150px"><a routerLink="/timeLine/{{f.id}}">{{f.fullName}}</a></h4>
+                        </div>
+                      </li>
+                    </ul>
+                  </div><!-- friends list sidebar -->
                   <div class="widget friend-list stick-widget">
                     <h4 class="widget-title" style="margin-bottom: 30px">Friends</h4>
                     <div id="searchDir"></div>
