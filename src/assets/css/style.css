@@ -1983,6 +1983,17 @@ li.post-comment .comet-avatar {
 #searchDir {
     padding: 0 20px;
 }
+#searchDir1 .filterinput {
+    border: 1px solid #eaeaea;
+    color: #575757;
+    font-size: 14px;
+    padding: 5px 10px;
+    width: 100%;
+}
+
+#searchDir1 {
+    padding: 0 20px;
+}
 
 #people-list {
     margin-top: 20px;
@@ -1990,7 +2001,20 @@ li.post-comment .comet-avatar {
     position: relative;
 }
 
+#people-list1 {
+    margin-top: 20px;
+    max-height: 450px;
+    position: relative;
+}
+
 #people-list figure {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+    width: 23%;
+    position: relative;
+}
+#people-list1 figure {
     display: inline-block;
     margin-bottom: 0;
     vertical-align: middle;
@@ -4661,7 +4685,7 @@ canvas {
 
 /*--- 100% radius images ---*/
 
-#people-list figure img,
+#people-list figure img,#people-list1 figure img,
 .new-postbox > figure img,
 .friend-info > figure img,
 .comet-avatar > img,

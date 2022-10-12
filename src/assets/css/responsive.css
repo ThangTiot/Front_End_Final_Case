@@ -9,12 +9,14 @@
     }
     #people-list figure {
         width: 14.7%;
+    } #people-list1 figure {
+        width: 14.7%;
     }
     .photos > li {
         min-width: 211px;
         width: 211px;
     }
-    
+
     .page-infos > span {
         font-weight: 600;
     }
@@ -41,6 +43,8 @@
         top: -33px;
     }
     #people-list figure {
+        width: 18.5%;
+    } #people-list1 figure {
         width: 18.5%;
     }
     .chat-box {

@@ -36,6 +36,8 @@ export class NewsFeedComponent implements OnInit {
   allUserNotFriend!: User[];
   allComment!: Comments[];
 
+
+
   constructor(
     private formBuilder: FormBuilder,
     private storage: AngularFireStorage,
@@ -45,6 +47,7 @@ export class NewsFeedComponent implements OnInit {
     private likePostService: LikePostService,
     private relationshipService: RelationshipService,
     private commentService: CommentService
+
   ) {
   }
 
@@ -322,7 +325,18 @@ export class NewsFeedComponent implements OnInit {
     }
   }
 
+
   updateComment(id: any) {
+    let cmtContent = document.getElementById("cmt-content");
+    let input = document.getElementById("update-cmt");
+    // @ts-ignore
+    input.style.display ="block"
+    // @ts-ignore
+    cmtContent.style.display ="none"
+
+
+
+
 
   }
 

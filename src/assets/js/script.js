@@ -32,7 +32,7 @@ jQuery(document).ready(function($) {
 
 //------ scrollbar plugin
   if ($.isFunction($.fn.perfectScrollbar)) {
-    $('.dropdowns, .twiter-feed, .invition, .followers, .chatting-area, .peoples, #people-list, .chat-list > ul, .message-list, .chat-users, .left-menu').perfectScrollbar();
+    $('.dropdowns, .twiter-feed, .invition, .followers, .chatting-area, .peoples, #people-list, #people-list1,.chat-list > ul, .message-list, .chat-users, .left-menu').perfectScrollbar();
   }
 
   /*--- socials menu scritp ---*/
@@ -101,23 +101,23 @@ jQuery(document).ready(function($) {
   });
 
 // Sticky Sidebar & header
-  if($(window).width() < 769) {
-    jQuery(".sidebar").children().removeClass("stick-widget");
-  }
+//   if($(window).width() < 769) {
+//     // jQuery(".sidebar").children().removeClass("stick-widget");
+//   }
 
-  if ($.isFunction($.fn.stick_in_parent)) {
-    $('.stick-widget').stick_in_parent({
-      parent: '#page-contents',
-      offset_top: 60,
-    });
+  // if ($.isFunction($.fn.stick_in_parent)) {
+  //   $('.stick-widget').stick_in_parent({
+  //     parent: '#page-contents',
+  //     offset_top: 60,
+  //   });
 
 
-    $('.stick').stick_in_parent({
-      parent: 'body',
-      offset_top: 0,
-    });
-
-  }
+  //   $('.stick').stick_in_parent({
+  //     parent: 'body',
+  //     offset_top: 0,
+  //   });
+  //
+  // }
 
   /*--- topbar setting dropdown ---*/
   $(".we-page-setting").on("click", function() {
