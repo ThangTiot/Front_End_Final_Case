@@ -37,7 +37,7 @@
         <li><span>Account Setting</span>
           <ul>
 
-<!--            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>-->
+            <!--            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>-->
             <li><a [routerLink]="'/edit-profile/' + userPresent.id" title="">edit profile basics</a></li>
 
 
@@ -117,7 +117,7 @@
   <div class="topbar stick">
     <div class="logo">
       <a title="" routerLink="/newsFeed"><img src="assets/images/logo-vinfast.png" alt=""
-                                             style="width: 50px; height: 45px"><span
+                                              style="width: 50px; height: 45px"><span
         style="font-weight: bold; font-size: 35px; position: absolute; margin-top: 2px; margin-left: -5px">inbook</span></a>
     </div>
 
@@ -142,7 +142,7 @@
           <a href="#" title="">account settings</a>
           <ul>
 
-<!--            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>-->
+            <!--            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>-->
             <li><a [routerLink]="'/edit-profile/' + userPresent.id" title="">edit profile basics</a></li>
             <li><a href="#" title="">message box</a></li>
 
@@ -387,40 +387,43 @@
                             <!-- Modal Header -->
                             <div class="modal-header">
                               <span style="margin-left: 170px"><h3 id="postFormTitle">Create Post</h3></span>
-                              <button type="button" class="close" data-dismiss="modal" (click)="clearFormCreatePost()">&times;</button>
+                              <button type="button" class="close" data-dismiss="modal" (click)="clearFormCreatePost()">
+                                &times;
+                              </button>
                             </div>
                             <!-- Modal body -->
                             <div class="modal-body">
                               <form method="post" [formGroup]="formCreatePost">
-                              <div style="display: flex">
-                                <figure>
-                                  <img src="{{userPresent.avatar}}" alt=""
-                                       style="height: 60px; width: 60px; border-radius: 50%">
-                                </figure>
-                                <div class="friend-name" style="width: 390px">
-                                  <ins><a>{{userPresent.fullName}}</a></ins>
-                                  <select id="permissionPost" name="permissionPost">
-                                    <option value="public"><i class="fa fa-globe" aria-hidden="true"
-                                                              style="margin-right: 5px"></i>Public
-                                    </option>
-                                    <option value="friend"><i class="fa fa-users" aria-hidden="true"
-                                                              style="margin-right: 5px"></i>Friend
-                                    </option>
-                                    <option value="private"><i class="fa fa-lock" aria-hidden="true"
-                                                               style="margin-right: 5px"></i>Private
-                                    </option>
-                                  </select>
+                                <div style="display: flex">
+                                  <figure>
+                                    <img src="{{userPresent.avatar}}" alt=""
+                                         style="height: 60px; width: 60px; border-radius: 50%">
+                                  </figure>
+                                  <div class="friend-name" style="width: 390px">
+                                    <ins><a>{{userPresent.fullName}}</a></ins>
+                                    <select id="permissionPost" name="permissionPost">
+                                      <option value="public"><i class="fa fa-globe" aria-hidden="true"
+                                                                style="margin-right: 5px"></i>Public
+                                      </option>
+                                      <option value="friend"><i class="fa fa-users" aria-hidden="true"
+                                                                style="margin-right: 5px"></i>Friend
+                                      </option>
+                                      <option value="private"><i class="fa fa-lock" aria-hidden="true"
+                                                                 style="margin-right: 5px"></i>Private
+                                      </option>
+                                    </select>
+                                  </div>
                                 </div>
-                              </div>
                                 <input type="text" hidden formControlName="id">
-                              <div class="new-postbox">
-                                <div class="newpst-input">
+                                <div class="new-postbox">
+                                  <div class="newpst-input">
                                       <textarea rows="2" placeholder="What's on your mind?"
                                                 style="border: none" formControlName="content"></textarea>
-<!--                                  <div contenteditable="true" id="postContent" formControlName="content" (paste)="getLink($event)">-->
-<!--                                  </div>-->
+                                    <!--                                  <div contenteditable="true" id="postContent" formControlName="content" (paste)="getLink($event)">-->
+                                    <!--                                  </div>-->
                                     <div *ngIf="imageSrc != ''">
-                                      <i class="fa fa-times" aria-hidden="true" style="float: left" (click)="deleteImage()"></i>
+                                      <i class="fa fa-times" aria-hidden="true" style="float: left"
+                                         (click)="deleteImage()"></i>
                                       <img [src]="imageSrc" alt=""
                                            style="width: 400px; margin-top: -10px; margin-left: 20px">
                                     </div>
@@ -452,8 +455,8 @@
                                               [disabled]="disablePost || formCreatePost.invalid">Post
                                       </button>
                                     </div>
-                                </div>
-                              </div><!-- add post new box -->
+                                  </div>
+                                </div><!-- add post new box -->
                               </form>
                             </div>
                           </div>
@@ -522,48 +525,51 @@
                             </div>
                             <div class="we-comment">
                               <div class="coment-head">
-                                <h5><a routerLink="/timeLine/{{cmt.users!.id}}" title="">{{cmt.users!.fullName}}</a></h5>
+                                <h5><a routerLink="/timeLine/{{cmt.users!.id}}" title="">{{cmt.users!.fullName}}</a>
+                                </h5>
                                 <span>{{cmt.dateCreate | date:'hh:mm:ss'}}</span>
                                 <a class="we-reply" title="Reply"><i class="fa fa-reply"></i></a>
                                 <a class="we-reply" title="Heart"><i class="ti-heart"></i></a>
                                 <a class="we-reply" title="Update" *ngIf="cmt.users!.id == idUserPresent">
-                                  <i class="fa fa-pencil-square-o" aria-hidden="true" (click)="updateComment(cmt.id)"></i></a>
+                                  <i class="fa fa-pencil-square-o" aria-hidden="true"
+                                     (click)="updateComment(cmt.id)"></i></a>
                                 <a class="we-reply" title="Delete" *ngIf="cmt.users!.id == idUserPresent">
                                   <i class="fa fa-trash-o" aria-hidden="true" (click)="deleteComment(cmt.id)"></i></a>
                               </div>
                               <p style="font-size: inherit">{{cmt.content}}</p>
                             </div>
-<!--                            <ul>-->
-<!--                              <li>-->
-<!--                                <div class="comet-avatar">-->
-<!--                                  <img src="assets/images/resources/comet-2.jpg" alt="">-->
-<!--                                </div>-->
-<!--                                <div class="we-comment">-->
-<!--                                  <div class="coment-head">-->
-<!--                                    <h5><a href="#" title="">alexendra dadrio</a></h5>-->
-<!--                                    <span>1 month ago</span>-->
-<!--                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>-->
-<!--                                  </div>-->
-<!--                                  <p>yes, really very awesome car i see the features of this car in the official website-->
-<!--                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>-->
-<!--                                </div>-->
-<!--                              </li>-->
-<!--                            </ul>-->
+                            <!--                            <ul>-->
+                            <!--                              <li>-->
+                            <!--                                <div class="comet-avatar">-->
+                            <!--                                  <img src="assets/images/resources/comet-2.jpg" alt="">-->
+                            <!--                                </div>-->
+                            <!--                                <div class="we-comment">-->
+                            <!--                                  <div class="coment-head">-->
+                            <!--                                    <h5><a href="#" title="">alexendra dadrio</a></h5>-->
+                            <!--                                    <span>1 month ago</span>-->
+                            <!--                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>-->
+                            <!--                                  </div>-->
+                            <!--                                  <p>yes, really very awesome car i see the features of this car in the official website-->
+                            <!--                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>-->
+                            <!--                                </div>-->
+                            <!--                              </li>-->
+                            <!--                            </ul>-->
                           </li>
 
-<!--                          <li>-->
-<!--                            <a href="#" title="" class="showmore underline">more comments</a>-->
-<!--                          </li>-->
+                          <!--                          <li>-->
+                          <!--                            <a href="#" title="" class="showmore underline">more comments</a>-->
+                          <!--                          </li>-->
 
-                          <li class="post-comment" *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)">
+                          <li class="post-comment" *ngIf="checkFriend()">
                             <div class="comet-avatar">
                               <img [src]="userPresent.avatar" alt="">
                             </div>
                             <div class="post-comt-box">
                               <form method="post" [formGroup]="formComment">
                                 <input type="text" formControlName="id" hidden>
-                                <textarea id="comment" placeholder="Post your comment" formControlName="comment" (keydown.enter)="createComment(post.id)"></textarea>
-<!--                                <button type="submit" style="background: #088dcd; position: relative">Post</button>-->
+                                <textarea id="comment" placeholder="Post your comment" formControlName="comment"
+                                          (keydown.enter)="createComment(post.id)"></textarea>
+                                <!--                                <button type="submit" style="background: #088dcd; position: relative">Post</button>-->
                               </form>
                             </div>
                           </li>
@@ -580,12 +586,25 @@
                     <h4 class="widget-title" style="margin-bottom: 30px">Friend Requests</h4>
                     <div></div>
                     <ul class="followers">
-                      <li  *ngFor="let f of friendListConfirmFrom">
+                      <li *ngFor="let f of friendListConfirmFrom" style="display: flex;flex-direction: column">
+                        <div>
                         <figure>
                           <img src="{{f.avatar}}" alt="">
                         </figure>
                         <div class="friend-meta">
                           <h4 style="width: 150px"><a routerLink="/timeLine/{{f.id}}">{{f.fullName}}</a></h4>
+                        </div>
+                        </div>
+                        <div style="display: flex;
+
+    justify-content: center;
+    flex-direction: row-reverse;">
+                          <a title="" class="underline" data-ripple="" (click)="deleteRequest(f.id)"
+                             style=" padding: 8px; margin-top: -10px">Cancel</a>
+                          <a title="" class="underline" data-ripple="" (click)="confirm(f.id)"
+                             style=" padding: 8px; margin-top: -10px">Accept</a>
+
+
                         </div>
                       </li>
                     </ul>
@@ -594,7 +613,7 @@
                     <h4 class="widget-title" style="margin-bottom: 30px">Friends</h4>
                     <div id="searchDir"></div>
                     <ul id="people-list" class="friendz-list">
-                      <li  *ngFor="let f of friendList">
+                      <li *ngFor="let f of friendList">
                         <figure>
                           <img src="{{f.avatar}}" alt="">
                           <span class="status f-online"></span>
