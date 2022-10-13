@@ -357,4 +357,24 @@ export class NewsFeedComponent implements OnInit {
       }
     })
   }
+
+  getPostValue() {
+    document.getElementById("postValue")!.contentEditable = "false";
+  }
+
+  getLink(event: ClipboardEvent) {
+    let clipboardData = event.clipboardData;
+    let pastedText = clipboardData!.getData('text/plain');
+    if (this.checkLinkPaste(pastedText)) {
+      let postContent = document.getElementById("postContent")!.textContent;
+      postContent += `<a href="${pastedText}" style="color: #00bff3">${pastedText}</a>`;
+      // @ts-ignore
+      document.getElementById("postContent").innerHTML = postContent;
+      this.imageSrc = pastedText;
+    }
+  }
+
+  checkLinkPaste(link: string) {
+    return link.match("http(s)?:\/\/");
+  }
 }

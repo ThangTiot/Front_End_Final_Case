@@ -1151,7 +1151,7 @@ header.sticky {
     margin-bottom: 30px;
     background: #fdfdfd;
     border: 1px solid #ede9e9;
-    border-radius: 3px;
+    border-radius: 10px;
 }
 
 .sidebar .widget:last-child {
@@ -1278,7 +1278,7 @@ header.sticky {
 .central-meta {
     background: #fdfdfd none repeat scroll 0 0;
     border: 1px solid #ede9e9;
-    border-radius: 3px;
+    border-radius: 10px;
     display: inline-block;
     width: 100%;
     margin-bottom: 20px;
@@ -1802,6 +1802,7 @@ for some reason nth-child(1) is always busy and elements starting from 2 */
     vertical-align: top;
     position: relative;
     width: 65%;
+    border-radius: 10px;
 }
 
 .we-comment::before,
@@ -1902,7 +1903,7 @@ li.post-comment .comet-avatar {
 .post-comt-box form textarea {
     background: #f3f3f3 none repeat scroll 0 0;
     border-color: transparent;
-    border-radius: 3px;
+    border-radius: 10px;
     color: #000000;
     font-size: 13.5px;
     font-weight: 500;
