@@ -121,7 +121,7 @@ export class NewsFeedComponent implements OnInit {
     });
   }
 
-  getCommentByPost(idPost: any) {
+  getCommentByPost(idPost: any){
     let commentOfPost: Comments[] = [];
     for (let i = 0; i < this.allComment.length; i++) {
       if (this.allComment[i].posts!.id == idPost) {
@@ -188,7 +188,6 @@ export class NewsFeedComponent implements OnInit {
       });
     }
   }
-
   updatePostForm(idPost: any) {
     this.formCreatePost.reset();
     this.imageSrc = "";
@@ -203,7 +202,6 @@ export class NewsFeedComponent implements OnInit {
       document.getElementById("permissionPost").value = data.permissionPost;
     });
   }
-
   logout() {
     Swal.fire({
       title: 'Log Out',
@@ -274,7 +272,7 @@ export class NewsFeedComponent implements OnInit {
       if ((this.likePostList[i].post!.id == idPost) && (this.likePostList[i].users!.id == this.idUserPresent)) {
         this.likePostService.disLikePost(this.likePostList[i].id).subscribe(() => {
             this.getAllLikePost();
-            this.getAllPostOfNewFeed();
+            this.getAllPostOfNewFeed()
           }
         );
       }
@@ -321,7 +319,6 @@ export class NewsFeedComponent implements OnInit {
   deleteImage() {
     this.imageSrc = "";
   }
-
   checkFriend(idUserPost: any) {
     for (let i = 0; i < this.friendList.length; i++) {
       if (this.friendList[i].id == idUserPost) {
@@ -337,7 +334,6 @@ export class NewsFeedComponent implements OnInit {
     })
   }
 
-
   addFriend(idUser: any) {
     let relationship = {
       usersFrom: {
@@ -349,7 +345,8 @@ export class NewsFeedComponent implements OnInit {
     }
     this.relationshipService.addFriend(relationship).subscribe(() => {
       this.getAllFriend();
-      this.findAllUserNotFriend()
+      this.findAllUserNotFriend();
+      this.getAllPostOfNewFeed();
     });
   }
 
@@ -391,7 +388,7 @@ export class NewsFeedComponent implements OnInit {
         this.commentService.delete(idCmt).subscribe(() => {
           this.getAllComment();
           this.getAllPostOfNewFeed();
-        });
+          });
       }
     })
   }
@@ -414,5 +411,21 @@ export class NewsFeedComponent implements OnInit {
 
   checkLinkPaste(link: string) {
     return link.match("http(s)?:\/\/");
+  }
+
+  deleteRequest(idUser: any) {
+    this.relationshipService.unfriend(this.idUserPresent, idUser).subscribe(() => {
+      this.getAllPostOfNewFeed();
+      this.getAllFriend();
+      this.findAllUserNotFriend();
+    });
+  }
+
+  confirm(idUser: any) {
+    this.relationshipService.confirm(this.idUserPresent, idUser).subscribe(() => {
+      this.getAllPostOfNewFeed();
+      this.getAllFriend();
+      this.findAllUserNotFriend();
+    });
   }
 }
