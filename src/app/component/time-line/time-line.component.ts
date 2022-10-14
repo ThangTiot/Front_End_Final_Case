@@ -326,8 +326,8 @@ export class TimeLineComponent implements OnInit {
     })
   }
 
-  deleteRequest() {
-    this.relationshipService.unfriend(this.idUserPresent, this.id).subscribe(() => {
+  deleteRequest(idUser: any) {
+    this.relationshipService.unfriend(this.idUserPresent, idUser).subscribe(() => {
       this.checkFriend();
       this.getAllPostOfUser();
       this.getAllFriend();

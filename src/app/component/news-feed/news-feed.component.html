@@ -20,14 +20,13 @@
     </div>
     <nav id="menu" class="res-menu">
       <ul>
-        <li><a routerLink="/newsFeed" title=""><i class="fa fa-home" aria-hidden="true"></i>
-        </a></li>
-        <!--          <ul>-->
-        <!--            &lt;!&ndash;            <li><a href="login.html" title="">Login page</a></li>&ndash;&gt;-->
-        <!--            <li><a routerLink="" title="">Logout Page</a></li>-->
-        <!--            -->
-        <!--          </ul>-->
-        <!--        </li>-->
+        <li><span>Home</span>
+          <ul>
+            <!--            <li><a href="login.html" title="">Login page</a></li>-->
+            <li><a routerLink="" title="">Logout Page</a></li>
+            <li><a routerLink="/newsFeed" title="">News feed</a></li>
+          </ul>
+        </li>
         <li><span>Time Line</span>
           <ul>
             <li><a href="#" title="">timeline</a></li>
@@ -38,7 +37,7 @@
         <li><span>Account Setting</span>
           <ul>
 
-            <!--            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>-->
+<!--            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>-->
             <li><a [routerLink]="'/edit-profile/' + userPresent.id" title="">edit profile basics</a></li>
 
 
@@ -118,29 +117,45 @@
   <div class="topbar stick">
     <div class="logo">
       <a title="" routerLink="/newsFeed"><img src="assets/images/logo-vinfast.png" alt=""
-                                              style="width: 50px; height: 45px"><span
+                                             style="width: 50px; height: 45px"><span
         style="font-weight: bold; font-size: 35px; position: absolute; margin-top: 2px; margin-left: -5px">inbook</span></a>
     </div>
 
     <div class="top-area">
-<!--      <ul class="main-menu">-->
-<!--        <li><a routerLink="newsFeed" title=""><i class="fa fa-home" aria-hidden="true"></i>-->
-<!--        </a></li>-->
-<!--        <li><a href="#" title="" routerLink="/timeLine/{{idUserPresent}}"><i class="fa fa-user" aria-hidden="true"></i>-->
-<!--        </a></li>-->
-        <!--        <li>-->
-        <!--          <a href="#" title="">account settings</a>-->
-        <!--          <ul>-->
+      <ul class="main-menu">
+        <li>
+          <a href="#" title="">Home</a>
+          <ul>
+            <!--            <li><a href="login.html" title="">Login page</a></li>-->
+            <li><a routerLink="" title="">Logout Page</a></li>
+            <li><a routerLink="newsFeed" title="">news feed</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#" title="">timeline</a>
+          <ul>
+            <li><a href="#" title="" routerLink="/timeLine/{{idUserPresent}}">TimeLine</a></li>
+            <li><a href="#" title="">timeline friends</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#" title="">account settings</a>
+          <ul>
 
-        <!--&lt;!&ndash;            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>&ndash;&gt;-->
-        <!--            <li><a [routerLink]="'/edit-profile/' + userPresent.id" title="">edit profile basics</a></li>-->
-        <!--            <li><a href="#" title="">message box</a></li>-->
+<!--            <li><a [routerLink]="'/edit-password/' + userPresent.id" title="">edit-password</a></li>-->
+            <li><a [routerLink]="'/edit-profile/' + userPresent.id" title="">edit profile basics</a></li>
+            <li><a href="#" title="">message box</a></li>
 
-        <!--          </ul>-->
-        <!--        </li>-->
-<!--        <li><a title="" routerLink="/edit-profile/{{idUserPresent}}"><i class="fa fa-info" aria-hidden="true"></i></a>-->
-<!--        </li>-->
-<!--      </ul>-->
+          </ul>
+        </li>
+        <li>
+          <a href="#" title="">more pages</a>
+          <ul>
+            <li><a href="#" title="">404 error page</a></li>
+            <li><a title="" routerLink="/edit-profile/{{idUserPresent}}">About</a></li>
+          </ul>
+        </li>
+      </ul>
       <ul class="setting-area">
         <li>
           <a href="#" title="Home" data-ripple=""><i class="ti-search"></i></a>
@@ -372,43 +387,40 @@
                             <!-- Modal Header -->
                             <div class="modal-header">
                               <span style="margin-left: 170px"><h3 id="postFormTitle">Create Post</h3></span>
-                              <button type="button" class="close" data-dismiss="modal" (click)="clearFormCreatePost()">
-                                &times;
-                              </button>
+                              <button type="button" class="close" data-dismiss="modal" (click)="clearFormCreatePost()">&times;</button>
                             </div>
                             <!-- Modal body -->
                             <div class="modal-body">
                               <form method="post" [formGroup]="formCreatePost">
-                                <div style="display: flex">
-                                  <figure>
-                                    <img src="{{userPresent.avatar}}" alt=""
-                                         style="height: 60px; width: 60px; border-radius: 50%">
-                                  </figure>
-                                  <div class="friend-name" style="width: 390px">
-                                    <ins><a>{{userPresent.fullName}}</a></ins>
-                                    <select id="permissionPost" name="permissionPost">
-                                      <option value="public"><i class="fa fa-globe" aria-hidden="true"
-                                                                style="margin-right: 5px"></i>Public
-                                      </option>
-                                      <option value="friend"><i class="fa fa-users" aria-hidden="true"
-                                                                style="margin-right: 5px"></i>Friend
-                                      </option>
-                                      <option value="private"><i class="fa fa-lock" aria-hidden="true"
-                                                                 style="margin-right: 5px"></i>Private
-                                      </option>
-                                    </select>
-                                  </div>
+                              <div style="display: flex">
+                                <figure>
+                                  <img src="{{userPresent.avatar}}" alt=""
+                                       style="height: 60px; width: 60px; border-radius: 50%">
+                                </figure>
+                                <div class="friend-name" style="width: 390px">
+                                  <ins><a>{{userPresent.fullName}}</a></ins>
+                                  <select id="permissionPost" name="permissionPost">
+                                    <option value="public"><i class="fa fa-globe" aria-hidden="true"
+                                                              style="margin-right: 5px"></i>Public
+                                    </option>
+                                    <option value="friend"><i class="fa fa-users" aria-hidden="true"
+                                                              style="margin-right: 5px"></i>Friend
+                                    </option>
+                                    <option value="private"><i class="fa fa-lock" aria-hidden="true"
+                                                               style="margin-right: 5px"></i>Private
+                                    </option>
+                                  </select>
                                 </div>
+                              </div>
                                 <input type="text" hidden formControlName="id">
-                                <div class="new-postbox">
-                                  <div class="newpst-input">
+                              <div class="new-postbox">
+                                <div class="newpst-input">
                                       <textarea rows="2" placeholder="What's on your mind?"
                                                 style="border: none" formControlName="content"></textarea>
-                                    <!--                                  <div contenteditable="true" id="postContent" formControlName="content" (paste)="getLink($event)">-->
-                                    <!--                                  </div>-->
+<!--                                  <div contenteditable="true" id="postContent" formControlName="content" (paste)="getLink($event)">-->
+<!--                                  </div>-->
                                     <div *ngIf="imageSrc != ''">
-                                      <i class="fa fa-times" aria-hidden="true" style="float: left"
-                                         (click)="deleteImage()"></i>
+                                      <i class="fa fa-times" aria-hidden="true" style="float: left" (click)="deleteImage()"></i>
                                       <img [src]="imageSrc" alt=""
                                            style="width: 400px; margin-top: -10px; margin-left: 20px">
                                     </div>
@@ -440,8 +452,8 @@
                                               [disabled]="disablePost || formCreatePost.invalid">Post
                                       </button>
                                     </div>
-                                  </div>
-                                </div><!-- add post new box -->
+                                </div>
+                              </div><!-- add post new box -->
                               </form>
                             </div>
                           </div>
@@ -510,11 +522,15 @@
                             </div>
                             <div class="we-comment">
                               <div class="coment-head">
-                                <h5><a routerLink="/timeLine/{{cmt.users!.id}}" title="">{{cmt.users!.fullName}}</a>
-                                </h5>
+                                <h5><a routerLink="/timeLine/{{cmt.users!.id}}" title="">{{cmt.users!.fullName}}</a></h5>
                                 <span>{{cmt.dateCreate | date:'hh:mm:ss'}}</span>
                                 <a class="we-reply" title="Reply"><i class="fa fa-reply"></i></a>
-                                <a class="we-reply" title="Heart"><i class="ti-heart"></i></a>
+                                <span  class="like" data-toggle="tooltip" title="like">
+																<i class="ti-heart" *ngIf="!likeShowComment(cmt)" (click)="likeComment(cmt.id)"></i>
+                                <i class="fa fa-heart" *ngIf="likeShowComment(cmt)" (click)="disLikeComment(cmt.id)"
+                                style="color: green"></i>
+																<ins style="text-decoration: none; margin-left: 2px">{{cmt.likeCount}}</ins>
+                                </span>
                                 <a class="we-reply" title="Update" *ngIf="cmt.users!.id == idUserPresent">
                                   <label for="contentCmt{{cmt.id}}"><i class="fa fa-pencil-square-o" aria-hidden="true" (click)="showUpdateCommentForm(cmt)"></i></label></a>
                                 <a class="we-reply" title="Delete" *ngIf="cmt.users!.id == idUserPresent">
@@ -529,39 +545,37 @@
                               </form>
 
                             </div>
-                            <!--                            <ul>-->
-                            <!--                              <li>-->
-                            <!--                                <div class="comet-avatar">-->
-                            <!--                                  <img src="assets/images/resources/comet-2.jpg" alt="">-->
-                            <!--                                </div>-->
-                            <!--                                <div class="we-comment">-->
-                            <!--                                  <div class="coment-head">-->
-                            <!--                                    <h5><a href="#" title="">alexendra dadrio</a></h5>-->
-                            <!--                                    <span>1 month ago</span>-->
-                            <!--                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>-->
-                            <!--                                  </div>-->
-                            <!--                                  <p>yes, really very awesome car i see the features of this car in the official website-->
-                            <!--                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>-->
-                            <!--                                </div>-->
-                            <!--                              </li>-->
-                            <!--                            </ul>-->
+<!--                            <ul>-->
+<!--                              <li>-->
+<!--                                <div class="comet-avatar">-->
+<!--                                  <img src="assets/images/resources/comet-2.jpg" alt="">-->
+<!--                                </div>-->
+<!--                                <div class="we-comment">-->
+<!--                                  <div class="coment-head">-->
+<!--                                    <h5><a href="#" title="">alexendra dadrio</a></h5>-->
+<!--                                    <span>1 month ago</span>-->
+<!--                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>-->
+<!--                                  </div>-->
+<!--                                  <p>yes, really very awesome car i see the features of this car in the official website-->
+<!--                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>-->
+<!--                                </div>-->
+<!--                              </li>-->
+<!--                            </ul>-->
                           </li>
 
-                          <!--                          <li>-->
-                          <!--                            <a href="#" title="" class="showmore underline">more comments</a>-->
-                          <!--                          </li>-->
+<!--                          <li>-->
+<!--                            <a href="#" title="" class="showmore underline">more comments</a>-->
+<!--                          </li>-->
 
-                          <li class="post-comment"
-                              *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)">
+                          <li class="post-comment" *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)">
                             <div class="comet-avatar">
                               <img [src]="userPresent.avatar" alt="">
                             </div>
                             <div class="post-comt-box">
                               <form method="post" [formGroup]="formComment">
                                 <input type="text" formControlName="id" hidden>
-                                <textarea id="comment" placeholder="Post your comment" formControlName="comment"
-                                          (keydown.enter)="createComment(post.id)"></textarea>
-                                <!--                                <button type="submit" style="background: #088dcd; position: relative">Post</button>-->
+                                <textarea id="comment" placeholder="Post your comment" formControlName="comment" (keydown.enter)="createComment(post.id,$event)"></textarea>
+<!--                                <button type="submit" style="background: #088dcd; position: relative">Post</button>-->
                               </form>
                             </div>
                           </li>
@@ -578,12 +592,22 @@
                     <h4 class="widget-title" style="margin-bottom: 30px">Friend Requests</h4>
                     <div></div>
                     <ul class="followers">
-                      <li *ngFor="let f of friendList">
-                        <figure>
-                          <img src="{{f.avatar}}" alt="">
-                        </figure>
-                        <div class="friend-meta">
-                          <h4 style="width: 150px"><a routerLink="/timeLine/{{f.id}}">{{f.fullName}}</a></h4>
+                      <li *ngFor="let f of friendListConfirmFrom" style="display: flex;flex-direction: column"
+                          class="request-action">
+                        <div>
+                          <figure>
+                            <img src="{{f.avatar}}" alt="">
+                          </figure>
+                          <div class="friend-meta">
+                            <h4 style="width: 150px"><a routerLink="/timeLine/{{f.id}}">{{f.fullName}}</a></h4>
+                          </div>
+                        </div>
+                        <div style="position:relative; margin-bottom: 25px">
+                          <a title="" class="add-butn more-action"
+                             data-ripple="" (click)="deleteRequest(f.id)"
+                             style="color: white;border-radius: 10px;width: 75px;margin-top: -13px;font-size: 15px;text-align: center;margin-right: 60px;">Cancel</a>
+                          <a title="" class="add-butn" data-ripple="" (click)="confirm(f.id)"
+                             style="color: white;border-radius: 10px;width: 75px;margin-top: -13px;font-size: 15px;text-align: center;margin-right: 50px;">Accept</a>
                         </div>
                       </li>
                     </ul>
@@ -592,7 +616,7 @@
                     <h4 class="widget-title" style="margin-bottom: 30px">Friends</h4>
                     <div id="searchDir"></div>
                     <ul id="people-list" class="friendz-list">
-                      <li *ngFor="let f of friendList">
+                      <li  *ngFor="let f of friendList">
                         <figure>
                           <img src="{{f.avatar}}" alt="">
                           <span class="status f-online"></span>
@@ -603,21 +627,6 @@
                       </li>
                     </ul>
                   </div><!-- friends list sidebar -->
-                  <!--                  <div class="widget friend-list stick-widget">-->
-                  <!--                    <h4 class="widget-title" style="margin-bottom: 30px">Friends</h4>-->
-                  <!--                    <div id="searchDir1"></div>-->
-                  <!--                    <ul id="people-list1" class="friendz-list">-->
-                  <!--                      <li  *ngFor="let f of friendList">-->
-                  <!--                        <figure>-->
-                  <!--                          <img src="{{f.avatar}}" alt="">-->
-                  <!--                          <span class="status f-online"></span>-->
-                  <!--                        </figure>-->
-                  <!--                        <div class="friend-meta">-->
-                  <!--                          <h4 style="width: 150px"><a routerLink="/timeLine/{{f.id}}">{{f.fullName}}</a></h4>-->
-                  <!--                        </div>-->
-                  <!--                      </li>-->
-                  <!--                    </ul>-->
-                  <!--                  </div>&lt;!&ndash; friends list sidebar &ndash;&gt;-->
                 </aside>
               </div><!-- sidebar -->
             </div>

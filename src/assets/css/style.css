@@ -308,7 +308,9 @@ textarea {
 a:hover.facebook {
     background: #516eab;
 }
-
+a:hover {
+  cursor: pointer;
+}
 a:hover.instagram {
     background: #444;
 }
@@ -1187,6 +1189,7 @@ header.sticky {
     position: absolute;
     width: 20%;
 }
+
 
 .sidebar .widget li {
     display: inline-block;

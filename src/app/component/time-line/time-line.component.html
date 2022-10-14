@@ -419,9 +419,9 @@
           <i class="fa fa-user-times" aria-hidden="true" style="margin-right: 5px;font-size: 20px"></i>Unfriend</a>
         <a *ngSwitchCase="'confirm'" title="" data-ripple="" (click)="confirm(id)" style="margin-right: 15px; padding: 6px 10px">
           <i class="fa fa-check" aria-hidden="true" style="margin-right: 5px;font-size: 18px"></i>Confirm</a>
-          <a *ngSwitchCase="'confirm'" title="" data-ripple="" (click)="deleteRequest()" style="padding: 6px 10px">
+          <a *ngSwitchCase="'confirm'" title="" data-ripple="" (click)="deleteRequest(id)" style="padding: 6px 10px">
             <i class="fa fa-times" aria-hidden="true" style="margin-right: 5px;font-size: 18px"></i>Delete</a>
-        <a *ngSwitchCase="'cancel request'" title="" data-ripple="" (click)="deleteRequest()" style="padding: 6px 10px">
+        <a *ngSwitchCase="'cancel request'" title="" data-ripple="" (click)="deleteRequest(id)" style="padding: 6px 10px">
           <i class="fa fa-user-times" aria-hidden="true" style="margin-right: 5px;font-size: 20px"></i>Cancel Request</a>
         <a *ngSwitchCase="'strange'" title="" data-ripple="" (click)="addFriend(id)" style="padding: 6px 10px">
           <i class="fa fa-user-plus" aria-hidden="true" style="margin-right: 5px;font-size: 20px"></i>Add Friend</a>
