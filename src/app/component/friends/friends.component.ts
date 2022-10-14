@@ -3,6 +3,7 @@ import {User} from "../../model/User";
 import {ActivatedRoute} from "@angular/router";
 import {RelationshipService} from "../../service/relationship.service";
 import {UsersService} from "../../service/users.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-friends',
@@ -39,17 +40,54 @@ export class FriendsComponent implements OnInit {
     }
   }
   getAllFriend() {
-    if (this.idUserPresent) {
-      this.userService.findAllFriend(this.idUserPresent).subscribe(listFriend => {
+    if (this.id) {
+      this.userService.findAllFriend(this.id).subscribe(listFriend => {
         this.friendList = listFriend;
       });
-      this.userService.findAllFriendConfirmTo(this.idUserPresent).subscribe(listFriendConfirmTo => {
+      this.userService.findAllFriendConfirmTo(this.id).subscribe(listFriendConfirmTo => {
         this.friendListConfirmTo = listFriendConfirmTo;
       });
-      this.userService.findAllFriendConfirmFrom(this.idUserPresent).subscribe(listFriendConfirmFrom => {
+      this.userService.findAllFriendConfirmFrom(this.id).subscribe(listFriendConfirmFrom => {
         this.friendListConfirmFrom = listFriendConfirmFrom;
       });
     }
   };
 
+  checkFriend(): string {
+    for (let i = 0; i < this.friendList.length; i++) {
+      if (this.friendList[i].id == this.idUserPresent) {
+        return "friend";
+      }
+    }
+    for (let i = 0; i < this.friendListConfirmTo.length; i++) {
+      if (this.friendListConfirmTo[i].id == this.idUserPresent) {
+        return "cancel request";
+      }
+    }
+    for (let i = 0; i < this.friendListConfirmFrom.length; i++) {
+      if (this.friendListConfirmFrom[i].id == this.idUserPresent) {
+        return "confirm";
+      }
+    }
+    return "strange";
+  }
+
+  unfriend(idUser: any) {
+    Swal.fire({
+      title: 'Unfriend ' + this.user.fullName,
+      text: "Are you sure want to unfriend " + this.user.fullName + "?",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirm'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.relationshipService.unfriend(this.idUserPresent, idUser).subscribe(() => {
+          this.checkFriend();
+          this.getAllFriend();
+          this.getMutualFriends()
+        });
+      }
+    })
+  }
 }
