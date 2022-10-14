@@ -5,6 +5,7 @@ import {RelationshipService} from "../../service/relationship.service";
 import {UsersService} from "../../service/users.service";
 import {TimelineService} from "../../service/timeline.service";
 import {Post} from "../../model/Post";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-friends',
@@ -15,15 +16,13 @@ export class FriendsComponent implements OnInit {
   id: any;
   idUserPresent!: any;
   user!: User;
-  posts! : Post[];
   listMutualFriend!: User[];
   friendList!: User[];
   friendListConfirmTo!: User[];
   friendListConfirmFrom!: User[];
   constructor(private routerActive:ActivatedRoute,
               private relationshipService: RelationshipService,
-              private userService: UsersService,
-              private timelineService: TimelineService) { }
+              private userService: UsersService) { }
 
   ngOnInit(): void {
     this.idUserPresent = sessionStorage.getItem("userPresentId");
@@ -42,54 +41,60 @@ export class FriendsComponent implements OnInit {
       });
     }
   }
-
   getAllFriend() {
-    if (this.idUserPresent) {
-      this.userService.findAllFriend(this.idUserPresent).subscribe(listFriend => {
+    if (this.id) {
+      this.userService.findAllFriend(this.id).subscribe(listFriend => {
         this.friendList = listFriend;
       });
-      this.userService.findAllFriendConfirmTo(this.idUserPresent).subscribe(listFriendConfirmTo => {
+      this.userService.findAllFriendConfirmTo(this.id).subscribe(listFriendConfirmTo => {
         this.friendListConfirmTo = listFriendConfirmTo;
       });
-      this.userService.findAllFriendConfirmFrom(this.idUserPresent).subscribe(listFriendConfirmFrom => {
+      this.userService.findAllFriendConfirmFrom(this.id).subscribe(listFriendConfirmFrom => {
         this.friendListConfirmFrom = listFriendConfirmFrom;
       });
     }
   };
 
-  getAllPostOfUser(){
-    if (this.idUserPresent == this.id) {
-      this.timelineService.findAllById(this.id).subscribe((data1) => {
-        this.posts = data1.reverse()
-      });
-    } else {
-      this.timelineService.findPostOfTimeLine(this.id, this.idUserPresent).subscribe(data => {
-        this.posts = data.reverse();
-      });
-    }
-  }
   checkFriend(): string {
     for (let i = 0; i < this.friendList.length; i++) {
-      if (this.friendList[i].id == this.user.id) {
+      if (this.friendList[i].id == this.idUserPresent) {
         return "friend";
       }
     }
     for (let i = 0; i < this.friendListConfirmTo.length; i++) {
-      if (this.friendListConfirmTo[i].id == this.user.id) {
+      if (this.friendListConfirmTo[i].id == this.idUserPresent) {
         return "cancel request";
       }
     }
     for (let i = 0; i < this.friendListConfirmFrom.length; i++) {
-      if (this.friendListConfirmFrom[i].id == this.user.id) {
+      if (this.friendListConfirmFrom[i].id == this.idUserPresent) {
         return "confirm";
       }
     }
     return "strange";
   }
+
+  unfriend(idUser: any) {
+    Swal.fire({
+      title: 'Unfriend ' + this.user.fullName,
+      text: "Are you sure want to unfriend " + this.user.fullName + "?",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirm'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.relationshipService.unfriend(this.idUserPresent, idUser).subscribe(() => {
+          this.checkFriend();
+          this.getAllFriend();
+          this.getMutualFriends()
+        });
+      }
+    })
+  }
   deleteRequest(idUser: any) {
     this.relationshipService.unfriend(this.idUserPresent, idUser).subscribe(() => {
       this.checkFriend();
-      this.getAllPostOfUser();
       this.getAllFriend();
     });
   }
@@ -97,7 +102,6 @@ export class FriendsComponent implements OnInit {
   confirm(idUser: any) {
     this.relationshipService.confirm(this.idUserPresent, idUser).subscribe(() => {
       this.checkFriend();
-      this.getAllPostOfUser();
       this.getAllFriend();
     });
   }

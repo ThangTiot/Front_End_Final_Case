@@ -1,3 +1,4 @@
+
 <div class="theme-layout">
 
   <div class="topbar stick">
@@ -21,7 +22,7 @@
         <li>
           <a href="#" title="">timeline</a>
           <ul>
-            <li><a href="../../resources/templates/time-line.html" title="">timeline</a></li>
+            <li><a routerLink="/timeLine/{{idUserPresent}}" title="">timeline</a></li>
             <li><a href="timeline-friends.html" title="">timeline friends</a></li>
 
           </ul>
@@ -132,13 +133,13 @@
                   <span></span>
                 </li>
                 <li>
-                  <a class="" [routerLink]="'/timeLine/'+user.id" title="" data-ripple="">time
+                  <a class="" [routerLink]="'/timeLine/'+user.id"  title="" data-ripple="">time
                     line</a>
 
 
                   <a class="active" href="timeline-friends.html" title="" data-ripple="">Friends</a>
 
-                  <a class="" [routerLink]="'/about/'+user.id" title="" data-ripple="">about</a>
+                  <a class="" [routerLink]="'/edit-profile/'+user.id"  title="" data-ripple="">about</a>
 
                 </li>
               </ul>
@@ -163,19 +164,18 @@
                   <div class="frnds">
                     <ul class="nav nav-tabs">
                       <li class="nav-item"><a class="active" href="#frends" data-toggle="tab">All
-                        Friend</a></li>
+                        Friend</a> </li>
 
                       <li class="nav-item" *ngIf="idUserPresent == id"><a class="" href="#frends-req" data-toggle="tab">Friend
                         Requests</a></li>
 
-                      <li class="nav-item" *ngIf="idUserPresent != id"><a class="" href="#frends-muntual"
-                                                                          data-toggle="tab">Mutual
+                      <li class="nav-item" *ngIf="idUserPresent != id"><a class="" href="#frends-muntual" data-toggle="tab">Mutual
                         Friends</a></li>
                     </ul>
 
                     <!-- Tab panes -->
                     <div class="tab-content">
-                      <div class="tab-pane active fade show " id="frends">
+                      <div class="tab-pane active fade show " id="frends" *ngIf="(checkFriend() == 'friend') || (id == idUserPresent)">
                         <ul class="nearby-contct" *ngFor="let f of friendList">
                           <li>
                             <div class="nearly-pepls">
@@ -189,16 +189,13 @@
                                 <h4><a routerLink="/timeLine/{{f.id}}"
                                        title="">{{f.fullName}}</a></h4>
                                 <span></span>
-                                <a href="#" title="" class="add-butn more-action"
-                                   data-ripple="" *ngIf="idUserPresent == id">unfriend</a>
-                                <a href="#" title="" class="add-butn" data-ripple="">Message</a>
+<!--                                <a href="#" title="" class="add-butn more-action"-->
+<!--                                   data-ripple="" >unfriend</a>-->
+<!--                                <a href="#" title="" class="add-butn" data-ripple="">Message</a>-->
                               </div>
                             </div>
                           </li>
                         </ul>
-                        <div class="lodmore">
-                          <button class="btn-view btn-load-more"></button>
-                        </div>
                       </div>
                       <div class="tab-pane fade" id="frends-req">
                         <ul class="nearby-contct" *ngFor="let f of friendListConfirmFrom">
@@ -210,7 +207,7 @@
                                                  alt=""></a>
                               </figure>
                               <div class="pepl-info">
-                                <h4><a href="#"
+                                <h4><a routerLink="/timeLine/{{f.id}}"
                                        title="">{{f.fullName}}</a></h4>
                                 <a title="" class="add-butn more-action"
                                    data-ripple="" (click)="deleteRequest(f.id)" style="color: white; padding: 8px; margin-top: -10px">delete Request</a>
@@ -221,9 +218,8 @@
 
 
                         </ul>
-                        <button class="btn-view btn-load-more"></button>
                       </div>
-                      <div class="tab-pane fade" id="frends-muntual">
+                      <div class="tab-pane fade" id="frends-muntual" *ngIf="(checkFriend() == 'friend')">
                         <ul class="nearby-contct" *ngFor="let l of listMutualFriend">
                           <li>
                             <div class="nearly-pepls">
@@ -236,15 +232,15 @@
                                 <h4><a routerLink="/timeLine/{{l.id}}"
                                        title="">{{l.fullName}}</a></h4>
                                 <span></span>
-                                <a href="#" title="" class="add-butn" data-ripple="">unfriend</a>
-
+                                <a [routerLink]="'/friends/'+user.id" title="" class="add-butn more-action"
+                                   data-ripple="" (click)="unfriend(l.id)">unfriend</a>
+<!--                                <a href="#" title="" class="add-butn" data-ripple="">Message</a>-->
                               </div>
                             </div>
                           </li>
 
 
                         </ul>
-                        <button class="btn-view btn-load-more"></button>
                       </div>
                     </div>
                   </div>

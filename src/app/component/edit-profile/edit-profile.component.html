@@ -146,11 +146,11 @@
               <ul>
                 <li class="admin-name">
                   <h5>{{user.fullName}}</h5>
-                  <span>Hi Hi</span>
+<!--                  <span>Hi Hi</span>-->
                 </li>
                 <li>
                   <a class="" routerLink="/timeLine/{{id}}" title="" data-ripple="">time line</a>
-                  <a class="" href="timeline-friends.html" title="" data-ripple="">Friends</a>
+                  <a class="" [routerLink]="'/friends/'+user.id"  title="" data-ripple="">Friends</a>
                   <a class="active" title="" data-ripple="">About</a>
                 </li>
               </ul>
