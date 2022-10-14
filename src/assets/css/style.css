@@ -308,7 +308,9 @@ textarea {
 a:hover.facebook {
     background: #516eab;
 }
-
+a:hover {
+  cursor: pointer;
+}
 a:hover.instagram {
     background: #444;
 }

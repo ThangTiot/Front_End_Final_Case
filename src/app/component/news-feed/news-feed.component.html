@@ -118,7 +118,7 @@
   <div class="topbar stick">
     <div class="logo">
       <a title="" routerLink="/newsFeed"><img src="assets/images/logo-vinfast.png" alt=""
-                                              style="width: 50px; height: 45px"><span
+                                             style="width: 50px; height: 45px"><span
         style="font-weight: bold; font-size: 35px; position: absolute; margin-top: 2px; margin-left: -5px">inbook</span></a>
     </div>
 
@@ -514,7 +514,12 @@
                                 </h5>
                                 <span>{{cmt.dateCreate | date:'hh:mm:ss'}}</span>
                                 <a class="we-reply" title="Reply"><i class="fa fa-reply"></i></a>
-                                <a class="we-reply" title="Heart"><i class="ti-heart"></i></a>
+                                <span  class="like" data-toggle="tooltip" title="like">
+																<i class="ti-heart" *ngIf="!likeShowComment(cmt)" (click)="likeComment(cmt.id)"></i>
+                                <i class="fa fa-heart" *ngIf="likeShowComment(cmt)" (click)="disLikeComment(cmt.id)"
+                                style="color: green"></i>
+																<ins>{{cmt.likeCount}}</ins>
+                                </span>
                                 <a class="we-reply" title="Update" *ngIf="cmt.users!.id == idUserPresent">
                                   <label for="contentCmt{{cmt.id}}"><i class="fa fa-pencil-square-o" aria-hidden="true" (click)="showUpdateCommentForm(cmt)"></i></label></a>
                                 <a class="we-reply" title="Delete" *ngIf="cmt.users!.id == idUserPresent">
@@ -529,27 +534,27 @@
                               </form>
 
                             </div>
-                            <!--                            <ul>-->
-                            <!--                              <li>-->
-                            <!--                                <div class="comet-avatar">-->
-                            <!--                                  <img src="assets/images/resources/comet-2.jpg" alt="">-->
-                            <!--                                </div>-->
-                            <!--                                <div class="we-comment">-->
-                            <!--                                  <div class="coment-head">-->
-                            <!--                                    <h5><a href="#" title="">alexendra dadrio</a></h5>-->
-                            <!--                                    <span>1 month ago</span>-->
-                            <!--                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>-->
-                            <!--                                  </div>-->
-                            <!--                                  <p>yes, really very awesome car i see the features of this car in the official website-->
-                            <!--                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>-->
-                            <!--                                </div>-->
-                            <!--                              </li>-->
-                            <!--                            </ul>-->
+<!--                            <ul>-->
+<!--                              <li>-->
+<!--                                <div class="comet-avatar">-->
+<!--                                  <img src="assets/images/resources/comet-2.jpg" alt="">-->
+<!--                                </div>-->
+<!--                                <div class="we-comment">-->
+<!--                                  <div class="coment-head">-->
+<!--                                    <h5><a href="#" title="">alexendra dadrio</a></h5>-->
+<!--                                    <span>1 month ago</span>-->
+<!--                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>-->
+<!--                                  </div>-->
+<!--                                  <p>yes, really very awesome car i see the features of this car in the official website-->
+<!--                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>-->
+<!--                                </div>-->
+<!--                              </li>-->
+<!--                            </ul>-->
                           </li>
 
-                          <!--                          <li>-->
-                          <!--                            <a href="#" title="" class="showmore underline">more comments</a>-->
-                          <!--                          </li>-->
+<!--                          <li>-->
+<!--                            <a href="#" title="" class="showmore underline">more comments</a>-->
+<!--                          </li>-->
 
                           <li class="post-comment"
                               *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)">
@@ -578,7 +583,7 @@
                     <h4 class="widget-title" style="margin-bottom: 30px">Friend Requests</h4>
                     <div></div>
                     <ul class="followers">
-                      <li *ngFor="let f of friendList">
+                      <li *ngFor="let f of friendListConfirmFrom">
                         <figure>
                           <img src="{{f.avatar}}" alt="">
                         </figure>
@@ -603,21 +608,6 @@
                       </li>
                     </ul>
                   </div><!-- friends list sidebar -->
-                  <!--                  <div class="widget friend-list stick-widget">-->
-                  <!--                    <h4 class="widget-title" style="margin-bottom: 30px">Friends</h4>-->
-                  <!--                    <div id="searchDir1"></div>-->
-                  <!--                    <ul id="people-list1" class="friendz-list">-->
-                  <!--                      <li  *ngFor="let f of friendList">-->
-                  <!--                        <figure>-->
-                  <!--                          <img src="{{f.avatar}}" alt="">-->
-                  <!--                          <span class="status f-online"></span>-->
-                  <!--                        </figure>-->
-                  <!--                        <div class="friend-meta">-->
-                  <!--                          <h4 style="width: 150px"><a routerLink="/timeLine/{{f.id}}">{{f.fullName}}</a></h4>-->
-                  <!--                        </div>-->
-                  <!--                      </li>-->
-                  <!--                    </ul>-->
-                  <!--                  </div>&lt;!&ndash; friends list sidebar &ndash;&gt;-->
                 </aside>
               </div><!-- sidebar -->
             </div>

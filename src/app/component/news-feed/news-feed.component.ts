@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from "../../model/User";
 import {UsersService} from "../../service/users.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -13,6 +13,9 @@ import {LikePostService} from "../../service/like-post.service";
 import {RelationshipService} from "../../service/relationship.service";
 import {CommentService} from "../../service/comment.service";
 import {Comments} from "../../model/Comments";
+import {LikeCommentService} from "../../service/like-comment.service";
+import {data} from 'jquery';
+import {LikeComment} from "../../model/LikeComment";
 
 
 
@@ -38,6 +41,7 @@ export class NewsFeedComponent implements OnInit {
   likePostList!: LikePost[];
   allUserNotFriend!: User[];
   allComment!: Comments[];
+  likeCommentList!: LikeComment[];
   constructor(
     private formBuilder: FormBuilder,
     private storage: AngularFireStorage,
@@ -47,12 +51,11 @@ export class NewsFeedComponent implements OnInit {
     private likePostService: LikePostService,
     private relationshipService: RelationshipService,
     private commentService: CommentService,
-    private fb: FormBuilder
+    private likeCommentService: LikeCommentService,
   ) {
   }
 
   ngOnInit(): void {
-
     this.formCreatePost = this.formBuilder.group({
       id: [""],
       content: ["", Validators.required],
@@ -69,6 +72,8 @@ export class NewsFeedComponent implements OnInit {
     this.getAllPostOfNewFeed();
     this.getAllLikePost();
     this.findAllUserNotFriend();
+    this.getAllComment();
+    this.getAllLikeComment();
     this.getAllComment();
   }
 
@@ -106,13 +111,20 @@ export class NewsFeedComponent implements OnInit {
     });
   }
 
+  getAllLikeComment() {
+    this.likeCommentService.findAllByUser(this.idUserPresent).subscribe(data => {
+      this.likeCommentList = data
+      console.log(this.likeCommentList)
+    })
+  }
+
   getAllComment() {
     this.commentService.findAll().subscribe(data => {
       this.allComment = data;
     });
   }
 
-  getCommentByPost(idPost: any){
+  getCommentByPost(idPost: any) {
     let commentOfPost: Comments[] = [];
     for (let i = 0; i < this.allComment.length; i++) {
       if (this.allComment[i].posts!.id == idPost) {
@@ -179,6 +191,7 @@ export class NewsFeedComponent implements OnInit {
       });
     }
   }
+
   updatePostForm(idPost: any) {
     this.formCreatePost.reset();
     this.imageSrc = "";
@@ -193,6 +206,7 @@ export class NewsFeedComponent implements OnInit {
       document.getElementById("permissionPost").value = data.permissionPost;
     });
   }
+
   logout() {
     Swal.fire({
       title: 'Log Out',
@@ -217,6 +231,14 @@ export class NewsFeedComponent implements OnInit {
     return false;
   }
 
+  likeShowComment(cmt: Comments) {
+    for (let i = 0; i < this.likeCommentList.length; i++) {
+      if (this.likeCommentList[i].comments!.id == cmt.id) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   likePost(idPost: any) {
     let likePost = {
@@ -234,19 +256,45 @@ export class NewsFeedComponent implements OnInit {
     );
   }
 
+  likeComment(idComment: any) {
+    let likeComment = {
+      users: {
+        id: this.idUserPresent,
+      },
+      comments: {
+        id: idComment,
+      }
+    }
+    this.likeCommentService.likeComment(likeComment).subscribe(() => {
+      this.getAllLikeComment();
+      this.getAllPostOfNewFeed();
+      this.getAllComment();
+    })
+  }
+
   disLikePost(idPost: any) {
     for (let i = 0; i < this.likePostList.length; i++) {
       if ((this.likePostList[i].post!.id == idPost) && (this.likePostList[i].users!.id == this.idUserPresent)) {
         this.likePostService.disLikePost(this.likePostList[i].id).subscribe(() => {
             this.getAllLikePost();
-            this.getAllPostOfNewFeed()
+            this.getAllPostOfNewFeed();
           }
         );
       }
     }
   }
 
-
+  disLikeComment(idComment:any){
+    for (let i = 0 ; i < this.likeCommentList.length; i++){
+      if (this.likeCommentList[i].comments!.id == idComment) {
+        this.likeCommentService.disLikeComment(this.likeCommentList[i].id).subscribe(()=>{
+          this.getAllLikeComment();
+          this.getAllPostOfNewFeed();
+          this.getAllComment();
+        })
+      }
+    }
+  }
 
   deletePost(id: any) {
     Swal.fire({
@@ -285,8 +333,10 @@ export class NewsFeedComponent implements OnInit {
     return false;
   }
 
-  findAllUserNotFriend(){
-    return this.userService.findAllUserNotFriend(this.idUserPresent).subscribe(data=>{this.allUserNotFriend = data})
+  findAllUserNotFriend() {
+    return this.userService.findAllUserNotFriend(this.idUserPresent).subscribe(data => {
+      this.allUserNotFriend = data
+    })
   }
 
 
@@ -377,7 +427,7 @@ hideUpdateCommentForm (idCmt:any){
         this.commentService.delete(idCmt).subscribe(() => {
           this.getAllComment();
           this.getAllPostOfNewFeed();
-          });
+        });
       }
     })
   }
