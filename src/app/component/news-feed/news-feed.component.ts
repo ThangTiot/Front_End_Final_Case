@@ -247,8 +247,6 @@ export class NewsFeedComponent implements OnInit {
     }
   }
 
-
-
   deletePost(id: any) {
     Swal.fire({
       title: 'Are you sure?',
@@ -282,7 +280,24 @@ export class NewsFeedComponent implements OnInit {
     return this.userService.findAllUserNotFriend(this.idUserPresent).subscribe(data=>{this.allUserNotFriend = data})
   }
 
-
+  checkFriend(): string {
+    for (let i = 0; i < this.friendList.length; i++) {
+      if (this.friendList[i].id == this.user.id) {
+        return "friend";
+      }
+    }
+    for (let i = 0; i < this.friendListConfirmTo.length; i++) {
+      if (this.friendListConfirmTo[i].id == this.user.id) {
+        return "cancel request";
+      }
+    }
+    for (let i = 0; i < this.friendListConfirmFrom.length; i++) {
+      if (this.friendListConfirmFrom[i].id == this.user.id) {
+        return "confirm";
+      }
+    }
+    return "strange";
+  }
   addFriend(idUser: any) {
     let relationship = {
       usersFrom: {
@@ -294,7 +309,9 @@ export class NewsFeedComponent implements OnInit {
     }
     this.relationshipService.addFriend(relationship).subscribe(() => {
       this.getAllFriend();
-      this.findAllUserNotFriend()
+      this.findAllUserNotFriend();
+      this.checkFriend();
+      this.getAllPostOfNewFeed();
     });
   }
 
@@ -360,48 +377,22 @@ export class NewsFeedComponent implements OnInit {
   checkLinkPaste(link: string) {
     return link.match("http(s)?:\/\/");
   }
-  checkFriend(): string {
-    for (let i = 0; i < this.friendList.length; i++) {
-      if (this.friendList[i].id == this.user.id) {
-        return "friend";
-      }
-    }
-    for (let i = 0; i < this.friendListConfirmTo.length; i++) {
-      if (this.friendListConfirmTo[i].id == this.user.id) {
-        return "cancel request";
-      }
-    }
-    for (let i = 0; i < this.friendListConfirmFrom.length; i++) {
-      if (this.friendListConfirmFrom[i].id == this.user.id) {
-        return "confirm";
-      }
-    }
-    return "strange";
-  }
-  getAllPostOfUser(){
-    if (this.idUserPresent == this.id) {
-      this.timelineService.findAllById(this.id).subscribe((data1) => {
-        this.posts = data1.reverse()
-      });
-    } else {
-      this.timelineService.findPostOfTimeLine(this.id, this.idUserPresent).subscribe(data => {
-        this.posts = data.reverse();
-      });
-    }
-  }
+
   deleteRequest(idUser: any) {
     this.relationshipService.unfriend(this.idUserPresent, idUser).subscribe(() => {
-      this.checkFriend();
-      this.getAllPostOfUser();
+      this.getAllPostOfNewFeed();
       this.getAllFriend();
+      this.findAllUserNotFriend();
+      this.checkFriend();
     });
   }
 
   confirm(idUser: any) {
     this.relationshipService.confirm(this.idUserPresent, idUser).subscribe(() => {
-      this.checkFriend();
-      this.getAllPostOfUser();
+      this.getAllPostOfNewFeed();
       this.getAllFriend();
+      this.findAllUserNotFriend();
+      this.checkFriend();
     });
   }
 }

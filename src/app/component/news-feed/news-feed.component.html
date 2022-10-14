@@ -584,9 +584,9 @@
                 <aside class="sidebar static">
                   <div class="widget">
                     <h4 class="widget-title" style="margin-bottom: 30px">Friend Requests</h4>
-                    <div></div>
                     <ul class="followers">
-                      <li *ngFor="let f of friendListConfirmFrom" style="display: flex;flex-direction: column" class="request-action">
+                      <li *ngFor="let f of friendListConfirmFrom" style="display: flex;flex-direction: column"
+                          class="request-action">
                         <div>
                           <figure>
                             <img src="{{f.avatar}}" alt="">
@@ -595,17 +595,12 @@
                             <h4 style="width: 150px"><a routerLink="/timeLine/{{f.id}}">{{f.fullName}}</a></h4>
                           </div>
                         </div>
-                        <div style="position:relative; margin-bottom: 25px" >
-                          <!--                          <a title="" class="underline" data-ripple="" (click)="deleteRequest(f.id)"-->
-                          <!--                             style=" padding: 8px; margin-top: -10px">Cancel</a>-->
-                          <!--                          <a title="" class="underline" data-ripple="" (click)="confirm(f.id)"-->
-                          <!--                             style=" padding: 8px; margin-top: -10px">Accept</a>-->
+                        <div style="position:relative; margin-bottom: 25px">
                           <a title="" class="add-butn more-action"
                              data-ripple="" (click)="deleteRequest(f.id)"
-                             style="color: white; border-radius: 10px; padding: 8px; margin-top: -10px">Cancel</a>
+                             style="color: white;border-radius: 10px;width: 75px;margin-top: -13px;font-size: 15px;text-align: center;margin-right: 60px;">Cancel</a>
                           <a title="" class="add-butn" data-ripple="" (click)="confirm(f.id)"
-                             style="color: white; border-radius: 10px; padding: 8px; margin-top: -10px">Accept</a>
-
+                             style="color: white;border-radius: 10px;width: 75px;margin-top: -13px;font-size: 15px;text-align: center;margin-right: 50px;">Accept</a>
                         </div>
                       </li>
                     </ul>
