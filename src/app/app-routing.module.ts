@@ -6,6 +6,7 @@ import {TimeLineComponent} from "./component/time-line/time-line.component";
 import {FriendsComponent} from "./component/friends/friends.component";
 import {EditProfileComponent} from "./component/edit-profile/edit-profile.component";
 
+
 const routes: Routes = [
 
   { path: '', component: UsersComponent },

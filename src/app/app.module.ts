@@ -15,7 +15,6 @@ import { TimeLineComponent } from './component/time-line/time-line.component';
 import {FriendsComponent} from "./component/friends/friends.component";
 
 import {EditProfileComponent} from "./component/edit-profile/edit-profile.component";
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +24,9 @@ import {EditProfileComponent} from "./component/edit-profile/edit-profile.compon
     FriendsComponent,
     NewsFeedComponent,
     EditProfileComponent,
+
+
+
   ],
   imports: [
     BrowserModule,
@@ -40,3 +42,6 @@ import {EditProfileComponent} from "./component/edit-profile/edit-profile.compon
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+

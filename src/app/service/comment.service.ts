@@ -20,4 +20,7 @@ export class CommentService {
   public delete(idCmt: any): Observable<any> {
     return this.httpClient.delete("http://localhost:8080/comments/delete/" + idCmt);
   }
+ public update(idCmt:any,comment :Comments) : Observable<Comments>{
+    return this.httpClient.put<Comments>("http://localhost:8080/comments/update/"+ idCmt,comment);
+ }
 }

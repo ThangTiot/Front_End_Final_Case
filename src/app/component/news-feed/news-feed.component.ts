@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from "../../model/User";
 import {UsersService} from "../../service/users.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -15,13 +15,16 @@ import {CommentService} from "../../service/comment.service";
 import {Comments} from "../../model/Comments";
 
 
+
 @Component({
   selector: 'app-news-feed',
   templateUrl: './news-feed.component.html',
   styleUrls: ['./news-feed.component.css']
 })
 export class NewsFeedComponent implements OnInit {
+
   userPresent!: User;
+
   formCreatePost!: FormGroup;
   formComment!: FormGroup;
   imageFile!: any;
@@ -35,9 +38,6 @@ export class NewsFeedComponent implements OnInit {
   likePostList!: LikePost[];
   allUserNotFriend!: User[];
   allComment!: Comments[];
-
-
-
   constructor(
     private formBuilder: FormBuilder,
     private storage: AngularFireStorage,
@@ -46,12 +46,13 @@ export class NewsFeedComponent implements OnInit {
     private userService: UsersService,
     private likePostService: LikePostService,
     private relationshipService: RelationshipService,
-    private commentService: CommentService
-
+    private commentService: CommentService,
+    private fb: FormBuilder
   ) {
   }
 
   ngOnInit(): void {
+
     this.formCreatePost = this.formBuilder.group({
       id: [""],
       content: ["", Validators.required],
@@ -325,20 +326,43 @@ export class NewsFeedComponent implements OnInit {
     }
   }
 
+  showUpdateCommentForm (cmt : any){
 
-  updateComment(id: any) {
-    let cmtContent = document.getElementById("cmt-content");
-    let input = document.getElementById("update-cmt");
+     // @ts-ignore
+    document.getElementById(`contentCmt${cmt.id}`).value= cmt.content
     // @ts-ignore
-    input.style.display ="block"
-    // @ts-ignore
-    cmtContent.style.display ="none"
+  document.getElementById(`cmt${cmt.id}`).style.display="block"
+
+  // @ts-ignore
+    document.getElementById(`cmtContent${cmt.id}`).style.display="none"
 
 
+}
+hideUpdateCommentForm (idCmt:any){
+  // @ts-ignore
+  document.getElementById(`cmt${idCmt}`).style.display="none"
 
+  // @ts-ignore
+  document.getElementById(`cmtContent${idCmt}`).style.display="block"
 
-
-  }
+}
+ updateComment (idCmt : any, evt: Event) {
+   // this.hideUpdateCommentForm(idCmt);
+   // @ts-ignore
+   let content = document.getElementById(`contentCmt${idCmt}`).value;
+   evt.preventDefault();
+   if (content == "") {
+     this.deleteComment(idCmt)
+   } else {
+     let comment = {
+       content: content
+     };
+     this.commentService.update(idCmt, comment).subscribe(() => {
+       this.getAllComment();
+       this.getAllPostOfNewFeed();
+     })
+   }
+ }
 
   deleteComment(idCmt: any) {
     Swal.fire({
@@ -377,4 +401,5 @@ export class NewsFeedComponent implements OnInit {
   checkLinkPaste(link: string) {
     return link.match("http(s)?:\/\/");
   }
+
 }
