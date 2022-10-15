@@ -87,7 +87,7 @@
                 <input type="password" id="rePass" formControlName="rePass" required="required" (input)="checkRePass()"/>
                 <label class="control-label" for="rePass">RePassword</label><i class="mtrl-select"></i>
               </div>
-              <div class="error" [hidden] = "checkRepass">
+              <div class="error" [hidden]="checkRepass">
                 RePassword is incorrect!
               </div>
               <div class="error" *ngIf="formSignUp.get('rePass')!.invalid && formSignUp.get('rePass')!.touched">
@@ -112,7 +112,7 @@
               </div>
               <a href="#" title="" class="already-have">Already have an account</a>
               <div class="submit-btns">
-                <button class="mtr-btn signin" type="submit" [disabled]="formSignUp.invalid"><span>Register</span></button>
+                <button class="mtr-btn signin" type="submit" [disabled]="formSignUp.invalid || !checkRepass"><span>Register</span></button>
               </div>
             </form>
           </div>

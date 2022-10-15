@@ -10,5 +10,4 @@ export interface User {
   address?: string;
   avatar?: string;
   hobby?: string;
-  blockAccount?: boolean;
 }

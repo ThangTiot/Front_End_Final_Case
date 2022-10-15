@@ -516,7 +516,7 @@
                       </div>
                       <div class="coment-area">
                         <ul class="we-comet">
-                          <li *ngFor="let cmt of getCommentByPost(post.id)">
+                          <li *ngFor="let cmt of getCommentByPost(post.id)" style="margin-bottom: 0">
                             <div class="comet-avatar">
                               <img [src]="cmt.users!.avatar" alt="" style="width: 45px">
                             </div>
@@ -524,7 +524,7 @@
                               <div class="coment-head">
                                 <h5><a routerLink="/timeLine/{{cmt.users!.id}}" title="">{{cmt.users!.fullName}}</a></h5>
                                 <span>{{cmt.dateCreate | date:'hh:mm:ss'}}</span>
-                                <a class="we-reply" title="Reply" *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)" (click)="showReplyCmt()"><i class="fa fa-reply"></i></a>
+                                <a class="we-reply" title="Reply" *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)" (click)="showReplyCmt(cmt.id)"><i class="fa fa-reply"></i></a>
                                 <span  class="like" data-toggle="tooltip" title="like">
 																<i class="ti-heart" *ngIf="!likeShowComment(cmt)" (click)="likeComment(cmt.id)" style="font-size: 13px"></i>
                                 <i class="fa fa-heart" *ngIf="likeShowComment(cmt)" (click)="disLikeComment(cmt.id)"
@@ -545,29 +545,46 @@
                               </form>
                             </div>
 <!--                            // CHild comment-->
-                            <ul *ngIf="cmt.parentComment != null">
-                              <li>
+                            <ul>
+                              <li *ngFor="let cmtChild of getCommentChildByComment(cmt.id)">
                                 <div class="comet-avatar">
-                                  <img src="assets/images/resources/comet-2.jpg" alt="">
+                                  <img [src]="cmtChild.users!.avatar" alt="" style="width: 35px; margin-left: 6px">
                                 </div>
                                 <div class="we-comment">
                                   <div class="coment-head">
-                                    <h5><a href="#" title="">alexendra dadrio</a></h5>
-                                    <span>1 month ago</span>
-                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
+                                    <h5><a routerLink="/timeLine/{{cmtChild.users!.id}}" title="">{{cmtChild.users!.fullName}}</a></h5>
+                                    <span>{{cmtChild.dateCreate | date:'hh:mm:ss'}}</span>
+                                    <label for="childCmtContent{{cmt.id}}"><a class="we-reply" title="Reply" *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)" (click)="showReplyCmt(cmt.id)"><i class="fa fa-reply"></i></a></label>
+                                    <span  class="like" data-toggle="tooltip" title="like">
+																<i class="ti-heart" *ngIf="!likeShowComment(cmtChild)" (click)="likeComment(cmtChild.id)" style="font-size: 13px"></i>
+                                <i class="fa fa-heart" *ngIf="likeShowComment(cmtChild)" (click)="disLikeComment(cmtChild.id)"
+                                   style="color: green; font-size: 13px"></i>
+																<ins *ngIf="cmtChild.likeCount != 0" style="text-decoration: none; margin-left: 2px">{{cmtChild.likeCount}}</ins>
+                                </span>
+                                    <a class="we-reply" title="Update" *ngIf="cmtChild.users!.id == idUserPresent">
+                                      <label for="contentCmt{{cmtChild.id}}"><i class="fa fa-pencil-square-o" aria-hidden="true" (click)="showUpdateCommentForm(cmtChild)"></i></label></a>
+                                    <a class="we-reply" title="Delete" *ngIf="cmtChild.users!.id == idUserPresent">
+                                      <i class="fa fa-trash-o" aria-hidden="true" (click)="deleteComment(cmtChild.id)"></i></a>
                                   </div>
-                                  <p>yes, really very awesome car i see the features of this car in the official website
-                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>
+                                  <p style="font-size: inherit" id="cmtContent{{cmtChild.id}}">{{cmtChild.content}}</p>
+                                  <form  id="cmt{{cmtChild.id}}" style="display: none">
+                                <textarea id="contentCmt{{cmtChild.id}}" class="comment-form-textarea" required minlength="1" name="name"
+                                          (keydown.enter)="updateComment(cmtChild.id,$event)"
+                                          (keydown.escape)="hideUpdateCommentForm(cmtChild.id)">{{cmtChild.content}}</textarea>
+
+                                  </form>
                                 </div>
                               </li>
-                              <li class="post-comment">
+                              <li id="reply{{cmt.id}}" class="post-comment" style="display: none; margin-bottom: 10px">
                                 <div class="comet-avatar">
-                                  <img [src]="userPresent.avatar" alt="">
+                                  <img [src]="userPresent.avatar" alt="" style="margin-left: 6px">
                                 </div>
                                 <div class="post-comt-box">
-                                  <form method="post" [formGroup]="formComment">
-                                    <input type="text" formControlName="id" hidden>
-                                    <textarea id="commentChild" placeholder="Post your comment" formControlName="comment" (keydown.enter)="createComment(post.id,$event)"></textarea>
+                                  <form method="post">
+                                    <textarea id="childCmtContent{{cmt.id}}" placeholder="Post your comment"
+                                              (keydown.enter)="createCommentChild(post.id,cmt.id,$event)"
+                                              (keydown.escape)="hideReply(cmt.id)"
+                                    ></textarea>
                                   </form>
                                 </div>
                               </li>
@@ -575,12 +592,11 @@
                           </li>
                           <li class="post-comment" *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)">
                             <div class="comet-avatar">
-                              <img [src]="userPresent.avatar" alt="">
+                              <img [src]="userPresent.avatar" alt="" style="max-width: 40px">
                             </div>
                             <div class="post-comt-box">
                               <form method="post" [formGroup]="formComment">
-                                <input type="text" formControlName="id" hidden>
-                                <textarea id="comment" placeholder="Post your comment" formControlName="comment" (keydown.enter)="createComment(post.id,$event)"></textarea>
+                                <textarea placeholder="Post your comment" formControlName="comment" (keydown.enter)="createComment(post.id,$event)"></textarea>
                               </form>
                             </div>
                           </li>

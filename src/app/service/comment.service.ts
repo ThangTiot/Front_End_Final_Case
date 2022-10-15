@@ -11,7 +11,10 @@ export class CommentService {
   constructor(private httpClient: HttpClient) { }
 
   public findAll(): Observable<Comments[]> {
-    return this.httpClient.get<Comments[]>("http://localhost:8080/comments/findAll");
+    return this.httpClient.get<Comments[]>("http://localhost:8080/comments/findAllCommentParent");
+  }
+  public findAllCommentChild(): Observable<Comments[]> {
+    return this.httpClient.get<Comments[]>("http://localhost:8080/comments/findAllCommentChild");
   }
 
   public create(comment: any): Observable<Comments> {

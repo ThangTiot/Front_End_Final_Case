@@ -8,5 +8,5 @@ export interface Comments {
   dateCreate?: Date;
   posts?: Post;
   users?: User;
-  parentComment?: Comments;
+  idParentComment?: number;
 }

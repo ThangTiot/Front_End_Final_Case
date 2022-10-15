@@ -1872,7 +1872,7 @@ for some reason nth-child(1) is always busy and elements starting from 2 */
     line-height: 26px;
     margin-bottom: 0;
     max-width: 100%;
-    margin-top: 5px;
+    margin-top: 0;
 }
 
 .we-reply {

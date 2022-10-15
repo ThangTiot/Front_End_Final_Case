@@ -38,6 +38,7 @@ export class NewsFeedComponent implements OnInit {
   likePostList!: LikePost[];
   allUserNotFriend!: User[];
   allComment!: Comments[];
+  allCommentChild!: Comments[];
   likeCommentList!: LikeComment[];
   constructor(
     private formBuilder: FormBuilder,
@@ -70,6 +71,7 @@ export class NewsFeedComponent implements OnInit {
     this.getAllLikePost();
     this.findAllUserNotFriend();
     this.getAllComment();
+    this.getAllCommentChild();
     this.getAllLikeComment();
   }
 
@@ -119,6 +121,12 @@ export class NewsFeedComponent implements OnInit {
     });
   }
 
+  getAllCommentChild() {
+    this.commentService.findAllCommentChild().subscribe(data => {
+      this.allCommentChild = data;
+    });
+  }
+
   getCommentByPost(idPost: any){
     let commentOfPost: Comments[] = [];
     for (let i = 0; i < this.allComment.length; i++) {
@@ -127,6 +135,15 @@ export class NewsFeedComponent implements OnInit {
       }
     }
     return commentOfPost;
+  }
+  getCommentChildByComment(idCmt: any){
+    let commentChild: Comments[] = [];
+    for (let i = 0; i < this.allCommentChild.length; i++) {
+      if (this.allCommentChild[i].idParentComment == idCmt) {
+        commentChild.push(this.allCommentChild[i]);
+      }
+    }
+    return commentChild;
   }
 
   showPreview(event: any) {
@@ -265,6 +282,7 @@ export class NewsFeedComponent implements OnInit {
       this.getAllLikeComment();
       this.getAllPostOfNewFeed();
       this.getAllComment();
+      this.getAllCommentChild();
     })
   }
 
@@ -287,6 +305,7 @@ export class NewsFeedComponent implements OnInit {
           this.getAllLikeComment();
           this.getAllPostOfNewFeed();
           this.getAllComment();
+          this.getAllCommentChild();
         })
       }
     }
@@ -385,7 +404,7 @@ export class NewsFeedComponent implements OnInit {
 
 
 }
-hideUpdateCommentForm (idCmt:any){
+  hideUpdateCommentForm (idCmt:any){
   // @ts-ignore
   document.getElementById(`cmt${idCmt}`).style.display="none"
 
@@ -393,6 +412,10 @@ hideUpdateCommentForm (idCmt:any){
   document.getElementById(`cmtContent${idCmt}`).style.display="block"
 
 }
+  hideReply (idCmt:any){
+    // @ts-ignore
+    document.getElementById(`reply${idCmt}`).style.display="none"
+  }
  updateComment (idCmt : any, evt: Event) {
    // this.hideUpdateCommentForm(idCmt);
    // @ts-ignore
@@ -407,6 +430,7 @@ hideUpdateCommentForm (idCmt:any){
      this.commentService.update(idCmt, comment).subscribe(() => {
        this.getAllComment();
        this.getAllPostOfNewFeed();
+       this.getAllCommentChild();
      })
    }
  }
@@ -424,9 +448,41 @@ hideUpdateCommentForm (idCmt:any){
         this.commentService.delete(idCmt).subscribe(() => {
           this.getAllComment();
           this.getAllPostOfNewFeed();
-          });
+          this.getAllCommentChild();
+        });
       }
     })
+  }
+
+  showReplyCmt(idCmtParent: any) {
+    // @ts-ignore
+    document.getElementById(`reply${idCmtParent}`).style.display = "block";
+  }
+
+  createCommentChild(idPost: any, idCmtParent: any, event: any) {
+    event.preventDefault();
+    // @ts-ignore
+    document.getElementById(`reply${idCmtParent}`).style.display = "none";
+    // @ts-ignore
+    let commentChildValue = document.getElementById(`childCmtContent${idCmtParent}`).value;
+    if (commentChildValue != "") {
+      let comment = {
+        content: commentChildValue,
+        posts: {
+          id: idPost,
+        },
+        idParentComment: idCmtParent,
+        users: {
+          id: this.idUserPresent,
+        }
+      };
+      this.commentService.create(comment).subscribe(() => {
+        this.getAllCommentChild();
+        this.getAllPostOfNewFeed();
+      });
+    } else {
+      this.hideReply(idCmtParent);
+    }
   }
 
   getPostValue() {
@@ -464,8 +520,6 @@ hideUpdateCommentForm (idCmt:any){
       this.findAllUserNotFriend();
     });
   }
-
-  showReplyCmt() {
-
-  }
 }
+
+
