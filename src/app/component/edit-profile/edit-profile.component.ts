@@ -43,7 +43,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.idUserPresent = sessionStorage.getItem("userPresentId");
+    this.idUserPresent = localStorage.getItem("userPresentId");
     this.formUserInfo = this.formBuilder.group({
         fullName: ["",[Validators.pattern(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/),Validators.required]],
         phone: [""],
@@ -257,7 +257,10 @@ export class EditProfileComponent implements OnInit {
       confirmButtonText: 'Yes, Logout!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.router.navigateByUrl('').then(() => location.reload());
+        this.router.navigateByUrl('').then(() => {
+          localStorage.clear();
+          location.reload()
+        });
       }
     })
   }

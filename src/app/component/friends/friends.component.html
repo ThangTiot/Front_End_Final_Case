@@ -98,9 +98,17 @@
   <section>
     <div class="feature-photo">
       <figure><img src="/assets/images/resources/timeline-1.jpg" alt=""></figure>
-      <div class="add-btn">
-        <span></span>
-        <a href="#" title="" data-ripple="">Add Friend</a>
+      <div class="add-btn" [ngSwitch]="checkFriend()" *ngIf="id != idUserPresent" style="color: white">
+        <a *ngSwitchCase="'friend'" title="" data-ripple="" (click)="unfriend(id)" style="padding: 6px 10px">
+          <i class="fa fa-user-times" aria-hidden="true" style="margin-right: 5px;font-size: 20px"></i>Unfriend</a>
+        <a *ngSwitchCase="'confirm'" title="" data-ripple="" (click)="confirm(id)" style="margin-right: 15px; padding: 6px 10px">
+          <i class="fa fa-check" aria-hidden="true" style="margin-right: 5px;font-size: 18px"></i>Confirm</a>
+        <a *ngSwitchCase="'confirm'" title="" data-ripple="" (click)="deleteRequest(id)" style="padding: 6px 10px">
+          <i class="fa fa-times" aria-hidden="true" style="margin-right: 5px;font-size: 18px"></i>Delete</a>
+        <a *ngSwitchCase="'cancel request'" title="" data-ripple="" (click)="deleteRequest(id)" style="padding: 6px 10px">
+          <i class="fa fa-user-times" aria-hidden="true" style="margin-right: 5px;font-size: 20px"></i>Cancel Request</a>
+        <a *ngSwitchCase="'strange'" title="" data-ripple="" (click)="addFriend(id)" style="padding: 6px 10px">
+          <i class="fa fa-user-plus" aria-hidden="true" style="margin-right: 5px;font-size: 20px"></i>Add Friend</a>
       </div>
       <form class="edit-phto">
         <i class="fa fa-camera-retro"></i>
@@ -177,7 +185,7 @@
                     <div class="tab-content">
                       <div class="tab-pane active fade show " id="frends" *ngIf="(checkFriend() == 'friend') || (id == idUserPresent)">
                         <ul class="nearby-contct" *ngFor="let f of friendList">
-                          <li>
+                          <li style="border-radius: 10px">
                             <div class="nearly-pepls">
                               <figure>
                                 <a href="#"
@@ -199,7 +207,7 @@
                       </div>
                       <div class="tab-pane fade" id="frends-req">
                         <ul class="nearby-contct" *ngFor="let f of friendListConfirmFrom">
-                          <li>
+                          <li style="border-radius: 10px">
                             <div class="nearly-pepls">
                               <figure>
                                 <a href="#"
@@ -210,13 +218,11 @@
                                 <h4><a routerLink="/timeLine/{{f.id}}"
                                        title="">{{f.fullName}}</a></h4>
                                 <a title="" class="add-butn more-action"
-                                   data-ripple="" (click)="deleteRequest(f.id)" style="color: white; padding: 8px; margin-top: -10px">delete Request</a>
-                                <a title="" class="add-butn" data-ripple="" (click)="confirm(f.id)" style="color: white; padding: 8px; margin-top: -10px">Confirm</a>
+                                   data-ripple="" (click)="deleteRequest(f.id)" style="color: white; padding: 8px; margin-top: -10px; border-radius: 10px">Delete</a>
+                                <a title="" class="add-butn" data-ripple="" (click)="confirm(f.id)" style="color: white; padding: 8px; margin-top: -10px; border-radius: 10px">Confirm</a>
                               </div>
                             </div>
                           </li>
-
-
                         </ul>
                       </div>
                       <div class="tab-pane fade" id="frends-muntual" *ngIf="(checkFriend() == 'friend')">

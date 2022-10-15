@@ -20,7 +20,7 @@ export class AboutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.idUserPresent = sessionStorage.getItem("userPresentId");
+    this.idUserPresent = localStorage.getItem("userPresentId");
 
     this.route.paramMap.subscribe(paramMap => {
       this.id = paramMap.get('id');

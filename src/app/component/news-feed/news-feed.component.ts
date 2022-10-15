@@ -63,7 +63,7 @@ export class NewsFeedComponent implements OnInit {
       comment: [""],
     })
     this.listPostOfNewFeed = [];
-    this.idUserPresent = sessionStorage.getItem("userPresentId");
+    this.idUserPresent = localStorage.getItem("userPresentId");
     this.getUserPresent();
     this.getAllFriend();
     this.getAllPostOfNewFeed();
@@ -211,7 +211,10 @@ export class NewsFeedComponent implements OnInit {
       confirmButtonText: 'Yes, Logout!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.router.navigateByUrl('').then(() => location.reload());
+        this.router.navigateByUrl('').then(() => {
+          localStorage.clear();
+          location.reload()
+        });
       }
     })
   }

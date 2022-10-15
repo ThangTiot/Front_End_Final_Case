@@ -77,7 +77,7 @@ export class TimeLineComponent implements OnInit {
     }
   }
   getUserPresent() {
-    this.idUserPresent = sessionStorage.getItem("userPresentId");
+    this.idUserPresent = localStorage.getItem("userPresentId");
     this.routerActive.paramMap.subscribe(paramMap => {
       this.id = paramMap.get('id');
       this.userService.findById(this.id).subscribe((data)=>{
@@ -92,6 +92,8 @@ export class TimeLineComponent implements OnInit {
     }
 
   }
+
+  // Danh sách bạn của user đang đăng nhập
   getAllFriend() {
     if (this.idUserPresent) {
       this.userService.findAllFriend(this.idUserPresent).subscribe(listFriend => {
@@ -193,7 +195,10 @@ export class TimeLineComponent implements OnInit {
       confirmButtonText: 'Yes, Logout!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.router.navigateByUrl('').then(() => location.reload());
+        this.router.navigateByUrl('').then(() => {
+          localStorage.clear();
+          location.reload()
+        });
       }
     })
   }
@@ -272,6 +277,7 @@ export class TimeLineComponent implements OnInit {
     this.imageSrc = "";
   }
 
+  // Kiểm tra mỗi quan hệ với dựa trên danh sách bạn của user đang đăng nhập
   checkFriend(): string {
     for (let i = 0; i < this.friendList.length; i++) {
       if (this.friendList[i].id == this.user.id) {

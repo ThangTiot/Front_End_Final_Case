@@ -25,7 +25,7 @@ export class FriendsComponent implements OnInit {
               private userService: UsersService) { }
 
   ngOnInit(): void {
-    this.idUserPresent = sessionStorage.getItem("userPresentId");
+    this.idUserPresent = localStorage.getItem("userPresentId");
     this.routerActive.paramMap.subscribe(paramMap => {
       this.id = paramMap.get('id');
       this.userService.findById(this.id).subscribe((data)=>{
@@ -41,6 +41,8 @@ export class FriendsComponent implements OnInit {
       });
     }
   }
+
+  // Danh sách bạn của đối phương chứ không phải user đang đăng nhập
   getAllFriend() {
     if (this.id) {
       this.userService.findAllFriend(this.id).subscribe(listFriend => {
@@ -55,6 +57,7 @@ export class FriendsComponent implements OnInit {
     }
   };
 
+  // Kiểm tra mỗi quan hệ với dựa trên danh sách bạn của đối phương
   checkFriend(): string {
     for (let i = 0; i < this.friendList.length; i++) {
       if (this.friendList[i].id == this.idUserPresent) {
@@ -63,15 +66,30 @@ export class FriendsComponent implements OnInit {
     }
     for (let i = 0; i < this.friendListConfirmTo.length; i++) {
       if (this.friendListConfirmTo[i].id == this.idUserPresent) {
-        return "cancel request";
+        return "confirm";
       }
     }
     for (let i = 0; i < this.friendListConfirmFrom.length; i++) {
       if (this.friendListConfirmFrom[i].id == this.idUserPresent) {
-        return "confirm";
+        return "cancel request";
       }
     }
     return "strange";
+  }
+  addFriend(idUser: any) {
+    let relationship = {
+      usersFrom: {
+        id: this.idUserPresent,
+      },
+      usersTo: {
+        id: idUser,
+      }
+    }
+    this.relationshipService.addFriend(relationship).subscribe(() => {
+      this.checkFriend();
+      this.getAllFriend();
+      this.getMutualFriends()
+    });
   }
 
   unfriend(idUser: any) {

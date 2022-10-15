@@ -169,7 +169,7 @@
         <li><a routerLink="newsFeed" title="Home" data-ripple=""><i class="ti-home"></i></a></li>
         <li>
           <a href="#" title="Notification" data-ripple="">
-            <i class="ti-bell"></i><span>20</span>
+            <i class="ti-bell"></i><span></span>
           </a>
           <div class="dropdowns">
             <span>4 New Notifications</span>
@@ -234,7 +234,7 @@
           </div>
         </li>
         <li>
-          <a href="#" title="Messages" data-ripple=""><i class="ti-comment"></i><span>12</span></a>
+          <a href="#" title="Messages" data-ripple=""><i class="ti-comment"></i><span></span></a>
           <div class="dropdowns">
             <span>5 New Messages</span>
             <ul class="drops-menu">
@@ -328,7 +328,7 @@
                       <figure>
                         <img src="{{userPresent.avatar}}" alt="" style="height: 35px; width: 35px; border-radius: 50%">
                       </figure>
-                      <span style="font-size: small; padding-left: 10px">{{userPresent.fullName}}</span>
+                      <span style="font-size: small; padding-left: 10px;" routerLink="/timeLine/{{idUserPresent}}">{{userPresent.fullName}}</span>
                     </h4>
                     <ul class="naves">
                       <li>
@@ -353,7 +353,7 @@
                       </li>
                     </ul>
                   </div><!-- Shortcuts -->
-                  <div class="widget stick-widget">
+                  <div class="widget stick-widget" *ngIf="allUserNotFriend.length != 0">
                     <h4 class="widget-title">People You May Know</h4>
                     <ul class="followers" *ngFor="let a of allUserNotFriend">
                       <li>
@@ -489,14 +489,14 @@
                               <li>
 															<span class="comment" data-toggle="tooltip" title="Comments">
 																<i class="fa fa-comments-o"></i>
-																<ins>{{post.commentCount}}</ins>
+																<ins *ngIf="post.commentCount != 0">{{post.commentCount}}</ins>
 															</span>
                               </li>
                               <li>
 															<span class="like" data-toggle="tooltip" title="like">
 																<i class="ti-heart" *ngIf="!likeShow(post)" (click)="likePost(post.id)"></i>
                                 <i class="fa fa-heart" *ngIf="likeShow(post)" (click)="disLikePost(post.id)"></i>
-																<ins>{{post.likeCount}}</ins>
+																<ins *ngIf="post.likeCount != 0">{{post.likeCount}}</ins>
 															</span>
                               </li>
                               <li *ngIf="post.users!.id == idUserPresent">
@@ -524,12 +524,12 @@
                               <div class="coment-head">
                                 <h5><a routerLink="/timeLine/{{cmt.users!.id}}" title="">{{cmt.users!.fullName}}</a></h5>
                                 <span>{{cmt.dateCreate | date:'hh:mm:ss'}}</span>
-                                <a class="we-reply" title="Reply"><i class="fa fa-reply"></i></a>
+                                <a class="we-reply" title="Reply" *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)"><i class="fa fa-reply"></i></a>
                                 <span  class="like" data-toggle="tooltip" title="like">
-																<i class="ti-heart" *ngIf="!likeShowComment(cmt)" (click)="likeComment(cmt.id)"></i>
+																<i class="ti-heart" *ngIf="!likeShowComment(cmt)" (click)="likeComment(cmt.id)" style="font-size: 13px"></i>
                                 <i class="fa fa-heart" *ngIf="likeShowComment(cmt)" (click)="disLikeComment(cmt.id)"
-                                style="color: green"></i>
-																<ins style="text-decoration: none; margin-left: 2px">{{cmt.likeCount}}</ins>
+                                style="color: green; font-size: 13px"></i>
+																<ins *ngIf="cmt.likeCount != 0" style="text-decoration: none; margin-left: 2px">{{cmt.likeCount}}</ins>
                                 </span>
                                 <a class="we-reply" title="Update" *ngIf="cmt.users!.id == idUserPresent">
                                   <label for="contentCmt{{cmt.id}}"><i class="fa fa-pencil-square-o" aria-hidden="true" (click)="showUpdateCommentForm(cmt)"></i></label></a>
@@ -543,30 +543,35 @@
                                           (keydown.escape)="hideUpdateCommentForm(cmt.id)">{{cmt.content}}</textarea>
 
                               </form>
-
                             </div>
-<!--                            <ul>-->
-<!--                              <li>-->
-<!--                                <div class="comet-avatar">-->
-<!--                                  <img src="assets/images/resources/comet-2.jpg" alt="">-->
-<!--                                </div>-->
-<!--                                <div class="we-comment">-->
-<!--                                  <div class="coment-head">-->
-<!--                                    <h5><a href="#" title="">alexendra dadrio</a></h5>-->
-<!--                                    <span>1 month ago</span>-->
-<!--                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>-->
-<!--                                  </div>-->
-<!--                                  <p>yes, really very awesome car i see the features of this car in the official website-->
-<!--                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>-->
-<!--                                </div>-->
-<!--                              </li>-->
-<!--                            </ul>-->
+                            <ul>
+                              <li>
+                                <div class="comet-avatar">
+                                  <img src="assets/images/resources/comet-2.jpg" alt="">
+                                </div>
+                                <div class="we-comment">
+                                  <div class="coment-head">
+                                    <h5><a href="#" title="">alexendra dadrio</a></h5>
+                                    <span>1 month ago</span>
+                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>
+                                  </div>
+                                  <p>yes, really very awesome car i see the features of this car in the official website
+                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>
+                                </div>
+                              </li>
+                              <li class="post-comment">
+                                <div class="comet-avatar">
+                                  <img [src]="userPresent.avatar" alt="">
+                                </div>
+                                <div class="post-comt-box">
+                                  <form method="post" [formGroup]="formComment">
+                                    <input type="text" formControlName="id" hidden>
+                                    <textarea id="commentChild" placeholder="Post your comment" formControlName="comment" (keydown.enter)="createComment(post.id,$event)"></textarea>
+                                  </form>
+                                </div>
+                              </li>
+                            </ul>
                           </li>
-
-<!--                          <li>-->
-<!--                            <a href="#" title="" class="showmore underline">more comments</a>-->
-<!--                          </li>-->
-
                           <li class="post-comment" *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)">
                             <div class="comet-avatar">
                               <img [src]="userPresent.avatar" alt="">
@@ -575,7 +580,6 @@
                               <form method="post" [formGroup]="formComment">
                                 <input type="text" formControlName="id" hidden>
                                 <textarea id="comment" placeholder="Post your comment" formControlName="comment" (keydown.enter)="createComment(post.id,$event)"></textarea>
-<!--                                <button type="submit" style="background: #088dcd; position: relative">Post</button>-->
                               </form>
                             </div>
                           </li>
@@ -588,9 +592,8 @@
               </div><!-- centerl meta -->
               <div class="col-lg-3">
                 <aside class="sidebar static">
-                  <div class="widget">
-                    <h4 class="widget-title" style="margin-bottom: 30px">Friend Requests</h4>
-                    <div></div>
+                  <div class="widget" *ngIf="friendListConfirmFrom.length != 0">
+                    <h4 class="widget-title" style="margin-bottom: 20px">Friend Requests</h4>
                     <ul class="followers">
                       <li *ngFor="let f of friendListConfirmFrom" style="display: flex;flex-direction: column"
                           class="request-action">
@@ -603,17 +606,17 @@
                           </div>
                         </div>
                         <div style="position:relative; margin-bottom: 25px">
+                          <a title="" class="add-butn" data-ripple="" (click)="confirm(f.id)"
+                             style="color: white;border-radius: 10px;width: 70px;margin-top: -13px;font-size: 15px;text-align: center;margin-right: 70px;">Confirm</a>
                           <a title="" class="add-butn more-action"
                              data-ripple="" (click)="deleteRequest(f.id)"
-                             style="color: white;border-radius: 10px;width: 75px;margin-top: -13px;font-size: 15px;text-align: center;margin-right: 60px;">Cancel</a>
-                          <a title="" class="add-butn" data-ripple="" (click)="confirm(f.id)"
-                             style="color: white;border-radius: 10px;width: 75px;margin-top: -13px;font-size: 15px;text-align: center;margin-right: 50px;">Accept</a>
+                             style="color: white;border-radius: 10px;width: 70px;margin-top: -13px;font-size: 15px;text-align: center;margin-right: -80px;">Delete</a>
                         </div>
                       </li>
                     </ul>
                   </div><!-- friends list sidebar -->
                   <div class="widget friend-list stick-widget">
-                    <h4 class="widget-title" style="margin-bottom: 30px">Friends</h4>
+                    <h4 class="widget-title" style="margin-bottom: 10px">Friends</h4>
                     <div id="searchDir"></div>
                     <ul id="people-list" class="friendz-list">
                       <li  *ngFor="let f of friendList">

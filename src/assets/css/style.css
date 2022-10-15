@@ -10078,4 +10078,7 @@ aside.sidebar.full-style {
   font-size: 13px;
   margin-top: -5px;
 }
+i:hover {
+  cursor: pointer;
+}
 

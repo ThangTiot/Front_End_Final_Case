@@ -15,6 +15,7 @@ export class UsersComponent implements OnInit {
   signInError: boolean = false;
   checkUsername: boolean = false;
   checkRepass: boolean = true;
+  idUserPresent!: any;
 
   constructor(private formBuilder: FormBuilder,
               private userService: UsersService,
@@ -22,7 +23,10 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    sessionStorage.clear();
+    this.idUserPresent = localStorage.getItem("userPresentId");
+    if (this.idUserPresent) {
+      this.router.navigateByUrl('newsFeed').then(() => location.reload());
+    }
     this.formSignIn = this.formBuilder.group(
       {
         id: "",
@@ -51,7 +55,7 @@ export class UsersComponent implements OnInit {
       if (value != null) {
         let userPresentId = value.id;
         // @ts-ignore
-        sessionStorage.setItem("userPresentId", userPresentId);
+        localStorage.setItem("userPresentId", userPresentId);
         this.router.navigateByUrl('newsFeed').then(() => location.reload());
       } else {
         this.signInError = true;
