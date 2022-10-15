@@ -14,6 +14,8 @@ import {Post} from "../../model/Post";
 import {RelationshipService} from "../../service/relationship.service";
 import {Comments} from "../../model/Comments";
 import {CommentService} from "../../service/comment.service";
+import {LikeComment} from "../../model/LikeComment";
+import {LikeCommentService} from "../../service/like-comment.service";
 
 @Component({
   selector: 'app-time-line',
@@ -37,6 +39,7 @@ export class TimeLineComponent implements OnInit {
   idUserPresent!: any;
   likePostList!: LikePost[];
   allComment!: Comments[];
+  likeCommentList!: LikeComment[];
 
   constructor(private timelineService: TimelineService,
               private routerActive: ActivatedRoute,
@@ -47,7 +50,8 @@ export class TimeLineComponent implements OnInit {
               private userService: UsersService,
               private likePostService: LikePostService,
               private relationshipService: RelationshipService,
-              private commentService: CommentService
+              private commentService: CommentService,
+              private likeCommentService: LikeCommentService,
   ) { }
 
   ngOnInit(): void {
@@ -64,6 +68,7 @@ export class TimeLineComponent implements OnInit {
     this.getAllFriend();
     this.getAllLikePost();
     this.getAllComment();
+    this.getAllLikeComment();
   }
   getAllPostOfUser(){
     if (this.idUserPresent == this.id) {
@@ -112,6 +117,11 @@ export class TimeLineComponent implements OnInit {
     this.likePostService.findAllByUser(this.idUserPresent).subscribe(data => {
       this.likePostList = data;
     });
+  }
+  getAllLikeComment() {
+    this.likeCommentService.findAllByUser(this.idUserPresent).subscribe(data => {
+      this.likeCommentList = data
+    })
   }
   getAllComment() {
     this.commentService.findAll().subscribe(data => {
@@ -210,6 +220,14 @@ export class TimeLineComponent implements OnInit {
     }
     return false;
   }
+  likeShowComment(cmt: Comments) {
+    for (let i = 0; i < this.likeCommentList.length; i++) {
+      if (this.likeCommentList[i].comments!.id == cmt.id) {
+        return true;
+      }
+    }
+    return false;
+  }
   likePost(idPost: any) {
     let likePost = {
       users: {
@@ -225,6 +243,21 @@ export class TimeLineComponent implements OnInit {
       }
     );
   }
+  likeComment(idComment: any) {
+    let likeComment = {
+      users: {
+        id: this.idUserPresent,
+      },
+      comments: {
+        id: idComment,
+      }
+    }
+    this.likeCommentService.likeComment(likeComment).subscribe(() => {
+      this.getAllLikeComment();
+      this.getAllPostOfUser();
+      this.getAllComment();
+    })
+  }
   disLikePost(idPost: any) {
     for (let i = 0; i < this.likePostList.length; i++) {
       if ((this.likePostList[i].post!.id == idPost) && (this.likePostList[i].users!.id == this.idUserPresent)) {
@@ -233,6 +266,17 @@ export class TimeLineComponent implements OnInit {
             this.getAllPostOfUser()
           }
         );
+      }
+    }
+  }
+  disLikeComment(idComment:any){
+    for (let i = 0 ; i < this.likeCommentList.length; i++){
+      if (this.likeCommentList[i].comments!.id == idComment) {
+        this.likeCommentService.disLikeComment(this.likeCommentList[i].id).subscribe(()=>{
+          this.getAllLikeComment();
+          this.getAllPostOfUser();
+          this.getAllComment();
+        })
       }
     }
   }
@@ -388,5 +432,9 @@ export class TimeLineComponent implements OnInit {
         });
       }
     })
+  }
+
+  showReplyCmt() {
+
   }
 }

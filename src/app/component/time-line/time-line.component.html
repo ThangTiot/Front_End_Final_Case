@@ -685,8 +685,13 @@
                               <div class="coment-head">
                                 <h5><a routerLink="/timeLine/{{cmt.users!.id}}" title="">{{cmt.users!.fullName}}</a></h5>
                                 <span>{{cmt.dateCreate | date:'hh:mm:ss'}}</span>
-                                <a class="we-reply" title="Reply"><i class="fa fa-reply"></i></a>
-                                <a class="we-reply" title="Heart"><i class="ti-heart"></i></a>
+                                <a class="we-reply" title="Reply" *ngIf="checkFriend() || (p.users!.id == idUserPresent)" (click)="showReplyCmt()"><i class="fa fa-reply"></i></a>
+                                <span  class="like" data-toggle="tooltip" title="like">
+																<i class="ti-heart" *ngIf="!likeShowComment(cmt)" (click)="likeComment(cmt.id)" style="font-size: 13px"></i>
+                                <i class="fa fa-heart" *ngIf="likeShowComment(cmt)" (click)="disLikeComment(cmt.id)"
+                                   style="color: green; font-size: 13px"></i>
+																<ins *ngIf="cmt.likeCount != 0" style="text-decoration: none; margin-left: 2px">{{cmt.likeCount}}</ins>
+                                </span>
                                 <a class="we-reply" title="Update" *ngIf="cmt.users!.id == idUserPresent">
                                   <i class="fa fa-pencil-square-o" aria-hidden="true" (click)="updateComment(cmt.id)"></i></a>
                                 <a class="we-reply" title="Delete" *ngIf="cmt.users!.id == idUserPresent">

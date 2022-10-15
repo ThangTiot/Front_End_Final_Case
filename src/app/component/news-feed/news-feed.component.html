@@ -524,7 +524,7 @@
                               <div class="coment-head">
                                 <h5><a routerLink="/timeLine/{{cmt.users!.id}}" title="">{{cmt.users!.fullName}}</a></h5>
                                 <span>{{cmt.dateCreate | date:'hh:mm:ss'}}</span>
-                                <a class="we-reply" title="Reply" *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)"><i class="fa fa-reply"></i></a>
+                                <a class="we-reply" title="Reply" *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)" (click)="showReplyCmt()"><i class="fa fa-reply"></i></a>
                                 <span  class="like" data-toggle="tooltip" title="like">
 																<i class="ti-heart" *ngIf="!likeShowComment(cmt)" (click)="likeComment(cmt.id)" style="font-size: 13px"></i>
                                 <i class="fa fa-heart" *ngIf="likeShowComment(cmt)" (click)="disLikeComment(cmt.id)"
@@ -544,7 +544,8 @@
 
                               </form>
                             </div>
-                            <ul>
+<!--                            // CHild comment-->
+                            <ul *ngIf="cmt.parentComment != null">
                               <li>
                                 <div class="comet-avatar">
                                   <img src="assets/images/resources/comet-2.jpg" alt="">
@@ -570,7 +571,7 @@
                                   </form>
                                 </div>
                               </li>
-                            </ul>
+                            </ul><!-- child comment -->
                           </li>
                           <li class="post-comment" *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)">
                             <div class="comet-avatar">

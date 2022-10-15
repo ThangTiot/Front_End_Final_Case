@@ -110,7 +110,6 @@ export class NewsFeedComponent implements OnInit {
   getAllLikeComment() {
     this.likeCommentService.findAllByUser(this.idUserPresent).subscribe(data => {
       this.likeCommentList = data
-      console.log(this.likeCommentList)
     })
   }
 
@@ -464,5 +463,9 @@ hideUpdateCommentForm (idCmt:any){
       this.getAllFriend();
       this.findAllUserNotFriend();
     });
+  }
+
+  showReplyCmt() {
+
   }
 }
