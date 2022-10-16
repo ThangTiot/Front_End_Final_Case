@@ -472,7 +472,8 @@
                         </figure>
                         <div class="friend-name">
                           <ins><a routerLink="/timeLine/{{post.users!.id}}" title="">{{post.users!.fullName}}</a></ins>
-                          <span style="font-size: 12px; margin-top: -3px">{{(post.createDate)| date:'hh:mm:ss'}}
+                          <span style="font-size: 12px; margin-top: -3px">{{(post.createDate)| date:"EEE, MMM d"}}
+                            <span style="vertical-align: super">.</span>
                             <span [ngSwitch]="post.permissionPost" style="font-size: medium; margin-left: 3px">
                             <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'"></i>
                             <i class="fa fa-users" aria-hidden="true" *ngSwitchCase="'friend'"></i>
@@ -523,7 +524,7 @@
                             <div class="we-comment">
                               <div class="coment-head">
                                 <h5><a routerLink="/timeLine/{{cmt.users!.id}}" title="">{{cmt.users!.fullName}}</a></h5>
-                                <span>{{cmt.dateCreate | date:'hh:mm:ss'}}</span>
+                                <span>{{cmt.dateCreate | date:"EEE, MMM d"}}</span>
                                 <a class="we-reply" title="Reply" *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)" (click)="showReplyCmt(cmt.id)"><i class="fa fa-reply"></i></a>
                                 <span  class="like" data-toggle="tooltip" title="like">
 																<i class="ti-heart" *ngIf="!likeShowComment(cmt)" (click)="likeComment(cmt.id)" style="font-size: 13px"></i>
@@ -553,7 +554,7 @@
                                 <div class="we-comment">
                                   <div class="coment-head">
                                     <h5><a routerLink="/timeLine/{{cmtChild.users!.id}}" title="">{{cmtChild.users!.fullName}}</a></h5>
-                                    <span>{{cmtChild.dateCreate | date:'hh:mm:ss'}}</span>
+                                    <span>{{cmtChild.dateCreate | date:"EEE, MMM d"}}</span>
                                     <label for="childCmtContent{{cmt.id}}"><a class="we-reply" title="Reply" *ngIf="checkFriend(post.users!.id) || (post.users!.id == idUserPresent)" (click)="showReplyCmt(cmt.id)"><i class="fa fa-reply"></i></a></label>
                                     <span  class="like" data-toggle="tooltip" title="like">
 																<i class="ti-heart" *ngIf="!likeShowComment(cmtChild)" (click)="likeComment(cmtChild.id)" style="font-size: 13px"></i>
@@ -571,7 +572,6 @@
                                 <textarea id="contentCmt{{cmtChild.id}}" class="comment-form-textarea" required minlength="1" name="name"
                                           (keydown.enter)="updateComment(cmtChild.id,$event)"
                                           (keydown.escape)="hideUpdateCommentForm(cmtChild.id)">{{cmtChild.content}}</textarea>
-
                                   </form>
                                 </div>
                               </li>

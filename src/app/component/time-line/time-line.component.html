@@ -414,7 +414,7 @@
   <section>
     <div class="feature-photo">
       <figure><img src="../../../assets/images/resources/timeline-1.jpg" alt=""></figure>
-      <div class="add-btn" [ngSwitch]="checkFriend()" *ngIf="id != idUserPresent" style="color: white">
+      <div class="add-btn" [ngSwitch]="checkRelationShip()" *ngIf="id != idUserPresent" style="color: white">
         <a *ngSwitchCase="'friend'" title="" data-ripple="" (click)="unfriend(id)" style="padding: 6px 10px">
           <i class="fa fa-user-times" aria-hidden="true" style="margin-right: 5px;font-size: 20px"></i>Unfriend</a>
         <a *ngSwitchCase="'confirm'" title="" data-ripple="" (click)="confirm(id)" style="margin-right: 15px; padding: 6px 10px">
@@ -457,12 +457,8 @@
                 </li>
                 <li>
                   <a class="active" href="time-line.html" title="" data-ripple="">time line</a>
-                  <a class="" href="timeline-photos.html" title="" data-ripple="">Photos</a>
-                  <a class="" href="timeline-videos.html" title="" data-ripple="">Videos</a>
                   <a class="" [routerLink]="'/friends/'+ user.id"  title="" data-ripple="">Friends</a>
-                  <a class="" href="timeline-groups.html" title="" data-ripple="">Groups</a>
                   <a class="" [routerLink]="'/edit-profile/'+ user.id " title="" data-ripple="">about</a>
-                  <a class="" href="#" title="" data-ripple="">more</a>
                 </li>
               </ul>
             </div>
@@ -633,7 +629,7 @@
                         </figure>
                         <div class="friend-name">
                           <ins><a href="time-line.html" title=""></a>{{user.fullName}}</ins>
-                          <span style="font-size: 12px; margin-top: -3px">{{(p.createDate)| date:'hh:mm:ss'}}
+                          <span style="font-size: 12px; margin-top: -3px">{{(p.createDate)| date:"EEE, MMM d"}}
                             <span [ngSwitch]="p.permissionPost" style="font-size: medium; margin-left: 3px">
                             <i class="fa fa-globe" aria-hidden="true" *ngSwitchCase="'public'"></i>
                             <i class="fa fa-users" aria-hidden="true" *ngSwitchCase="'friend'"></i>
@@ -650,14 +646,14 @@
                               <li>
                                 <span class="comment" data-toggle="tooltip" title="Comments">
                                   <i class="fa fa-comments-o"></i>
-                                  <ins>{{p.commentCount}}</ins>
+                                  <ins  *ngIf="p.commentCount != 0">{{p.commentCount}}</ins>
                                 </span>
                               </li>
                               <li>
                                 <span class="like" data-toggle="tooltip" title="like">
                                   <i class="ti-heart" *ngIf="!likeShow(p)" (click)="likePost(p.id)"></i>
                                   <i class="fa fa-heart" *ngIf="likeShow(p)" (click)="disLikePost(p.id)"></i>
-                                  <ins>{{p.likeCount}}</ins>
+                                  <ins *ngIf="p.likeCount != 0">{{p.likeCount}}</ins>
                                 </span>
                               </li>
                               <li *ngIf="p.users!.id == idUserPresent">
@@ -677,15 +673,15 @@
                       </div>
                       <div class="coment-area">
                         <ul class="we-comet">
-                          <li *ngFor="let cmt of getCommentByPost(p.id)">
+                          <li *ngFor="let cmt of getCommentByPost(p.id)" style="margin-bottom: 0">
                             <div class="comet-avatar">
                               <img [src]="cmt.users!.avatar" alt="" style="width: 45px">
                             </div>
                             <div class="we-comment">
                               <div class="coment-head">
                                 <h5><a routerLink="/timeLine/{{cmt.users!.id}}" title="">{{cmt.users!.fullName}}</a></h5>
-                                <span>{{cmt.dateCreate | date:'hh:mm:ss'}}</span>
-                                <a class="we-reply" title="Reply" *ngIf="checkFriend() || (p.users!.id == idUserPresent)" (click)="showReplyCmt()"><i class="fa fa-reply"></i></a>
+                                <span>{{cmt.dateCreate | date:"EEE, MMM d"}}</span>
+                                <a class="we-reply" title="Reply" *ngIf="checkFriend() || (p.users!.id == idUserPresent)" (click)="showReplyCmt(cmt.id)"><i class="fa fa-reply"></i></a>
                                 <span  class="like" data-toggle="tooltip" title="like">
 																<i class="ti-heart" *ngIf="!likeShowComment(cmt)" (click)="likeComment(cmt.id)" style="font-size: 13px"></i>
                                 <i class="fa fa-heart" *ngIf="likeShowComment(cmt)" (click)="disLikeComment(cmt.id)"
@@ -693,43 +689,70 @@
 																<ins *ngIf="cmt.likeCount != 0" style="text-decoration: none; margin-left: 2px">{{cmt.likeCount}}</ins>
                                 </span>
                                 <a class="we-reply" title="Update" *ngIf="cmt.users!.id == idUserPresent">
-                                  <i class="fa fa-pencil-square-o" aria-hidden="true" (click)="updateComment(cmt.id)"></i></a>
+                                  <label for="contentCmt{{cmt.id}}"><i class="fa fa-pencil-square-o" aria-hidden="true" (click)="showUpdateCommentForm(cmt)"></i></label></a>
                                 <a class="we-reply" title="Delete" *ngIf="cmt.users!.id == idUserPresent">
                                   <i class="fa fa-trash-o" aria-hidden="true" (click)="deleteComment(cmt.id)"></i></a>
                               </div>
-                              <p style="font-size: inherit">{{cmt.content}}</p>
+                              <p style="font-size: inherit" id="cmtContent{{cmt.id}}">{{cmt.content}}</p>
+                              <form  id="cmt{{cmt.id}}" style="display: none">
+                                <textarea id="contentCmt{{cmt.id}}" class="comment-form-textarea" required minlength="1" name="name"
+                                          (keydown.enter)="updateComment(cmt.id,$event)"
+                                          (keydown.escape)="hideUpdateCommentForm(cmt.id)">{{cmt.content}}</textarea>
+
+                              </form>
                             </div>
-                            <!--                            <ul>-->
-                            <!--                              <li>-->
-                            <!--                                <div class="comet-avatar">-->
-                            <!--                                  <img src="assets/images/resources/comet-2.jpg" alt="">-->
-                            <!--                                </div>-->
-                            <!--                                <div class="we-comment">-->
-                            <!--                                  <div class="coment-head">-->
-                            <!--                                    <h5><a href="#" title="">alexendra dadrio</a></h5>-->
-                            <!--                                    <span>1 month ago</span>-->
-                            <!--                                    <a class="we-reply" href="#" title="Reply"><i class="fa fa-reply"></i></a>-->
-                            <!--                                  </div>-->
-                            <!--                                  <p>yes, really very awesome car i see the features of this car in the official website-->
-                            <!--                                    of <a href="#" title="">#Mercedes-Benz</a> and really impressed :-)</p>-->
-                            <!--                                </div>-->
-                            <!--                              </li>-->
-                            <!--                            </ul>-->
+                            <!--                            // CHild comment-->
+                            <ul>
+                              <li *ngFor="let cmtChild of getCommentChildByComment(cmt.id)">
+                                <div class="comet-avatar">
+                                  <img [src]="cmtChild.users!.avatar" alt="" style="width: 35px; margin-left: 6px">
+                                </div>
+                                <div class="we-comment">
+                                  <div class="coment-head">
+                                    <h5><a routerLink="/timeLine/{{cmtChild.users!.id}}" title="">{{cmtChild.users!.fullName}}</a></h5>
+                                    <span>{{cmtChild.dateCreate | date:"EEE, MMM d"}}</span>
+                                    <label for="childCmtContent{{cmt.id}}"><a class="we-reply" title="Reply" *ngIf="checkFriend() || (p.users!.id == idUserPresent)" (click)="showReplyCmt(cmt.id)"><i class="fa fa-reply"></i></a></label>
+                                    <span  class="like" data-toggle="tooltip" title="like">
+																<i class="ti-heart" *ngIf="!likeShowComment(cmtChild)" (click)="likeComment(cmtChild.id)" style="font-size: 13px"></i>
+                                <i class="fa fa-heart" *ngIf="likeShowComment(cmtChild)" (click)="disLikeComment(cmtChild.id)"
+                                   style="color: green; font-size: 13px"></i>
+																<ins *ngIf="cmtChild.likeCount != 0" style="text-decoration: none; margin-left: 2px">{{cmtChild.likeCount}}</ins>
+                                </span>
+                                    <a class="we-reply" title="Update" *ngIf="cmtChild.users!.id == idUserPresent">
+                                      <label for="contentCmt{{cmtChild.id}}"><i class="fa fa-pencil-square-o" aria-hidden="true" (click)="showUpdateCommentForm(cmtChild)"></i></label></a>
+                                    <a class="we-reply" title="Delete" *ngIf="cmtChild.users!.id == idUserPresent">
+                                      <i class="fa fa-trash-o" aria-hidden="true" (click)="deleteComment(cmtChild.id)"></i></a>
+                                  </div>
+                                  <p style="font-size: inherit" id="cmtContent{{cmtChild.id}}">{{cmtChild.content}}</p>
+                                  <form  id="cmt{{cmtChild.id}}" style="display: none">
+                                <textarea id="contentCmt{{cmtChild.id}}" class="comment-form-textarea" required minlength="1" name="name"
+                                          (keydown.enter)="updateComment(cmtChild.id,$event)"
+                                          (keydown.escape)="hideUpdateCommentForm(cmtChild.id)">{{cmtChild.content}}</textarea>
+                                  </form>
+                                </div>
+                              </li>
+                              <li id="reply{{cmt.id}}" class="post-comment" style="display: none; margin-bottom: 10px">
+                                <div class="comet-avatar">
+                                  <img [src]="userPresent.avatar" alt="" style="margin-left: 6px">
+                                </div>
+                                <div class="post-comt-box">
+                                  <form method="post">
+                                    <textarea id="childCmtContent{{cmt.id}}" placeholder="Post your comment"
+                                              (keydown.enter)="createCommentChild(p.id,cmt.id,$event)"
+                                              (keydown.escape)="hideReply(cmt.id)"
+                                    ></textarea>
+                                  </form>
+                                </div>
+                              </li>
+                            </ul><!-- child comment -->
                           </li>
-
-                          <!--                          <li>-->
-                          <!--                            <a href="#" title="" class="showmore underline">more comments</a>-->
-                          <!--                          </li>-->
-
-                          <li class="post-comment" *ngIf="checkFriend() == 'friend' || (p.users!.id == idUserPresent)">
+                          <li class="post-comment" *ngIf="checkFriend() || (p.users!.id == idUserPresent)">
                             <div class="comet-avatar">
-                              <img [src]="userPresent.avatar" alt="">
+                              <img [src]="userPresent.avatar" alt="" style="max-width: 40px">
                             </div>
                             <div class="post-comt-box">
                               <form method="post" [formGroup]="formComment">
-                                <input type="text" formControlName="id" hidden>
-                                <textarea id="comment" placeholder="Post your comment" formControlName="comment" (keydown.enter)="createComment(p.id)"></textarea>
-                                <!--                                <button type="submit" style="background: #088dcd; position: relative">Post</button>-->
+                                <textarea id="comment" placeholder="Post your comment" formControlName="comment" (keydown.enter)="createComment(p.id,$event)"></textarea>
                               </form>
                             </div>
                           </li>

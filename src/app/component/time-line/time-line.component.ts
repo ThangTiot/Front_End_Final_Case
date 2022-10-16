@@ -39,6 +39,7 @@ export class TimeLineComponent implements OnInit {
   idUserPresent!: any;
   likePostList!: LikePost[];
   allComment!: Comments[];
+  allCommentChild!: Comments[];
   likeCommentList!: LikeComment[];
 
   constructor(private timelineService: TimelineService,
@@ -69,6 +70,7 @@ export class TimeLineComponent implements OnInit {
     this.getAllLikePost();
     this.getAllComment();
     this.getAllLikeComment();
+    this.getAllCommentChild();
   }
   getAllPostOfUser(){
     if (this.idUserPresent == this.id) {
@@ -128,6 +130,11 @@ export class TimeLineComponent implements OnInit {
       this.allComment = data;
     });
   }
+  getAllCommentChild() {
+    this.commentService.findAllCommentChild().subscribe(data => {
+      this.allCommentChild = data;
+    });
+  }
 
   getCommentByPost(idPost: any){
     let commentOfPost: Comments[] = [];
@@ -138,6 +145,17 @@ export class TimeLineComponent implements OnInit {
     }
     return commentOfPost;
   }
+
+  getCommentChildByComment(idCmt: any){
+    let commentChild: Comments[] = [];
+    for (let i = 0; i < this.allCommentChild.length; i++) {
+      if (this.allCommentChild[i].idParentComment == idCmt) {
+        commentChild.push(this.allCommentChild[i]);
+      }
+    }
+    return commentChild;
+  }
+
   showPreview(event: any) {
     this.imageFile = event.target.files[0]
     this.disablePost = true;
@@ -194,6 +212,7 @@ export class TimeLineComponent implements OnInit {
       });
     }
   }
+
   logout() {
     Swal.fire({
       title: 'Are you sure?',
@@ -256,6 +275,7 @@ export class TimeLineComponent implements OnInit {
       this.getAllLikeComment();
       this.getAllPostOfUser();
       this.getAllComment();
+      this.getAllCommentChild();
     })
   }
   disLikePost(idPost: any) {
@@ -276,6 +296,7 @@ export class TimeLineComponent implements OnInit {
           this.getAllLikeComment();
           this.getAllPostOfUser();
           this.getAllComment();
+          this.getAllCommentChild();
         })
       }
     }
@@ -322,7 +343,7 @@ export class TimeLineComponent implements OnInit {
   }
 
   // Kiểm tra mỗi quan hệ với dựa trên danh sách bạn của user đang đăng nhập
-  checkFriend(): string {
+  checkRelationShip(): string {
     for (let i = 0; i < this.friendList.length; i++) {
       if (this.friendList[i].id == this.user.id) {
         return "friend";
@@ -341,6 +362,15 @@ export class TimeLineComponent implements OnInit {
     return "strange";
   }
 
+  checkFriend() {
+    for (let i = 0; i < this.friendList.length; i++) {
+      if (this.friendList[i].id == this.id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   addFriend(idUser: any) {
     let relationship = {
       usersFrom: {
@@ -351,7 +381,7 @@ export class TimeLineComponent implements OnInit {
       }
     }
     this.relationshipService.addFriend(relationship).subscribe(() => {
-      this.checkFriend();
+      this.checkRelationShip();
       this.getAllPostOfUser();
       this.getAllFriend();
     });
@@ -368,7 +398,7 @@ export class TimeLineComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.relationshipService.unfriend(this.idUserPresent, idUser).subscribe(() => {
-          this.checkFriend();
+          this.checkRelationShip();
           this.getAllPostOfUser();
           this.getAllFriend();
         });
@@ -378,7 +408,7 @@ export class TimeLineComponent implements OnInit {
 
   deleteRequest(idUser: any) {
     this.relationshipService.unfriend(this.idUserPresent, idUser).subscribe(() => {
-      this.checkFriend();
+      this.checkRelationShip();
       this.getAllPostOfUser();
       this.getAllFriend();
     });
@@ -386,13 +416,14 @@ export class TimeLineComponent implements OnInit {
 
   confirm(idUser: any) {
     this.relationshipService.confirm(this.idUserPresent, idUser).subscribe(() => {
-      this.checkFriend();
+      this.checkRelationShip();
       this.getAllPostOfUser();
       this.getAllFriend();
     });
   }
-  createComment(idPost: any) {
-    let commentId = this.formComment.value.id;
+
+  createComment(idPost: any, evt: any) {
+    evt.preventDefault();
     let commentValue = this.formComment.value.comment;
     if (commentValue != null) {
       let comment = {
@@ -412,10 +443,6 @@ export class TimeLineComponent implements OnInit {
     }
   }
 
-  updateComment(id: any) {
-
-  }
-
   deleteComment(idCmt: any) {
     Swal.fire({
       title: 'Delete Comment ',
@@ -429,12 +456,81 @@ export class TimeLineComponent implements OnInit {
         this.commentService.delete(idCmt).subscribe(() => {
           this.getAllComment();
           this.getAllPostOfUser();
+          this.getAllCommentChild();
         });
       }
     })
   }
+  showUpdateCommentForm (cmt : any){
 
-  showReplyCmt() {
+    // @ts-ignore
+    document.getElementById(`contentCmt${cmt.id}`).value= cmt.content
+    // @ts-ignore
+    document.getElementById(`cmt${cmt.id}`).style.display="block"
 
+    // @ts-ignore
+    document.getElementById(`cmtContent${cmt.id}`).style.display="none"
+
+
+  }
+  hideUpdateCommentForm (idCmt:any){
+    // @ts-ignore
+    document.getElementById(`cmt${idCmt}`).style.display="none"
+
+    // @ts-ignore
+    document.getElementById(`cmtContent${idCmt}`).style.display="block"
+
+  }
+  hideReply (idCmt:any){
+    // @ts-ignore
+    document.getElementById(`reply${idCmt}`).style.display="none"
+  }
+  updateComment (idCmt : any, evt: Event) {
+    // this.hideUpdateCommentForm(idCmt);
+    // @ts-ignore
+    let content = document.getElementById(`contentCmt${idCmt}`).value;
+    evt.preventDefault();
+    if (content == "") {
+      this.deleteComment(idCmt)
+    } else {
+      let comment = {
+        content: content
+      };
+      this.commentService.update(idCmt, comment).subscribe(() => {
+        this.getAllComment();
+        this.getAllPostOfUser();
+        this.getAllCommentChild();
+      })
+    }
+  }
+  showReplyCmt(idCmtParent: any) {
+    // @ts-ignore
+    document.getElementById(`reply${idCmtParent}`).style.display = "block";
+  }
+
+  createCommentChild(idPost: any, idCmtParent: any, event: any) {
+    event.preventDefault();
+    // @ts-ignore
+    document.getElementById(`reply${idCmtParent}`).style.display = "none";
+    // @ts-ignore
+    let commentChildValue = document.getElementById(`childCmtContent${idCmtParent}`).value;
+    if (commentChildValue != "") {
+      let comment = {
+        content: commentChildValue,
+        posts: {
+          id: idPost,
+        },
+        idParentComment: idCmtParent,
+        users: {
+          id: this.idUserPresent,
+        }
+      };
+      this.commentService.create(comment).subscribe(() => {
+        this.getAllCommentChild();
+        this.getAllPostOfUser();
+      });
+    } else {
+      this.hideReply(idCmtParent);
+    }
   }
 }

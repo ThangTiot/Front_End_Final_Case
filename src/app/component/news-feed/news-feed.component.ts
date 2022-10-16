@@ -136,6 +136,7 @@ export class NewsFeedComponent implements OnInit {
     }
     return commentOfPost;
   }
+
   getCommentChildByComment(idCmt: any){
     let commentChild: Comments[] = [];
     for (let i = 0; i < this.allCommentChild.length; i++) {
