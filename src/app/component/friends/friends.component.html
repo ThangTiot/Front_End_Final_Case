@@ -78,7 +78,7 @@
         </li>
       </ul>
       <div class="user-img">
-        <img style="height:50px; width:50px" src="{{user.avatar}}" alt="">
+        <img style="height:50px; width:50px" src="{{userPresent.avatar}}" alt="">
         <span class="status f-online"></span>
         <div class="user-setting">
           <a href="#" title=""><span class="status f-online"></span>online</a>
@@ -97,7 +97,7 @@
 
   <section>
     <div class="feature-photo">
-      <figure><img src="/assets/images/resources/timeline-1.jpg" alt=""></figure>
+      <figure><img src="/assets/images/resources/background3.jpg" alt=""></figure>
       <div class="add-btn" [ngSwitch]="checkFriend()" *ngIf="id != idUserPresent" style="color: white">
         <a *ngSwitchCase="'friend'" title="" data-ripple="" (click)="unfriend(id)" style="padding: 6px 10px">
           <i class="fa fa-user-times" aria-hidden="true" style="margin-right: 5px;font-size: 20px"></i>Unfriend</a>

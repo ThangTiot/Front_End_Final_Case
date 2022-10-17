@@ -439,11 +439,11 @@
             <div class="user-avatar">
               <figure>
                 <img src = "{{user.avatar}}" alt="">
-                <form class="edit-phto">
+                <form class="edit-phto" *ngIf="id == idUserPresent">
                   <i class="fa fa-camera-retro"></i>
                   <label class="fileContainer">
                     Edit Display Photo
-                    <input type="file" (change)="showPreviewAvatar($event)"/>
+                    <input type="file" (change)="updateAvatar($event)"/>
                   </label>
                 </form>
               </figure>

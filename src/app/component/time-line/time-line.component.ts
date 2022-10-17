@@ -533,12 +533,9 @@ export class TimeLineComponent implements OnInit {
       this.hideReply(idCmtParent);
     }
   }
-  showPreviewAvatar(event: any) {
-    this.imageFile = event.target.files[0]
-    this.submitAvatar();
-  }
 
-  submitAvatar() {
+  updateAvatar(event: any) {
+    this.imageFile = event.target.files[0]
     if (this.imageFile != null) {
       const fileName = this.imageFile.name;
       const fileRef = this.storage.ref(fileName);
@@ -552,10 +549,7 @@ export class TimeLineComponent implements OnInit {
           Swal.showLoading();
           this.storage.upload(fileName, this.imageFile).snapshotChanges().pipe(
             finalize(() => (fileRef.getDownloadURL().subscribe(url => {
-              let user = {
-                avatar: url,
-              };
-              this.userService.updateUser(this.idUserPresent, user).subscribe(() => {
+              this.userService.updateAvatar(this.idUserPresent, url).subscribe(() => {
                 Swal.close();
                 location.reload();
               });

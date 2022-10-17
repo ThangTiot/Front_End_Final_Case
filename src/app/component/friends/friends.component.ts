@@ -3,8 +3,6 @@ import {User} from "../../model/User";
 import {ActivatedRoute} from "@angular/router";
 import {RelationshipService} from "../../service/relationship.service";
 import {UsersService} from "../../service/users.service";
-import {TimelineService} from "../../service/timeline.service";
-import {Post} from "../../model/Post";
 import Swal from "sweetalert2";
 
 @Component({
@@ -15,6 +13,7 @@ import Swal from "sweetalert2";
 export class FriendsComponent implements OnInit {
   id: any;
   idUserPresent!: any;
+  userPresent!: User;
   user!: User;
   listMutualFriend!: User[];
   friendList!: User[];
@@ -33,6 +32,15 @@ export class FriendsComponent implements OnInit {
     })
     this.getMutualFriends();
     this.getAllFriend();
+    this.getUserPresent();
+  }
+
+  getUserPresent() {
+    if (this.idUserPresent) {
+      this.userService.findById(this.idUserPresent).subscribe(data => {
+        this.userPresent = data;
+      });
+    }
   }
   getMutualFriends(){
     if(this.id){

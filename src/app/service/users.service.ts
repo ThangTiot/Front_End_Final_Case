@@ -35,5 +35,8 @@ export class UsersService {
   updateUser(id: any, user: User): Observable<User> {
     return this.httpClient.put<User>("http://localhost:8080/users/" + id, user)
   }
+  updateAvatar(id: any, url: String): Observable<User> {
+    return this.httpClient.put<User>("http://localhost:8080/users/avatar/" + id, url)
+  }
 
 }
