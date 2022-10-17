@@ -273,4 +273,7 @@ export class EditProfileComponent implements OnInit {
   }
 
 
+  reload() {
+    location.reload();
+  }
 }

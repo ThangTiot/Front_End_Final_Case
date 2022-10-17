@@ -533,4 +533,36 @@ export class TimeLineComponent implements OnInit {
       this.hideReply(idCmtParent);
     }
   }
+  showPreviewAvatar(event: any) {
+    this.imageFile = event.target.files[0]
+    this.submitAvatar();
+  }
+
+  submitAvatar() {
+    if (this.imageFile != null) {
+      const fileName = this.imageFile.name;
+      const fileRef = this.storage.ref(fileName);
+      // @ts-ignore
+      Swal.fire({
+        title: 'Loading...',
+        html: 'Please wait...',
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+          this.storage.upload(fileName, this.imageFile).snapshotChanges().pipe(
+            finalize(() => (fileRef.getDownloadURL().subscribe(url => {
+              let user = {
+                avatar: url,
+              };
+              this.userService.updateUser(this.idUserPresent, user).subscribe(() => {
+                Swal.close();
+                location.reload();
+              });
+            })))
+          ).subscribe();
+        }
+      }).then();
+    }
+  }
 }

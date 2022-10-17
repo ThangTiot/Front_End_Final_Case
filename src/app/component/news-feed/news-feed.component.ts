@@ -13,9 +13,8 @@ import {LikePostService} from "../../service/like-post.service";
 import {RelationshipService} from "../../service/relationship.service";
 import {CommentService} from "../../service/comment.service";
 import {Comments} from "../../model/Comments";
-import {LikeCommentService} from "../../service/like-comment.service";
-import {data} from 'jquery';
 import {LikeComment} from "../../model/LikeComment";
+import {LikeCommentService} from "../../service/like-comment.service";
 
 
 @Component({

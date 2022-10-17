@@ -196,10 +196,6 @@
                               <div class="pepl-info">
                                 <h4><a routerLink="/timeLine/{{f.id}}"
                                        title="">{{f.fullName}}</a></h4>
-                                <span></span>
-<!--                                <a href="#" title="" class="add-butn more-action"-->
-<!--                                   data-ripple="" >unfriend</a>-->
-<!--                                <a href="#" title="" class="add-butn" data-ripple="">Message</a>-->
                               </div>
                             </div>
                           </li>
@@ -227,7 +223,7 @@
                       </div>
                       <div class="tab-pane fade" id="frends-muntual" *ngIf="(checkFriend() == 'friend')">
                         <ul class="nearby-contct" *ngFor="let l of listMutualFriend">
-                          <li>
+                          <li style="border-radius: 10px">
                             <div class="nearly-pepls">
                               <figure>
                                 <a href="#"
@@ -239,8 +235,7 @@
                                        title="">{{l.fullName}}</a></h4>
                                 <span></span>
                                 <a [routerLink]="'/friends/'+user.id" title="" class="add-butn more-action"
-                                   data-ripple="" (click)="unfriend(l.id)">unfriend</a>
-<!--                                <a href="#" title="" class="add-butn" data-ripple="">Message</a>-->
+                                   data-ripple="" (click)="unfriend(l.id)" style="margin-top: -8px; border-radius: 10px">unfriend</a>
                               </div>
                             </div>
                           </li>

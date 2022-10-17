@@ -57,7 +57,7 @@ export class FriendsComponent implements OnInit {
     }
   };
 
-  // Kiểm tra mỗi quan hệ với dựa trên danh sách bạn của đối phương
+  // Kiểm tra mỗi quan hệ dựa trên danh sách bạn của đối phương
   checkFriend(): string {
     for (let i = 0; i < this.friendList.length; i++) {
       if (this.friendList[i].id == this.idUserPresent) {

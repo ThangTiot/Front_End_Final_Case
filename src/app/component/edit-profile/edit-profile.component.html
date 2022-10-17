@@ -146,12 +146,12 @@
               <ul>
                 <li class="admin-name">
                   <h5>{{user.fullName}}</h5>
-<!--                  <span>Hi Hi</span>-->
+                  <span>Hi Hi</span>
                 </li>
                 <li>
                   <a class="" routerLink="/timeLine/{{id}}" title="" data-ripple="">time line</a>
-                  <a class="" [routerLink]="'/friends/'+user.id"  title="" data-ripple="">Friends</a>
-                  <a class="active" title="" data-ripple="">About</a>
+                  <a class="" routerLink="/friends/{{user.id}}"  title="" data-ripple="">Friends</a>
+                  <a class="active" routerLink="/edit-profile/{{id}}" title="" data-ripple="">About</a>
                 </li>
               </ul>
             </div>
@@ -298,7 +298,7 @@
                         <label class="control-label" for="hobby">Hobby</label><i class="mtrl-select"></i>
                       </div>
                       <div class="submit-btns">
-                        <button type="reset" class="mtr-btn"><span>Cancel</span></button>
+                        <button type="button" class="mtr-btn" (click)="getUserPresent()"><span>Cancel</span></button>
                         <button type="submit" class="mtr-btn" [disabled]="formUserInfo.invalid"><span>Update</span>
                         </button>
                       </div>
