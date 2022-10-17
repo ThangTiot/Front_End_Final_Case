@@ -183,7 +183,7 @@
 
                     <!-- Tab panes -->
                     <div class="tab-content">
-                      <div class="tab-pane active fade show " id="frends" *ngIf="(checkFriend() == 'friend') || (id == idUserPresent)">
+                      <div class="tab-pane active fade show " id="frends" *ngIf="(checkFriend() == 'friend') || (id == idUserPresent); else elseBlock">
                         <ul class="nearby-contct" *ngFor="let f of friendList">
                           <li style="border-radius: 10px">
                             <div class="nearly-pepls">
@@ -201,6 +201,17 @@
                           </li>
                         </ul>
                       </div>
+                      <ng-template #elseBlock>
+                        <ul class="nearby-contct">
+                          <li style="border-radius: 10px">
+                            <div class="nearly-pepls">
+                              <div class="pepl-info">
+                                <h4><a title="">Add <span style="color: #00adee">{{user.fullName}}</span> to see friends list.</a></h4>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </ng-template>
                       <div class="tab-pane fade" id="frends-req">
                         <ul class="nearby-contct" *ngFor="let f of friendListConfirmFrom">
                           <li style="border-radius: 10px">
