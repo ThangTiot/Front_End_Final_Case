@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UsersService} from "../../service/users.service";
 import Swal from 'sweetalert2'
@@ -13,9 +13,10 @@ export class UsersComponent implements OnInit {
   formSignIn!: FormGroup;
   formSignUp!: FormGroup;
   signInError: boolean = false;
-  checkUsername: boolean = false;
+  checkUsernameExist: boolean = false;
   checkRepass: boolean = true;
   idUserPresent!: any;
+  checkRqUserName: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
               private userService: UsersService,
@@ -30,16 +31,16 @@ export class UsersComponent implements OnInit {
     this.formSignIn = this.formBuilder.group(
       {
         id: "",
-        userName: ["",Validators.required],
-        pass: ["",Validators.required]
+        userName: ["", Validators.required],
+        pass: ["", Validators.required]
       }
     );
     this.formSignUp = this.formBuilder.group(
       {
-        userName1: ["",Validators.required],
-        pass1: ["", [Validators.pattern(/^(?=.*?[A-Z])[A-Za-z0-9]{6,32}$/),Validators.required]],
-        rePass: ["",Validators.required],
-        fullName: ["",Validators.required],
+        userName1: ["", Validators.required],
+        pass1: ["", [Validators.pattern(/^(?=.*?[A-Z])[A-Za-z0-9]{6,32}$/), Validators.required]],
+        rePass: ["", Validators.required],
+        fullName: ["", Validators.required],
         gender: ""
       }
     );
@@ -47,18 +48,11 @@ export class UsersComponent implements OnInit {
 
 
   signIn() {
-    let user = {
-      userName: this.formSignIn.value.userName,
-      pass: this.formSignIn.value.pass
-    };
-    this.userService.signIn(user).subscribe(value => {
-      if (value != null) {
-        let userPresentId = value.id;
-        // @ts-ignore
-        localStorage.setItem("userPresentId", userPresentId);
+    let userName = this.formSignIn.value.userName;
+    let pass = this.formSignIn.value.pass;
+    this.userService.signIn(userName, pass).subscribe({
+      next: () => {
         this.router.navigateByUrl('newsFeed').then(() => location.reload());
-      } else {
-        this.signInError = true;
       }
     });
   }
@@ -80,7 +74,14 @@ export class UsersComponent implements OnInit {
           timer: 1500
         }).then(r => location.reload())
       } else {
-        this.checkUsername = true;
+        switch (value) {
+          case "Username is required":
+            this.checkRqUserName = true;
+            break;
+          case "User already exists":
+            this.checkUsernameExist = true;
+            break;
+        }
       }
     });
   }
@@ -100,6 +101,6 @@ export class UsersComponent implements OnInit {
   }
 
   changeUserName() {
-    this.checkUsername = false;
+    this.checkUsernameExist = false;
   }
 }

@@ -4,7 +4,7 @@ import {UsersService} from "../../service/users.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PostsService} from "../../service/posts.service";
 import {AngularFireStorage} from "@angular/fire/compat/storage";
-import {finalize} from "rxjs";
+import {finalize, firstValueFrom, Observable} from "rxjs";
 import {Post} from "../../model/Post";
 import Swal from 'sweetalert2'
 import {Router} from "@angular/router";
@@ -39,6 +39,7 @@ export class NewsFeedComponent implements OnInit {
   allComment!: Comments[];
   allCommentChild!: Comments[];
   likeCommentList!: LikeComment[];
+
   constructor(
     private formBuilder: FormBuilder,
     private storage: AngularFireStorage,
@@ -52,7 +53,7 @@ export class NewsFeedComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.formCreatePost = this.formBuilder.group({
       id: [""],
       content: ["", Validators.required],
@@ -64,7 +65,13 @@ export class NewsFeedComponent implements OnInit {
     })
     this.listPostOfNewFeed = [];
     this.idUserPresent = localStorage.getItem("userPresentId");
-    this.getUserPresent();
+    if (this.idUserPresent) {
+      this.userPresent = await firstValueFrom(this.getUserPresentById());
+    } else {
+      this.userPresent = await firstValueFrom(this.getUserPresent());
+      this.idUserPresent = this.userPresent.id;
+      localStorage.setItem("userPresentId", this.idUserPresent);
+    }
     this.getAllFriend();
     this.getAllPostOfNewFeed();
     this.getAllLikePost();
@@ -74,12 +81,12 @@ export class NewsFeedComponent implements OnInit {
     this.getAllLikeComment();
   }
 
-  getUserPresent() {
-    if (this.idUserPresent) {
-      this.userService.findById(this.idUserPresent).subscribe(data => {
-        this.userPresent = data;
-      });
-    }
+  getUserPresent(): Observable<any> {
+    return this.userService.getUserInfo();
+  }
+
+  getUserPresentById(): Observable<any> {
+    return this.userService.findById(this.idUserPresent);
   }
 
   getAllFriend() {
@@ -126,7 +133,7 @@ export class NewsFeedComponent implements OnInit {
     });
   }
 
-  getCommentByPost(idPost: any){
+  getCommentByPost(idPost: any) {
     let commentOfPost: Comments[] = [];
     for (let i = 0; i < this.allComment.length; i++) {
       if (this.allComment[i].posts!.id == idPost) {
@@ -136,7 +143,7 @@ export class NewsFeedComponent implements OnInit {
     return commentOfPost;
   }
 
-  getCommentChildByComment(idCmt: any){
+  getCommentChildByComment(idCmt: any) {
     let commentChild: Comments[] = [];
     for (let i = 0; i < this.allCommentChild.length; i++) {
       if (this.allCommentChild[i].idParentComment == idCmt) {
@@ -203,6 +210,7 @@ export class NewsFeedComponent implements OnInit {
       });
     }
   }
+
   updatePostForm(idPost: any) {
     this.formCreatePost.reset();
     this.imageSrc = "";
@@ -217,6 +225,7 @@ export class NewsFeedComponent implements OnInit {
       document.getElementById("permissionPost").value = data.permissionPost;
     });
   }
+
   logout() {
     Swal.fire({
       title: 'Log Out',
@@ -298,10 +307,10 @@ export class NewsFeedComponent implements OnInit {
     }
   }
 
-  disLikeComment(idComment:any){
-    for (let i = 0 ; i < this.likeCommentList.length; i++){
+  disLikeComment(idComment: any) {
+    for (let i = 0; i < this.likeCommentList.length; i++) {
       if (this.likeCommentList[i].comments!.id == idComment) {
-        this.likeCommentService.disLikeComment(this.likeCommentList[i].id).subscribe(()=>{
+        this.likeCommentService.disLikeComment(this.likeCommentList[i].id).subscribe(() => {
           this.getAllLikeComment();
           this.getAllPostOfNewFeed();
           this.getAllComment();
@@ -339,6 +348,7 @@ export class NewsFeedComponent implements OnInit {
   deleteImage() {
     this.imageSrc = "";
   }
+
   checkFriend(idUserPost: any) {
     for (let i = 0; i < this.friendList.length; i++) {
       if (this.friendList[i].id == idUserPost) {
@@ -371,7 +381,7 @@ export class NewsFeedComponent implements OnInit {
     });
   }
 
-  createComment(idPost: any,evt: Event) {
+  createComment(idPost: any, evt: Event) {
     evt.preventDefault();
     let commentValue = this.formComment.value.comment;
     if (commentValue != null) {
@@ -392,48 +402,51 @@ export class NewsFeedComponent implements OnInit {
     }
   }
 
-  showUpdateCommentForm (cmt : any){
+  showUpdateCommentForm(cmt: any) {
 
-     // @ts-ignore
-    document.getElementById(`contentCmt${cmt.id}`).value= cmt.content
     // @ts-ignore
-  document.getElementById(`cmt${cmt.id}`).style.display="block"
-
-  // @ts-ignore
-    document.getElementById(`cmtContent${cmt.id}`).style.display="none"
-
-
-}
-  hideUpdateCommentForm (idCmt:any){
-  // @ts-ignore
-  document.getElementById(`cmt${idCmt}`).style.display="none"
-
-  // @ts-ignore
-  document.getElementById(`cmtContent${idCmt}`).style.display="block"
-
-}
-  hideReply (idCmt:any){
+    document.getElementById(`contentCmt${cmt.id}`).value = cmt.content
     // @ts-ignore
-    document.getElementById(`reply${idCmt}`).style.display="none"
+    document.getElementById(`cmt${cmt.id}`).style.display = "block"
+
+    // @ts-ignore
+    document.getElementById(`cmtContent${cmt.id}`).style.display = "none"
+
+
   }
- updateComment (idCmt : any, evt: Event) {
-   // this.hideUpdateCommentForm(idCmt);
-   // @ts-ignore
-   let content = document.getElementById(`contentCmt${idCmt}`).value;
-   evt.preventDefault();
-   if (content == "") {
-     this.deleteComment(idCmt)
-   } else {
-     let comment = {
-       content: content
-     };
-     this.commentService.update(idCmt, comment).subscribe(() => {
-       this.getAllComment();
-       this.getAllPostOfNewFeed();
-       this.getAllCommentChild();
-     })
-   }
- }
+
+  hideUpdateCommentForm(idCmt: any) {
+    // @ts-ignore
+    document.getElementById(`cmt${idCmt}`).style.display = "none"
+
+    // @ts-ignore
+    document.getElementById(`cmtContent${idCmt}`).style.display = "block"
+
+  }
+
+  hideReply(idCmt: any) {
+    // @ts-ignore
+    document.getElementById(`reply${idCmt}`).style.display = "none"
+  }
+
+  updateComment(idCmt: any, evt: Event) {
+    // this.hideUpdateCommentForm(idCmt);
+    // @ts-ignore
+    let content = document.getElementById(`contentCmt${idCmt}`).value;
+    evt.preventDefault();
+    if (content == "") {
+      this.deleteComment(idCmt)
+    } else {
+      let comment = {
+        content: content
+      };
+      this.commentService.update(idCmt, comment).subscribe(() => {
+        this.getAllComment();
+        this.getAllPostOfNewFeed();
+        this.getAllCommentChild();
+      })
+    }
+  }
 
   deleteComment(idCmt: any) {
     Swal.fire({

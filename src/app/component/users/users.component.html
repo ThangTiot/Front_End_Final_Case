@@ -19,6 +19,7 @@
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <div class="login-reg-bg">
           <div class="log-reg-area sign">
+            <a href="http://localhost:8080/oauth2/authorization/google" title="" class="forgot-pwd">Login with Google</a>
             <h2 class="log-title">Login</h2>
             <p>
               Don’t use Vinbook Yet?<a href="#" title=""> Join now</a>
@@ -70,10 +71,10 @@
                 <input type="text" id="userName1" formControlName="userName1" required="required" (input)="changeUserName()"/>
                 <label class="control-label" for="userName1">User Name</label><i class="mtrl-select"></i>
               </div>
-              <div class="error" *ngIf="!formSignUp.get('userName1')!.invalid && checkUsername">
+              <div class="error" *ngIf="!formSignUp.get('userName1')!.invalid && checkUsernameExist">
                 Username is exist!
               </div>
-              <div class="error" *ngIf="formSignUp.get('userName1')!.invalid && formSignUp.get('userName1')!.touched">
+              <div class="error" *ngIf="formSignUp.get('userName1')!.invalid && formSignUp.get('userName1')!.touched && checkRqUserName">
                 Username is required!
               </div>
               <div class="form-group">

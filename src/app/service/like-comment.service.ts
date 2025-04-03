@@ -10,12 +10,12 @@ export class LikeCommentService {
 
   constructor(private httpClient: HttpClient) { }
   findAllByUser(idUser: any): Observable<LikeComment[]> {
-    return this.httpClient.get<LikeComment[]>('http://localhost:8080/like-comment/findAllByUser/' + idUser)
+    return this.httpClient.get<LikeComment[]>('http://localhost:8080/like-comment/findAllByUser/' + idUser, { withCredentials: true })
   }
   likeComment(likeComment: LikeComment): Observable<LikeComment> {
-    return this.httpClient.post('http://localhost:8080/like-comment/like',likeComment)
+    return this.httpClient.post('http://localhost:8080/like-comment/like',likeComment, { withCredentials: true })
   }
   disLikeComment(id: any): Observable<void> {
-    return this.httpClient.delete<void>('http://localhost:8080/like-comment/disLike/' + id);
+    return this.httpClient.delete<void>('http://localhost:8080/like-comment/disLike/' + id, { withCredentials: true });
   }
 }

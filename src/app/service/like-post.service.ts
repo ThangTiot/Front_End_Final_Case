@@ -13,14 +13,14 @@ export class LikePostService {
   }
 
   findAllByUser(idUser: any): Observable<LikePost[]> {
-    return this.httpClient.get<LikePost[]>('http://localhost:8080/likePost/findAllByUser/' + idUser)
+    return this.httpClient.get<LikePost[]>('http://localhost:8080/likePost/findAllByUser/' + idUser, { withCredentials: true })
   }
 
   likePost(likePost: LikePost): Observable<LikePost> {
-    return this.httpClient.post('http://localhost:8080/likePost/like',likePost)
+    return this.httpClient.post('http://localhost:8080/likePost/like',likePost, { withCredentials: true })
   }
 
   disLikePost(id: any): Observable<void> {
-    return this.httpClient.delete<void>('http://localhost:8080/likePost/disLike/' + id);
+    return this.httpClient.delete<void>('http://localhost:8080/likePost/disLike/' + id, { withCredentials: true });
   }
 }
