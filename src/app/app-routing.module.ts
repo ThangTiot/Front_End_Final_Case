@@ -5,11 +5,13 @@ import {NewsFeedComponent} from "./component/news-feed/news-feed.component";
 import {TimeLineComponent} from "./component/time-line/time-line.component";
 import {FriendsComponent} from "./component/friends/friends.component";
 import {EditProfileComponent} from "./component/edit-profile/edit-profile.component";
+import {LoginComponent} from "./component/login/login.component";
 
 
 const routes: Routes = [
 
-  { path: '', component: UsersComponent },
+  { path: '', component: LoginComponent },
+  { path: 'loginWithAccount', component: UsersComponent },
   { path: 'newsFeed', component: NewsFeedComponent },
   { path: 'timeLine/:id', component: TimeLineComponent },
   { path: 'friends/:id', component: FriendsComponent },

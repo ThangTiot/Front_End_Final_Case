@@ -15,6 +15,7 @@ import { TimeLineComponent } from './component/time-line/time-line.component';
 import {FriendsComponent} from "./component/friends/friends.component";
 
 import {EditProfileComponent} from "./component/edit-profile/edit-profile.component";
+import { LoginComponent } from './component/login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +25,7 @@ import {EditProfileComponent} from "./component/edit-profile/edit-profile.compon
     FriendsComponent,
     NewsFeedComponent,
     EditProfileComponent,
+    LoginComponent,
 
 
 
